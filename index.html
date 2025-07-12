@@ -170,7 +170,7 @@
         <div class="lg:col-span-2 bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-6 md:p-10 text-center flex flex-col fade-in">
             
             <header class="mb-6">
-                <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-hover)]">Daily Ayah Challenge</h1>
+                <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-hover)]">Tadabbur</h1>
                 <p id="attempts-subtitle" class="text-slate-500 dark:text-slate-400 mt-2">You have 5 attempts to guess the Surah.</p>
             </header>
             
@@ -687,7 +687,7 @@
                 const result = user.progress[ui.currentDifficulty];
                 const attemptsStr = result.attempts.map(a => a.correct ? '🟩' : '🟥').join('');
                 const attemptCount = result.solved ? result.attempts.length : 'X';
-                const text = `Daily Ayah Challenge ${new Date().toLocaleDateString()}\nDifficulty: ${ui.currentDifficulty}\n${attemptCount}/${DIFFICULTIES[ui.currentDifficulty].attempts}\n${attemptsStr}`;
+                const text = `Tadabbur ${new Date().toLocaleDateString()}\nDifficulty: ${ui.currentDifficulty}\n${attemptCount}/${DIFFICULTIES[ui.currentDifficulty].attempts}\n${attemptsStr}`;
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
                 textArea.style.position = "fixed"; document.body.appendChild(textArea);
