@@ -134,7 +134,7 @@
             <div id="difficulty-buttons" class="flex flex-col sm:flex-row gap-4 justify-center">
                  <button data-difficulty="Easy" class="difficulty-btn btn px-8 py-4 text-lg bg-sky-600 text-white font-bold rounded-lg hover:bg-sky-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
                      Easy
-                     <span class="block text-sm font-normal text-sky-200">Juz 30</span>
+                     <span class="block text-sm font-normal text-sky-200">Juz Amma (30)</span>
                  </button>
                  <button data-difficulty="Medium" class="difficulty-btn btn px-8 py-4 text-lg bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
                      Medium
@@ -353,7 +353,6 @@
             
             /**
              * Fetches a specific edition of the Quran (e.g., Arabic script, audio).
-             * API REVERT: This function now uses the original api.alquran.cloud endpoint structure.
              * @param {string} edition - The identifier for the edition (e.g., 'quran-uthmani').
              * @returns {Promise<Array>} - An array of Ayah objects for the requested edition.
              */
@@ -376,7 +375,7 @@
             /**
              * Generates a deterministic "random" index based on the date and a salt.
              * Ensures every user gets the same challenge on the same day for a given difficulty.
-             * FIX: Uses a hashed seed to prevent sequential-looking outputs on consecutive days.
+             * Uses a hashed seed to prevent sequential-looking outputs on consecutive days.
              * @param {string} dateStr - The date string (YYYY-MM-DD).
              * @param {number} max - The maximum value for the index (exclusive).
              * @param {string} salt - A string to differentiate indexes (e.g., 'Easy', 'Medium').
@@ -398,9 +397,9 @@
             function populateReciterDropdown() { dom.reciterSelect.innerHTML = ''; appState.quran.reciters.forEach(reciter => { dom.reciterSelect.add(new Option(reciter.englishName, reciter.identifier)); }); const preferredReciter = 'ar.alafasy'; dom.reciterSelect.value = appState.quran.reciters.some(r => r.identifier === preferredReciter) ? preferredReciter : dom.reciterSelect.options[0].value; }
             
             /**
-             * FATAL BUG FIX: This function now correctly groups Surahs into Juzes based on the reverted API's data structure.
-             * It iterates through all Surahs, finds which Juzes they contain, and adds them to the appropriate lists in `appState.quran.juzData`.
-             * It also de-duplicates entries to ensure a clean list. This prevents the app from crashing on startup.
+             * Groups Surahs into Juzes based on the reverted API's data structure.
+             * Iterates through all Surahs, finds which Juzes they contain, and adds them to the appropriate lists in `appState.quran.juzData`.
+             * De-duplicates entries to ensure a clean list.
              */
             function groupSurahsByJuz() {
                 appState.quran.juzData = {};
@@ -428,8 +427,7 @@
             function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[50px] flex flex-wrap items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text'; basmalaP.textContent = BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-slate-500 dark:text-slate-400 italic text-center'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
             
             /**
-             * Sets up the daily challenge.
-             * FIX: This function now correctly initializes the challenge with ONLY ONE Ayah.
+             * Sets up the daily challenge by providing ONE Ayah.
              * It creates the appropriate filtered pool, selects a deterministic Ayah, and populates the UI.
              */
             function setupDailyAyah() {
@@ -470,7 +468,7 @@
             
             /**
              * Fetches and displays the Tafsir for the first Ayah of the given Surah.
-             * API REVERT: This now uses the stable api.alquran.cloud endpoint for Tafsir.
+             * IMPORTANT NOTE: This API does not return the Tafsir for the first Ayah of the Surah.
              */
             async function fetchAndDisplayTafsir(surahNumber) {
                 const tafsirContainer = document.createElement('div');
