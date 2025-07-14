@@ -276,7 +276,6 @@
             // API REVERT: Reverted all data fetching to the original, stable api.alquran.cloud.
             // This was done to fix the fatal initialization error caused by API data mismatches.
             const API_BASE_URL = 'https://api.alquran.cloud/v1';
-            const TAFSIR_ID = 167; // Using Tafsir al-Jalalayn (English), which is confirmed to work with this API.
 
             // Defines the rules for each difficulty level.
             const DIFFICULTIES = { 
@@ -467,22 +466,122 @@
             function checkGuess(surahNumber) { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; if (progress.completed) return; const isCorrect = surahNumber === appState.challenge.currentAyah.surah.number; progress.attempts.push({ surahNumber, correct: isCorrect }); updateAttemptsUI(); if (isCorrect) { progress.solved = true; endDailyGame(true); } else { const guessedButton = document.querySelector(`.surah-card[data-surah-number='${surahNumber}']`); if(guessedButton) guessedButton.disabled = true; if (progress.attempts.length === 1 && !progress.completed && !progress.hintUsed) { if (DIFFICULTIES[currentDifficulty].hint) { dom.hintButton.classList.remove('hidden'); } } if (progress.attempts.length >= 1) { dom.giveUpButton.classList.remove('hidden'); } if (progress.attempts.length >= DIFFICULTIES[currentDifficulty].attempts) { endDailyGame(false); } } saveGameState(); }
             
             /**
-             * Fetches and displays the Tafsir for the first Ayah of the given Surah.
-             * IMPORTANT NOTE: This API does not return the Tafsir for the first Ayah of the Surah.
+             * Fetches and displays the Tafsir for the given Surah and Ayah using the Quran API.
+             * This function fetches tafsir information for the specific ayah from the challenge.
              */
             async function fetchAndDisplayTafsir(surahNumber) {
                 const tafsirContainer = document.createElement('div');
                 tafsirContainer.className = "mt-2 p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg w-full max-w-xl text-left";
+                
+                // Get the ayah number from the current challenge
+                const currentAyah = appState.challenge.currentAyah;
+                const ayahNumber = currentAyah ? currentAyah.numberInSurah : 1;
+                
+                // Show loading state initially
+                tafsirContainer.innerHTML = `
+                    <h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">Surah Insight</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 italic">Loading tafsir information...</p>
+                `;
+                dom.feedbackMessage.appendChild(tafsirContainer);
+                
                 try {
-                    const response = await fetchJSON(`${API_BASE_URL}/tafsir/${TAFSIR_ID}/${surahNumber}/1`);
-                    const tafsirText = response.data.text;
-                    if (!tafsirText) throw new Error("Tafsir text not found in API response.");
-                    tafsirContainer.innerHTML = `<h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">Surah Insight (Tafsir al-Jalalayn, Ayah 1)</h4><p class="text-sm text-slate-500 dark:text-slate-400 italic">"${tafsirText}"</p>`;
+                    // Fetch tafsir from the Quran API with timeout
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    
+                    const response = await fetchJSON(`https://quranapi.pages.dev/api/tafsir/${surahNumber}_${ayahNumber}.json`, {
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response) {
+                        throw new Error("Invalid response from tafsir API");
+                    }
+                    
+                    let tafsirContent = '';
+                    
+                    // Get surah info from our existing data
+                    const surahInfo = appState.quran.surahMeta.get(surahNumber);
+                    const surahName = surahInfo ? surahInfo.englishName : `Surah ${surahNumber}`;
+                    
+                    // Add surah name, number, and ayah number
+                    tafsirContent += `<h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">${surahName} (${surahNumber}:${ayahNumber}) - Tafsir</h4>`;
+                    
+                    // Add revelation type if available
+                    if (surahInfo && surahInfo.revelationType) {
+                        tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mb-2">${surahInfo.revelationType}</p>`;
+                    }
+                    
+                    // Add tafsir text - the API returns multiple tafsirs from different sources
+                    if (response && response.tafsirs && response.tafsirs.length > 0) {
+                        // Get the first available tafsir (usually Ibn Kathir which is most comprehensive)
+                        const firstTafsir = response.tafsirs[0];
+                        
+                        if (firstTafsir && firstTafsir.content && firstTafsir.content.length > 0) {
+                            const maxLength = 800; // Limit to prevent overwhelming the UI
+                            let displayText = firstTafsir.content;
+                            
+                            if (displayText.length > maxLength) {
+                                displayText = displayText.substring(0, maxLength) + '...';
+                            }
+                            
+                            // Format the tafsir text with proper paragraph breaks and spacing
+                            const formattedText = displayText
+                                .replace(/\n\n/g, '</p><p class="text-sm text-slate-500 dark:text-slate-400 italic leading-relaxed mb-3">') // Double line breaks become new paragraphs
+                                .replace(/\n/g, '<br>') // Single line breaks become line breaks
+                                .replace(/## (.*?)(?=\n|$)/g, '<h5 class="font-bold text-slate-700 dark:text-slate-300 text-sm mb-2 mt-3">$1</h5>') // Markdown headers
+                                .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>') // Bold text
+                                .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>'); // Italic text
+                            
+                            tafsirContent += `<div class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed space-y-2">
+                                <p class="text-sm text-slate-500 dark:text-slate-400 italic leading-relaxed">${formattedText}</p>
+                            </div>`;
+                            tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mt-2">Source: ${firstTafsir.author}</p>`;
+                            
+                            // Add group verse info if available
+                            if (firstTafsir.groupVerse) {
+                                tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mt-1">${firstTafsir.groupVerse}</p>`;
+                            }
+                            
+                            // Add link to continue reading on Quran.com
+                            const quranComUrl = `https://quran.com/${surahNumber}:${ayahNumber}/tafsirs/en-tafisr-ibn-kathir`;
+                            tafsirContent += `<div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-600">
+                                <a href="${quranComUrl}" target="_blank" rel="noopener noreferrer" 
+                                   class="inline-flex items-center text-xs text-[var(--primary-color)] hover:text-[var(--primary-hover)] transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    Continue reading full tafsir on Quran.com
+                                </a>
+                            </div>`;
+                        } else {
+                            tafsirContent += `<p class="text-sm text-slate-500 dark:text-slate-400 italic">Tafsir information not available for this ayah.</p>`;
+                        }
+                    } else {
+                        tafsirContent += `<p class="text-sm text-slate-500 dark:text-slate-400 italic">Tafsir information not available for this ayah.</p>`;
+                    }
+                    
+                    tafsirContainer.innerHTML = tafsirContent;
+                    
                 } catch (error) {
                     console.error("Failed to fetch Tafsir:", error);
-                    tafsirContainer.innerHTML = `<p class="text-sm text-slate-500 dark:text-slate-400">Could not load Surah insight.</p>`;
+                    
+                    let errorMessage = "Could not load tafsir information at this time. Please try again later.";
+                    
+                    if (error.name === 'AbortError') {
+                        errorMessage = "Tafsir request timed out. Please check your internet connection.";
+                    } else if (error.message.includes('404')) {
+                        errorMessage = "Tafsir not available for this surah.";
+                    } else if (error.message.includes('network')) {
+                        errorMessage = "Network error. Please check your internet connection.";
+                    }
+                    
+                    tafsirContainer.innerHTML = `
+                        <h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">Surah Insight</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 italic">${errorMessage}</p>
+                    `;
                 }
-                dom.feedbackMessage.appendChild(tafsirContainer);
             }
 
             function endDailyGame(isWin, isGiveUp = false) { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; if (progress.completed) return; progress.completed = true; document.querySelectorAll('.surah-card, .juz-btn, #hint-button, #surah-search-input, #give-up-button').forEach(el => el.disabled = true); dom.hintButton.classList.add('hidden'); dom.giveUpButton.classList.add('hidden'); dom.prevAyahBtn.classList.add('hidden'); dom.nextAyahBtn.classList.add('hidden'); const message = isWin ? `<p class="text-green-400">MashAllah, correct!</p>` : (isGiveUp ? `<p class="text-slate-400">Challenge ended.</p>` : `<p class="text-red-500">Better luck next time!</p>`); const { surah } = appState.challenge.currentAyah; dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-slate-500 dark:text-slate-400">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`; fetchAndDisplayTafsir(surah.number); updateStats(isWin, progress.attempts.length); saveGameState(); showPostGameOptions(); }
