@@ -280,7 +280,7 @@
             // Defines the rules for each difficulty level.
             const DIFFICULTIES = { 
                 Easy:   { attempts: 5, hint: true, scope: 'easy' }, 
-                Medium: { attempts: 5, hint: true, scope: 'medium' }, // Corrected from 4 to 5 attempts.
+                Medium: { attempts: 5, hint: true, scope: 'medium' },
                 Hard:   { attempts: 3, hint: false, scope: 'hard' }
             };
             const SURAHS_PER_PAGE = 6; // How many Surahs to show at once in the selection list.
@@ -426,18 +426,76 @@
             function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[50px] flex flex-wrap items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text'; basmalaP.textContent = BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-slate-500 dark:text-slate-400 italic text-center'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
             
             /**
+             * Gets the daily ayah for a specific difficulty without setting up the UI.
+             * Used to determine which ayahs to exclude from hard mode.
+             */
+            function getDailyAyahForDifficulty(difficulty) {
+                let pool;
+                switch(difficulty) {
+                    case 'Easy':   pool = appState.quran.arabic.filter(a => a.juz === 30); break;
+                    case 'Medium': pool = appState.quran.arabic.filter(a => a.surah.number >= 36); break;
+                    default:       return null;
+                }
+                
+                if (!pool || pool.length === 0) return null;
+                const ayahIndex = getDailyIndex(appState.user.date, pool.length, difficulty);
+                return pool[ayahIndex];
+            }
+
+            /**
              * Sets up the daily challenge by providing ONE Ayah.
              * It creates the appropriate filtered pool, selects a deterministic Ayah, and populates the UI.
+             * For hard mode, it excludes ayahs from the same juz or surah as Easy and Medium modes.
              */
             function setupDailyAyah() {
                 const { currentDifficulty } = appState.ui;
                 const difficultySettings = DIFFICULTIES[currentDifficulty];
                 let pool;
-                switch(difficultySettings.scope) {
-                    case 'easy':   pool = appState.quran.arabic.filter(a => a.juz === 30); break;
-                    case 'medium': pool = appState.quran.arabic.filter(a => a.surah.number >= 36); break;
-                    case 'hard':   pool = appState.quran.arabic.filter(a => a.surah.number < 36 && a.surah.number > 1); break;
-                    default:       pool = appState.quran.arabic;
+                
+                if (currentDifficulty === 'Hard') {
+                    // For hard mode, exclude ayahs from the same juz or surah as Easy and Medium
+                    const easyAyah = getDailyAyahForDifficulty('Easy');
+                    const mediumAyah = getDailyAyahForDifficulty('Medium');
+                    
+                    // Start with the full Qur'an pool (Surahs 1-114)
+                    pool = appState.quran.arabic;
+                    
+                    // Filter out the exact same ayah as Easy mode
+                    if (easyAyah) {
+                        pool = pool.filter(a => a.number !== easyAyah.number);
+                    }
+                    
+                    // Filter out the exact same ayah as Medium mode
+                    if (mediumAyah) {
+                        pool = pool.filter(a => a.number !== mediumAyah.number);
+                    }
+                    
+                    // Filter out ayahs from the same surah as Easy mode
+                    if (easyAyah) {
+                        pool = pool.filter(a => a.surah.number !== easyAyah.surah.number);
+                    }
+                    
+                    // Filter out ayahs from the same surah as Medium mode
+                    if (mediumAyah) {
+                        pool = pool.filter(a => a.surah.number !== mediumAyah.surah.number);
+                    }
+                    
+                    // Filter out ayahs from the same juz as Easy mode
+                    if (easyAyah) {
+                        pool = pool.filter(a => a.juz !== easyAyah.juz);
+                    }
+                    
+                    // Filter out ayahs from the same juz as Medium mode
+                    if (mediumAyah) {
+                        pool = pool.filter(a => a.juz !== mediumAyah.juz);
+                    }
+                } else {
+                    // Standard pool selection for Easy and Medium
+                    switch(difficultySettings.scope) {
+                        case 'easy':   pool = appState.quran.arabic.filter(a => a.juz === 30); break;
+                        case 'medium': pool = appState.quran.arabic.filter(a => a.surah.number >= 36); break;
+                        default:       pool = appState.quran.arabic;
+                    }
                 }
                 
                 if (!pool || pool.length === 0) {
