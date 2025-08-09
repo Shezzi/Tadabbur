@@ -7,221 +7,291 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran:wght@400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CORE STYLING SECTION
-            - This section defines the visual theme of the application using CSS custom properties (variables).
-            - It allows for easy theme changes (e.g., light/dark mode) by updating these variables.
-            - Contains all custom classes for animations, layout, and component styling.
-        */
-
+        /* ---
+        CORE STYLING & AESTHETICS REFRESH V2
+        - Theme changed to a high-contrast, user-friendly "Mint & Charcoal" palette.
+        - This improves readability in both light and dark modes.
+        - Colors are softer and more cohesive across the entire application.
+        --- */
         :root {
-            /* Color variables for the "Midnight Blue & Gold" theme. */
-            --primary-color: #facc15;     /* yellow-400 (Gold) */
-            --primary-hover: #eab308;     /* yellow-500 (Darker Gold) */
-            --background-light: #f1f5f9;  /* slate-100 */
-            --background-dark: #0f172a;   /* slate-900 (Midnight Blue) */
+            /* Refined "Mint & Charcoal" color palette */
+            --primary-color: #6ee7b7;      /* emerald-300 (Mint) */
+            --primary-hover: #34d399;      /* emerald-400 (Deeper Mint) */
+            --primary-text: #064e3b;       /* emerald-900 (Dark Mint for text on light backgrounds) */
+            --primary-glow: rgba(52, 211, 153, 0.25);
+            
+            --background-light: #f1f5f9;  /* slate-100 (Light Gray) */
+            --background-dark: #0f172a;   /* slate-900 (Charcoal) */
+            
             --card-light: #ffffff;
-            --card-dark: #1e293b;         /* slate-800 */
-            --text-light: #020617;        /* slate-950 */
-            --text-dark: #e2e8f0;         /* slate-200 */
-            --subtle-text-light: #475569; /* slate-600 */
-            --subtle-text-dark: #94a3b8;  /* slate-400 */
-            --correct-color: #22c55e;    /* green-500 */
-            --incorrect-color: #ef4444;  /* red-500 */
+            --card-dark: #1e293b;          /* slate-800 */
+            
+            --text-light: #0f172a;         /* slate-900 (Charcoal text) */
+            --text-dark: #e2e8f0;          /* slate-200 (Light Gray text) */
+            
+            --subtle-text-light: #64748b;  /* slate-500 */
+            --subtle-text-dark: #94a3b8;   /* slate-400 */
+            
+            --border-light: #e2e8f0;       /* slate-200 */
+            --border-dark: #334155;        /* slate-700 */
+
+            --correct-color: #4ade80;      /* green-400 */
+            --incorrect-color: #f87171;    /* red-400 */
         }
 
-        /* Base body styles for typography and background colors. */
-        body { font-family: 'Inter', sans-serif; background-color: var(--background-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; }
-        .dark body { background-color: var(--background-dark); color: var(--text-dark); }
+        /* Base body styles for typography and background colors */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--background-light); 
+            color: var(--text-light); 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        .dark body { 
+            background-color: var(--background-dark); 
+            color: var(--text-dark); 
+        }
 
-        /* Specific style for the separated Basmala text. */
-        .basmala-text { font-family: 'Amiri Quran', serif; direction: rtl; font-size: clamp(1rem, 3vw, 1.25rem); text-align: center; margin-bottom: 0.5rem; color: var(--subtle-text-dark); width: 100%; }
+        /* Main Arabic text style for the Ayah display */
+        .arabic-text { 
+            font-family: 'Amiri Quran', serif; 
+            direction: rtl; 
+            line-height: 2; 
+            word-spacing: 8px; 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            color: var(--text-light); 
+            text-shadow: none;
+        }
+        .dark .arabic-text {
+            color: var(--primary-color); 
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
         
-        /* Main Arabic text style for the Ayah display. */
-        .arabic-text { font-family: 'Amiri Quran', serif; direction: rtl; line-height: 1.8; letter-spacing: 0.5px; word-spacing: 7px; font-size: clamp(2rem, 5vw, 2.75rem); color: var(--primary-color); }
-        
-        /* Style for the circular Ayah number. */
-        .ayah-number { display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; font-family: 'Inter', sans-serif; color: var(--primary-color); border: 2px solid var(--primary-color); border-radius: 9999px; width: 2.25rem; height: 2.25rem; text-align: center; vertical-align: middle; margin: 0 0.5rem; transition: all 0.3s ease; }
-        
-        /* Increased width for the script dropdown for better readability. */
-        #script-style-select { min-width: 150px; }
+        /* Style for the circular Ayah number */
+        .ayah-number { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1rem; 
+            font-family: 'Inter', sans-serif; 
+            color: var(--primary-text);
+            background-color: var(--primary-color);
+            border-radius: 9999px; 
+            width: 2.25rem; 
+            height: 2.25rem; 
+            text-align: center; 
+            vertical-align: middle; 
+            margin: 0 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease; 
+        }
+        .dark .ayah-number {
+             color: var(--primary-text);
+        }
 
-        /* Custom styling to hide default select dropdown arrows and use a background image instead. */
-        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-left: 1rem; padding-right: 2.5rem; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; }
-        .dark select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d1d5db' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); }
+        /* Custom styling for select dropdowns */
+        select { 
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            appearance: none; 
+            padding-left: 1rem; 
+            padding-right: 2.5rem; 
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); 
+            background-position: right 0.75rem center; 
+            background-repeat: no-repeat; 
+            background-size: 1.5em 1.5em; 
+        }
+        .dark select { 
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); 
+        }
         
-        /* Loading spinner animation. */
-        .spinner { border: 4px solid rgba(255, 255, 255, 0.2); width: 48px; height: 48px; border-radius: 50%; border-left-color: var(--primary-color); animation: spin 1s ease-in-out infinite; }
+        /* Loading spinner animation */
+        .spinner { 
+            border: 4px solid rgba(255, 255, 255, 0.2); 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            border-left-color: var(--primary-color); 
+            animation: spin 1s ease-in-out infinite; 
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Glassmorphism effect for modals. */
-        .glass-modal { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
-        .dark .glass-modal { background: rgba(15, 23, 42, 0.2); }
+        /* Glassmorphism effect for modals */
+        .glass-modal { 
+            background: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.7); 
+        }
+        .dark .glass-modal { 
+            background: rgba(30, 41, 59, 0.5); /* slate-800 with opacity */
+            border: 1px solid var(--border-dark);
+        }
         
-        /* General button hover effects. */
-        .btn { transition: all 0.2s ease-in-out; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .dark .btn:hover { box-shadow: 0 4px 20px rgba(var(--primary-color), 0.3); }
+        /* General button hover effects */
+        .btn { 
+            transition: all 0.2s ease-in-out; 
+        }
+        .btn:hover:not(:disabled) { 
+            transform: translateY(-2px); 
+            filter: brightness(1.1);
+        }
         
-        /* Animation for the guess attempt circles. */
-        .attempt-circle { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0); }
-        .attempt-circle.filled { transform: scale(1); }
+        /* Animation for the guess attempt circles */
+        .attempt-circle { 
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            transform: scale(0); 
+        }
+        .attempt-circle.filled { 
+            transform: scale(1); 
+        }
         
-        /* Custom scrollbar styling for Surah list. */
+        /* Custom scrollbar styling for Surah list */
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; } /* slate-300 */
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; } /* slate-700 */
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
 
-        /* General fade-in animation for modals and other elements. */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* General fade-in animation */
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         
-        /* Styling for the statistics distribution bars. */
-        .stat-bar { transition: width 0.5s ease-in-out; }
-        .stat-bar.is-primary { background-color: var(--primary-color); }
+        /* Styling for the statistics distribution bars */
+        .stat-bar { 
+            transition: width 0.5s ease-in-out; 
+            background-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
         
         /* Styling for completed challenge buttons */
         .difficulty-btn.completed-challenge {
-            background-color: #6b7280 !important; /* gray-500 */
-            opacity: 0.8;
+            background-color: #475569 !important; /* slate-600 */
+            color: #cbd5e1 !important; /* slate-300 */
             position: relative;
+            overflow: hidden;
         }
-        
         .difficulty-btn.completed-challenge:hover {
-            background-color: #4b5563 !important; /* gray-600 */
-            opacity: 1;
+            background-color: #64748b !important; /* slate-500 */
         }
-        
         .difficulty-btn.completed-challenge::after {
             content: "✓";
             position: absolute;
-            top: 8px;
-            right: 8px;
-            font-size: 14px;
+            top: 50%;
+            left: 1.5rem;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
             font-weight: bold;
-            color: white;
+            color: var(--correct-color);
         }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-200 flex items-center justify-center min-h-screen p-4 md:p-8">
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4">
 
-    <!--  
-        UI CONTROLS (HEADER)
-        - Contains persistent icons for Help, Statistics, and Theme settings.
-        - These are positioned absolutely at the top-right of the screen.
-    -->
-    <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
-        <button id="help-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="How to play">
+    <!-- UI CONTROLS (HEADER) -->
+    <div class="absolute top-4 right-4 z-20 flex items-center gap-2 text-subtle-text-light dark:text-subtle-text-dark">
+        <button id="help-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" aria-label="How to play">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         </button>
-        <button id="stats-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Open statistics">
+        <button id="stats-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" aria-label="Open statistics">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
         </button>
-        <button id="theme-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Change theme">
+       <!-- <button id="theme-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" aria-label="Change theme">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
-        </button>
+        </button> -->
     </div>
 
     <!-- Theme/Settings Modal -->
-    <div id="theme-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-white">
-            <button id="close-theme-btn" class="absolute top-4 right-4 text-slate-300 hover:text-white" aria-label="Close settings">
+    <div id="theme-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 fade-in">
+        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-text-dark">
+            <button id="close-theme-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" aria-label="Close settings">
                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
             </button>
             <h2 class="text-3xl font-bold text-center text-[var(--primary-color)] mb-6">Appearance</h2>
-             <label class="block mb-2 text-sm font-medium text-slate-300">Mode</label>
-             <div class="flex items-center justify-center gap-4 bg-slate-900/50 p-2 rounded-lg">
-                 <button id="theme-light-btn" class="theme-mode-btn flex-1 p-2 rounded-md" data-theme="light">Light</button>
-                 <button id="theme-dark-btn" class="theme-mode-btn flex-1 p-2 rounded-md" data-theme="dark">Dark</button>
-                 <button id="theme-system-btn" class="theme-mode-btn flex-1 p-2 rounded-md" data-theme="system">System</button>
-             </div>
+            <label class="block mb-2 text-sm font-medium text-slate-300">Mode</label>
+            <div class="flex items-center justify-center gap-2 bg-slate-900/70 p-2 rounded-lg">
+                <button id="theme-light-btn" class="theme-mode-btn flex-1 py-2 px-4 rounded-md text-sm transition-colors" data-theme="light">Light</button>
+                <button id="theme-dark-btn" class="theme-mode-btn flex-1 py-2 px-4 rounded-md text-sm transition-colors" data-theme="dark">Dark</button>
+                <button id="theme-system-btn" class="theme-mode-btn flex-1 py-2 px-4 rounded-md text-sm transition-colors" data-theme="system">System</button>
+            </div>
         </div>
     </div>
+
     
-    <!-- Loading Overlay: Shown during initial data fetch and script changes. -->
-    <div id="loading-overlay" class="fixed inset-0 bg-slate-900 bg-opacity-90 flex flex-col items-center justify-center z-[60] transition-opacity duration-500">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-background-dark bg-opacity-95 flex flex-col items-center justify-center z-[60] transition-opacity duration-500">
         <div class="spinner"></div>
         <p id="loading-message" class="mt-4 text-lg text-slate-300">Getting things ready...</p>
     </div>
 
-    <!-- Difficulty Selection Modal: The first screen the user sees. -->
-    <div id="difficulty-modal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-95 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="text-center">
-            <h1 class="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-hover)] mb-4">Tadabbur</h1>
-            <p class="text-slate-300 text-lg mb-8">Select a difficulty to begin today's challenge.</p>
-            <div id="difficulty-buttons" class="flex flex-col sm:flex-row gap-4 justify-center">
-                 <button data-difficulty="Easy" class="difficulty-btn btn px-8 py-4 text-lg bg-sky-600 text-white font-bold rounded-lg hover:bg-sky-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     <span class="difficulty-text">Easy</span>
-                     <span class="difficulty-subtitle block text-sm font-normal text-sky-200">Juz Amma (30)</span>
-                     <span class="review-text hidden text-sm font-normal text-sky-200">Review your guesses</span>
-                 </button>
-                 <button data-difficulty="Medium" class="difficulty-btn btn px-8 py-4 text-lg bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     <span class="difficulty-text">Medium</span>
-                     <span class="difficulty-subtitle block text-sm font-normal text-indigo-200">Surah 36-114</span>
-                     <span class="review-text hidden text-sm font-normal text-indigo-200">Review your guesses</span>
-                 </button>
-                 <button data-difficulty="Hard" class="difficulty-btn btn px-8 py-4 text-lg bg-rose-600 text-white font-bold rounded-lg hover:bg-rose-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     <span class="difficulty-text">Hard</span>
-                     <span class="difficulty-subtitle block text-sm font-normal text-rose-200">Full Qur'an</span>
-                     <span class="review-text hidden text-sm font-normal text-rose-200">Review your guesses</span>
-                 </button>
+    <!-- Difficulty Selection Modal -->
+    <div id="difficulty-modal" class="hidden fixed inset-0 bg-background-dark/95 flex items-center justify-center p-4 z-50 fade-in">
+        <div class="text-center max-w-2xl w-full">
+            <h1 class="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-green-400 mb-3">Tadabbur</h1>
+            <p class="text-slate-300 text-lg mb-10">Select a difficulty to begin today's challenge.</p>
+            <div id="difficulty-buttons" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <button data-difficulty="Easy" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
+                    <span class="difficulty-text block text-2xl">Easy</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Juz Amma (30)</span>
+                </button>
+                <button data-difficulty="Medium" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
+                    <span class="difficulty-text block text-2xl">Medium</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Surah 36-114</span>
+                </button>
+                <button data-difficulty="Hard" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
+                    <span class="difficulty-text block text-2xl">Hard</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Full Qur'an</span>
+                </button>
             </div>
-             <p id="all-challenges-done-message" class="hidden text-xl text-green-400 mt-8">MashAllah! You have completed all challenges for today. Come back tomorrow for more!</p>
+             <p id="all-challenges-done-message" class="hidden text-xl text-green-400 mt-10">MashAllah! You have completed all challenges for today. Come back tomorrow for more!</p>
         </div>
     </div>
 
-    <!--  
-        MAIN GAME CONTAINER
-        - This is the primary interface for the game, split into two main columns.
-        - Left column: Ayah display, audio, hints, guesses, feedback.
-        - Right column: Surah selection (search, Juz grid, Surah list).
-    -->
-    <div id="game-container" class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 opacity-0 transition-opacity duration-500">
+    <!-- MAIN GAME CONTAINER -->
+    <div id="game-container" class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6 opacity-0 transition-opacity duration-500">
         
         <!-- Left Column: Ayah Display & Interaction -->
-        <div class="lg:col-span-2 bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-6 md:p-10 text-center flex flex-col fade-in">
+        <div class="lg:col-span-3 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-6 md:p-8 text-center flex flex-col fade-in border border-border-light dark:border-border-dark">
             <header class="mb-6 relative">
-                <!-- Back Button -->
-                <button id="back-to-difficulty-btn" class="absolute top-0 left-0 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Back to difficulty selection">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
+                <button id="back-to-difficulty-btn" class="absolute top-1/2 -translate-y-1/2 left-0 p-2 rounded-full text-subtle-text-light dark:text-subtle-text-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Back to difficulty selection">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 </button>
-                <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-hover)]">Tadabbur</h1>
-                <p id="attempts-subtitle" class="text-slate-500 dark:text-slate-400 mt-2">You have 5 attempts to guess the Surah.</p>
+                <h1 class="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-green-600 dark:from-emerald-300 dark:to-green-400">Tadabbur</h1>
+                <p id="attempts-subtitle" class="text-subtle-text-light dark:text-subtle-text-dark mt-2"></p>
             </header>
             
             <!-- Script and Reciter Selection Dropdowns -->
             <div class="mb-6 flex flex-col sm:flex-row justify-center items-center gap-4">
-                 <select id="script-style-select" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block w-auto p-2.5 dark:bg-slate-700 dark:border-slate-600 dark:text-white" aria-label="Select Quranic script style">
-                     <option value="quran-uthmani" selected>Uthmani</option>
-                     <option value="quran-simple">Indo-Pak</option>
-                 </select>
-                 <select id="reciter-select" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block w-auto p-2.5 dark:bg-slate-700 dark:border-slate-600 dark:text-white" aria-label="Select Reciter"></select>
+                <select id="script-style-select" class="bg-slate-100 border border-border-light text-text-light text-sm rounded-lg focus:ring-2 focus:ring-[var(--primary-hover)] focus:border-[var(--primary-hover)] block w-36 p-2.5 dark:bg-slate-800 dark:border-border-dark dark:text-white transition" aria-label="Select Quranic script style">
+                    <option value="quran-uthmani" selected>Uthmani</option>
+                    <option value="quran-simple">Indo-Pak</option>
+                </select>
+                <select id="reciter-select" class="bg-slate-100 border border-border-light text-text-light text-sm rounded-lg focus:ring-2 focus:ring-[var(--primary-hover)] focus:border-[var(--primary-hover)] block w-auto p-2.5 dark:bg-slate-800 dark:border-border-dark dark:text-white transition" aria-label="Select Reciter"></select>
             </div>
             
             <!-- Ayah Display Area (Slider) -->
-            <div class="flex items-center justify-center gap-2">
-                 <button id="prev-ayah-btn" aria-label="Previous Ayah" class="hidden text-[var(--primary-color)] hover:text-[var(--primary-hover)] p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
-                 <div id="ayah-display-container" class="flex-grow overflow-hidden">
-                     <div id="ayah-slider" class="flex transition-transform duration-500 ease-in-out"></div>
-                 </div>
-                 <button id="next-ayah-btn" aria-label="Next Ayah (Hint)" class="hidden text-[var(--primary-color)] hover:text-[var(--primary-hover)] p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+            <div class="flex items-center justify-center gap-2 my-4">
+                <button id="prev-ayah-btn" aria-label="Previous Ayah" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                <div id="ayah-display-container" class="flex-grow overflow-hidden">
+                    <div id="ayah-slider" class="flex transition-transform duration-500 ease-in-out"></div>
+                </div>
+                <button id="next-ayah-btn" aria-label="Next Ayah (Hint)" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
             </div>
 
             <!-- Audio Player Controls -->
-            <div id="audio-player" class="mt-4 mb-4 flex justify-center items-center h-12">
+            <div id="audio-player" class="mt-2 mb-4 flex justify-center items-center h-12">
                 <audio id="ayah-audio"></audio>
-                <button id="play-button" aria-label="Play Audio" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)]"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg></button>
-                <button id="pause-button" aria-label="Pause Audio" class="hidden p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)]"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" /></svg></button>
+                <button id="play-button" aria-label="Play Audio" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg></button>
+                <button id="pause-button" aria-label="Pause Audio" class="hidden p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" /></svg></button>
                 <div id="audio-loading-spinner" class="spinner hidden" style="width: 28px; height: 28px;"></div>
             </div>
             
             <!-- Translation Display Area (Slider) -->
-            <div id="translation-container" class="flex-grow overflow-hidden">
+            <div id="translation-container" class="flex-grow overflow-hidden min-h-[4rem]">
                 <div id="translation-slider" class="flex transition-transform duration-500 ease-in-out"></div>
             </div>
 
@@ -230,8 +300,8 @@
 
             <!-- Hint and Give Up Buttons -->
             <div class="flex justify-center items-center gap-4 mb-6">
-                <button id="hint-button" class="hidden btn px-8 py-3 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-500/50">💡 Get a Hint</button>
-                <button id="give-up-button" class="hidden btn px-8 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 focus:outline-none focus:ring-4 focus:ring-slate-500/50">🤚 Give Up</button>
+                <button id="hint-button" class="hidden btn px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40">💡 Get a Hint</button>
+                <button id="give-up-button" class="hidden btn px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40">🤚 Give Up</button>
             </div>
 
             <!-- Feedback Message Area (Correct/Incorrect, Tafsir) -->
@@ -239,62 +309,62 @@
             
             <!-- Post-Game Options (Return to Menu, Share) -->
             <div id="post-game-options" class="hidden mt-4 flex flex-col items-center gap-3">
-                <button id="return-to-difficulty-btn" class="btn px-8 py-3 bg-[var(--primary-color)] text-slate-900 font-bold rounded-lg hover:bg-[var(--primary-hover)]">Choose another Challenge</button>
-                <button id="share-button" class="hidden btn mt-2 px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700">Share Results</button>
+                <button id="return-to-difficulty-btn" class="btn px-8 py-3 bg-[var(--primary-color)] text-[var(--primary-text)] font-bold rounded-lg hover:bg-[var(--primary-hover)] shadow-lg shadow-emerald-700/30">Choose another Challenge</button>
+                <button id="share-button" class="hidden btn mt-2 px-8 py-3 bg-slate-600 text-white font-bold rounded-lg hover:bg-slate-500 shadow-lg shadow-slate-900/30">Share Results</button>
             </div>
         </div>
 
         <!-- Right Column: Surah Selection -->
-        <div class="bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-6 flex flex-col fade-in" style="animation-delay: 0.1s;">
-            <h2 id="surah-selection-title" class="text-2xl font-bold text-center mb-4" style="color: var(--primary-color)">Select a Surah</h2>
+        <div class="lg:col-span-2 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-6 flex flex-col fade-in border border-border-light dark:border-border-dark" style="animation-delay: 0.1s;">
+            <h2 id="surah-selection-title" class="text-2xl font-bold text-center mb-4 text-emerald-600 dark:text-[var(--primary-color)]">Select a Surah</h2>
             <div class="mb-4">
-                 <input type="text" id="surah-search-input" placeholder="Search Surah..." class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white">
+                <input type="text" id="surah-search-input" placeholder="Search Surah..." class="w-full p-3 bg-slate-100 border border-border-light text-text-light text-sm rounded-lg focus:ring-2 focus:ring-[var(--primary-hover)] focus:border-[var(--primary-hover)] dark:bg-slate-800 dark:border-border-dark dark:placeholder-slate-400 dark:text-white transition">
             </div>
-            <div id="juz-grid-container" class="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-2 mb-4"></div>
-            <div id="surah-list-container" class="flex-grow space-y-2 p-1 bg-slate-50 dark:bg-slate-700/50 rounded-lg h-72 custom-scrollbar overflow-y-auto"></div>
+            <div id="juz-grid-container" class="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-4"></div>
+            <div id="surah-list-container" class="flex-grow space-y-2 p-1 bg-slate-100 dark:bg-slate-900/50 rounded-lg h-72 custom-scrollbar overflow-y-auto"></div>
             <div id="surah-pagination-controls" class="flex justify-center items-center mt-4 gap-4">
-                <button id="prev-surah-page" aria-label="Previous page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 disabled:opacity-50 disabled:pointer-events-none"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
-                <span id="surah-page-indicator" class="text-sm font-medium text-slate-700 dark:text-slate-300">1 / 1</span>
-                <button id="next-surah-page" aria-label="Next page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 disabled:opacity-50 disabled:pointer-events-none"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                <button id="prev-surah-page" aria-label="Previous page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                <span id="surah-page-indicator" class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark">1 / 1</span>
+                <button id="next-surah-page" aria-label="Next page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
             </div>
         </div>
     </div>
 
-    <!-- How to Play Modal: Shown on first visit. -->
-    <div id="how-to-play-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center relative text-white">
+    <!-- How to Play Modal -->
+    <div id="how-to-play-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 fade-in">
+        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center relative text-text-dark">
             <h2 class="text-3xl font-bold text-[var(--primary-color)] mb-6">How to Play</h2>
             <div class="text-left space-y-4 text-slate-200">
-                <p>1. Select a <strong class="text-indigo-400 font-semibold">Difficulty</strong> to start the challenge.</p>
+                <p>1. Select a <strong class="text-emerald-300 font-semibold">Difficulty</strong> to start the challenge.</p>
                 <p>2. Listen to or read the <strong class="text-[var(--primary-color)] font-semibold">Daily Ayah</strong>.</p>
                 <p>3. You have a limited number of attempts to guess the Surah.</p>
-                <p>4. If you get stuck, you can use the <strong class="text-indigo-400 font-semibold">💡 Get a Hint</strong> button after your first guess on Easy/Medium difficulties to reveal the next ayah.</p>
+                <p>4. If you get stuck, you can use the <strong class="text-emerald-300 font-semibold">💡 Get a Hint</strong> button after your first guess on Easy/Medium difficulties to reveal the next ayah.</p>
             </div>
-            <button id="close-modal-btn" class="btn mt-8 px-8 py-3 bg-[var(--primary-color)] text-slate-900 font-bold text-lg rounded-lg hover:bg-[var(--primary-hover)]">Let's Go!</button>
+            <button id="close-modal-btn" class="btn mt-8 px-8 py-3 bg-[var(--primary-color)] text-[var(--primary-text)] font-bold text-lg rounded-lg hover:bg-[var(--primary-hover)] shadow-lg shadow-emerald-900/30">Let's Go!</button>
         </div>
     </div>
 
     <!-- Statistics Modal -->
-    <div id="stats-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-white">
-            <button id="close-stats-btn" class="absolute top-4 right-4 text-slate-300 hover:text-white" aria-label="Close statistics"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+    <div id="stats-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 fade-in">
+        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-text-dark">
+            <button id="close-stats-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" aria-label="Close statistics"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
             <h2 class="text-3xl font-bold text-center text-[var(--primary-color)] mb-6">Statistics</h2>
             <div id="stats-content" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-6">
-                <div><div id="stats-played" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400">Played</div></div>
-                <div><div id="stats-win-pct" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400">Win %</div></div>
-                <div><div id="stats-current-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400">Current Streak</div></div>
-                <div><div id="stats-max-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400">Max Streak</div></div>
+                <div><div id="stats-played" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Played</div></div>
+                <div><div id="stats-win-pct" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Win %</div></div>
+                <div><div id="stats-current-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Current Streak</div></div>
+                <div><div id="stats-max-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Max Streak</div></div>
             </div>
             <h3 class="text-xl font-bold text-center text-[var(--primary-color)] mb-4">Guess Distribution</h3>
             <div id="guess-distribution-chart" class="space-y-2"></div>
         </div>
     </div>
     
-    <!-- Notification Popup: Used for sharing results, etc. -->
-    <div id="notification" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg z-[70] transition-opacity duration-300"></div>
+    <!-- Notification Popup -->
+    <div id="notification" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-lg shadow-lg z-[70] transition-all duration-300 transform translate-y-10 opacity-0"></div>
 
     <!-- Feedback Link -->
-    <a href="https://forms.gle/yhENVfd9YbNWxgmP7" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--primary-color)] dark:hover:text-[var(--primary-color)] transition-colors z-50">
+    <a href="https://forms.gle/yhENVfd9YbNWxgmP7" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-sm text-subtle-text-light dark:text-subtle-text-dark hover:text-[var(--primary-hover)] dark:hover:text-[var(--primary-color)] transition-colors z-50">
         Please Provide Feedback Here! :)
     </a>
 
@@ -307,24 +377,18 @@
 
             // --- CONFIGURATION & CONSTANTS ---
             // This section centralizes all static configuration values for easy management.
-
-            // API REVERT: Reverted all data fetching to the original, stable api.alquran.cloud.
-            // This was done to fix the fatal initialization error caused by API data mismatches.
             const API_BASE_URL = 'https://api.alquran.cloud/v1';
-
-            // Defines the rules for each difficulty level.
             const DIFFICULTIES = { 
                 Easy:   { attempts: 5, hint: true, scope: 'easy' }, 
                 Medium: { attempts: 5, hint: true, scope: 'medium' },
                 Hard:   { attempts: 3, hint: false, scope: 'hard' }
             };
-            const SURAHS_PER_PAGE = 6; // How many Surahs to show at once in the selection list.
-            const BASMALA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ "; // The Basmala text to detect and separate.
-            const MAX_HINTS = 2; // The maximum number of hints (additional ayahs) a user can get.
+            const SURAHS_PER_PAGE = 6;
+            const BASMALA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ";
+            const MAX_HINTS = 2;
 
             // --- DOM ELEMENT CACHING ---
-            // Caching DOM elements into a single object on startup.
-            // This improves performance by avoiding repeated `document.getElementById` calls throughout the code.
+            // Caching DOM elements improves performance by avoiding repeated document queries.
             const dom = {
                 loadingOverlay: document.getElementById('loading-overlay'), loadingMessage: document.getElementById('loading-message'), gameContainer: document.getElementById('game-container'),
                 difficultyModal: document.getElementById('difficulty-modal'), difficultyButtons: document.getElementById('difficulty-buttons'), allChallengesDoneMessage: document.getElementById('all-challenges-done-message'),
@@ -350,7 +414,6 @@
 
             // --- CENTRALIZED APPLICATION STATE ---
             // A single object to hold the entire state of the application.
-            // This makes debugging easier and provides a single source of truth for all data.
             let appState = {
                 quran: { arabic: [], english: [], audio: [], surahMeta: new Map(), allSurahs: [], juzData: {}, reciters: [] },
                 challenge: { currentAyah: null, allChallengeAyahs: [], visiblePaneIndex: 0 },
@@ -360,18 +423,17 @@
             };
             
             // --- UTILITY & HELPER FUNCTIONS ---
-            const showModal = (modalElement) => { modalElement.classList.remove('hidden'); };
-            const hideModal = (modalElement) => { modalElement.classList.add('hidden'); };
+            const showModal = (modalElement) => modalElement.classList.remove('hidden');
+            const hideModal = (modalElement) => modalElement.classList.add('hidden');
             const getTodayString = () => new Date().toISOString().split('T')[0];
             function applyColorScheme(scheme) { localStorage.setItem('quranle_color_scheme', scheme); if (scheme === 'system') { const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; document.documentElement.classList.toggle('dark', systemPrefersDark); } else { document.documentElement.classList.toggle('dark', scheme === 'dark'); } updateActiveThemeButtons(); }
-            function updateActiveThemeButtons() { const activeScheme = localStorage.getItem('quranle_color_scheme') || 'system'; document.querySelectorAll('.theme-mode-btn').forEach(btn => { btn.classList.toggle('bg-[var(--primary-color)]', btn.dataset.theme === activeScheme); btn.classList.toggle('text-slate-900', btn.dataset.theme === activeScheme); btn.classList.toggle('font-bold', btn.dataset.theme === activeScheme); }); }
+            function updateActiveThemeButtons() { const activeScheme = localStorage.getItem('quranle_color_scheme') || 'system'; document.querySelectorAll('.theme-mode-btn').forEach(btn => { btn.classList.toggle('bg-[var(--primary-color)]', btn.dataset.theme === activeScheme); btn.classList.toggle('text-[var(--primary-text)]', btn.dataset.theme === activeScheme); btn.classList.toggle('font-bold', btn.dataset.theme === activeScheme); }); }
             async function fetchJSON(url, options = {}) { const response = await fetch(url, options); if (!response.ok) throw new Error(`HTTP error! Status: ${response.status} for URL: ${url}`); return response.json(); }
 
             // --- DATA FETCHING & INITIALIZATION ---
 
             /**
              * Fetches the core, non-changing Quran data (Surah list, translations, reciters) once per session.
-             * API REVERT: This function now uses the original api.alquran.cloud endpoints.
              */
             async function loadCoreData() {
                 dom.loadingMessage.textContent = 'Loading Quranic data...';
@@ -410,10 +472,9 @@
             /**
              * Generates a deterministic "random" index based on the date and a salt.
              * Ensures every user gets the same challenge on the same day for a given difficulty.
-             * Uses a hashed seed to prevent sequential-looking outputs on consecutive days.
              * @param {string} dateStr - The date string (YYYY-MM-DD).
              * @param {number} max - The maximum value for the index (exclusive).
-             * @param {string} salt - A string to differentiate indexes (e.g., 'Easy', 'Medium').
+             * @param {string} salt - A string to differentiate indexes (e.g., 'Easy').
              * @returns {number} - A number between 0 and max-1.
              */
             function getDailyIndex(dateStr, max, salt = '') { const seed = simpleHash(dateStr + salt); return (seed * 9301 + 49297) % 233280 / 233280 * max | 0; }
@@ -428,13 +489,11 @@
 
             // --- UI & GAMEPLAY FUNCTIONS ---
             function updateStats(isWin, attemptCount) { const stats = appState.stats; const dailyProgress = appState.user.progress[appState.ui.currentDifficulty]; if (dailyProgress.statsRecorded) return; stats.gamesPlayed = (stats.gamesPlayed || 0) + 1; if (isWin) { stats.gamesWon = (stats.gamesWon || 0) + 1; stats.currentStreak = (stats.currentStreak || 0) + 1; stats.maxStreak = Math.max(stats.maxStreak || 0, stats.currentStreak); if (stats.guessDistribution[attemptCount] !== undefined) { stats.guessDistribution[attemptCount] = (stats.guessDistribution[attemptCount] || 0) + 1; } } else { stats.currentStreak = 0; stats.guessDistribution.fail = (stats.guessDistribution.fail || 0) + 1; } dailyProgress.statsRecorded = true; saveStats(); saveGameState(); }
-            function renderStatsModal() { const stats = appState.stats; dom.statsPlayed.textContent = stats.gamesPlayed || 0; dom.statsWinPct.textContent = (stats.gamesPlayed || 0) > 0 ? Math.round(((stats.gamesWon || 0) / stats.gamesPlayed) * 100) : 0; dom.statsCurrentStreak.textContent = stats.currentStreak || 0; dom.statsMaxStreak.textContent = stats.maxStreak || 0; const distContainer = dom.guessDistributionChart; distContainer.innerHTML = ''; const distribution = stats.guessDistribution || {}; const maxDistribution = Math.max(1, ...Object.values(distribution)); for (let i = 1; i <= DIFFICULTIES['Easy'].attempts; i++) { const count = distribution[i] || 0; if (count === undefined && i > DIFFICULTIES['Hard'].attempts) continue; const percentage = (count / maxDistribution) * 100; distContainer.innerHTML += `<div class="flex items-center gap-2 text-sm"><div class="font-mono">${i}</div><div class="flex-grow h-5 bg-slate-700 rounded-sm"><div class="h-full stat-bar ${count > 0 ? 'is-primary' : ''}" style="width: ${percentage}%"></div></div><div class="font-bold w-6 text-right">${count}</div></div>`; } const failCount = distribution.fail || 0; const failPercentage = (failCount / maxDistribution) * 100; distContainer.innerHTML += `<div class="flex items-center gap-2 text-sm"><div class="font-mono">X</div><div class="flex-grow h-5 bg-slate-700 rounded-sm"><div class="h-full stat-bar" style="width: ${failPercentage}%; background-color: var(--incorrect-color);"></div></div><div class="font-bold w-6 text-right">${failCount}</div></div>`; }
+            function renderStatsModal() { const stats = appState.stats; dom.statsPlayed.textContent = stats.gamesPlayed || 0; dom.statsWinPct.textContent = (stats.gamesPlayed || 0) > 0 ? Math.round(((stats.gamesWon || 0) / stats.gamesPlayed) * 100) : 0; dom.statsCurrentStreak.textContent = stats.currentStreak || 0; dom.statsMaxStreak.textContent = stats.maxStreak || 0; const distContainer = dom.guessDistributionChart; distContainer.innerHTML = ''; const distribution = stats.guessDistribution || {}; const maxDistribution = Math.max(1, ...Object.values(distribution)); for (let i = 1; i <= DIFFICULTIES['Easy'].attempts; i++) { const count = distribution[i] || 0; if (count === undefined && i > DIFFICULTIES['Hard'].attempts) continue; const percentage = (count / maxDistribution) * 100; distContainer.innerHTML += `<div class="flex items-center gap-4 text-sm"><div class="font-mono text-slate-400 w-4">${i}</div><div class="flex-grow h-5 bg-slate-700 rounded-sm"><div class="h-full stat-bar rounded-sm" style="width: ${percentage}%"></div></div><div class="font-bold w-8 text-right">${count}</div></div>`; } const failCount = distribution.fail || 0; const failPercentage = (failCount / maxDistribution) * 100; distContainer.innerHTML += `<div class="flex items-center gap-4 text-sm"><div class="font-mono text-slate-400 w-4">X</div><div class="flex-grow h-5 bg-slate-700 rounded-sm"><div class="h-full rounded-sm" style="width: ${failPercentage}%; background-color: var(--incorrect-color);"></div></div><div class="font-bold w-8 text-right">${failCount}</div></div>`; }
             function populateReciterDropdown() { dom.reciterSelect.innerHTML = ''; appState.quran.reciters.forEach(reciter => { dom.reciterSelect.add(new Option(reciter.englishName, reciter.identifier)); }); const preferredReciter = 'ar.alafasy'; dom.reciterSelect.value = appState.quran.reciters.some(r => r.identifier === preferredReciter) ? preferredReciter : dom.reciterSelect.options[0].value; }
             
             /**
-             * Groups Surahs into Juzes based on the reverted API's data structure.
-             * Iterates through all Surahs, finds which Juzes they contain, and adds them to the appropriate lists in `appState.quran.juzData`.
-             * De-duplicates entries to ensure a clean list.
+             * Groups Surahs into Juzes based on the API's data structure.
              */
             function groupSurahsByJuz() {
                 appState.quran.juzData = {};
@@ -456,7 +515,7 @@
                 }
             }
 
-            function populateJuzGrid() { dom.juzGridContainer.innerHTML = ''; for (let i = 1; i <= 30; i++) { const btn = document.createElement('button'); btn.textContent = i; btn.dataset.juz = i; btn.className = 'juz-btn p-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-yellow-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]'; btn.onclick = () => handleJuzSelection(i); dom.juzGridContainer.appendChild(btn); } }
+            function populateJuzGrid() { dom.juzGridContainer.innerHTML = ''; for (let i = 1; i <= 30; i++) { const btn = document.createElement('button'); btn.textContent = i; btn.dataset.juz = i; btn.className = 'juz-btn p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-emerald-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card-dark focus:ring-[var(--primary-hover)]'; btn.onclick = () => handleJuzSelection(i); dom.juzGridContainer.appendChild(btn); } }
             function setSurahList(surahArray) { appState.ui.currentSurahList = surahArray; appState.ui.surahListPage = 0; renderSurahListPage(); }
             function renderSurahListPage() { 
                 const { currentSurahList, surahListPage, isReviewMode } = appState.ui; 
@@ -470,7 +529,7 @@
                 pageSurahs.forEach(surah => { 
                     const btn = document.createElement('button'); 
                     btn.dataset.surahNumber = surah.number; 
-                    btn.className = 'surah-card block w-full text-left p-3 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:bg-slate-100 dark:disabled:bg-slate-700/50'; 
+                    btn.className = 'surah-card block w-full text-left p-3 rounded-lg bg-card-light dark:bg-card-dark hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:bg-slate-100 dark:disabled:bg-slate-800/50 border border-border-light dark:border-border-dark'; 
                     
                     if (!isReviewMode) {
                         btn.onclick = () => checkGuess(surah.number); 
@@ -480,13 +539,13 @@
                     if (guessedSurahNumbers.has(surah.number)) {
                         const attempt = progress.attempts.find(a => a.surahNumber === surah.number);
                         if (attempt && attempt.correct) {
-                            statusIndicator = '<span class="text-green-500 ml-2">✓</span>';
+                            statusIndicator = `<span class="text-green-400 ml-2 font-bold">✓</span>`;
                         } else {
-                            statusIndicator = '<span class="text-red-500 ml-2">✗</span>';
+                            statusIndicator = `<span class="text-red-400 ml-2 font-bold">✗</span>`;
                         }
                     }
                     
-                    btn.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center"><span class="mr-3 text-sm font-bold text-[var(--primary-color)]">${surah.number}.</span><div><p class="font-semibold text-slate-800 dark:text-slate-200">${surah.englishName}</p><p class="text-sm text-slate-500 dark:text-slate-400">${surah.name}</p></div></div><div class="flex items-center"><span class="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase">${surah.revelationType}</span>${statusIndicator}</div></div>`; 
+                    btn.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center"><span class="mr-4 text-sm font-bold text-emerald-600 dark:text-[var(--primary-color)] w-6 text-center">${surah.number}.</span><div><p class="font-semibold text-text-light dark:text-text-dark">${surah.englishName}</p><p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">${surah.name}</p></div></div><div class="flex items-center"><span class="text-xs text-subtle-text-light dark:text-subtle-text-dark font-medium uppercase">${surah.revelationType}</span>${statusIndicator}</div></div>`; 
                     
                     if (progress.completed || guessedSurahNumbers.has(surah.number) || isReviewMode) { 
                         btn.disabled = true; 
@@ -495,14 +554,14 @@
                 }); 
                 
                 if (pageSurahs.length === 0 && currentSurahList.length === 0) { 
-                    dom.surahListContainer.innerHTML = `<p class="text-center text-slate-500 dark:text-slate-400 p-4">${dom.surahSearchInput.value ? 'No Surahs found.' : 'Select a Juz'}</p>`; 
+                    dom.surahListContainer.innerHTML = `<p class="text-center text-subtle-text-light dark:text-subtle-text-dark p-4">${dom.surahSearchInput.value ? 'No Surahs found.' : 'Select a Juz'}</p>`; 
                 } 
                 const totalPages = Math.ceil(currentSurahList.length / SURAHS_PER_PAGE); 
                 dom.surahPageIndicator.textContent = `${surahListPage + 1} / ${totalPages || 1}`; 
                 dom.prevSurahPage.disabled = surahListPage === 0; 
                 dom.nextSurahPage.disabled = surahListPage >= totalPages - 1; 
             }
-            function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[50px] flex flex-wrap items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text'; basmalaP.textContent = BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-slate-500 dark:text-slate-400 italic text-center'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
+            function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[5rem] flex flex-col items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text font-amiri text-center text-sm text-subtle-text-light dark:text-subtle-text-dark mb-2'; basmalaP.textContent = BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-subtle-text-light dark:text-subtle-text-dark italic text-center max-w-2xl'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
             
             /**
              * Gets the daily ayah for a specific difficulty without setting up the UI.
@@ -515,7 +574,6 @@
                     case 'Medium': pool = appState.quran.arabic.filter(a => a.surah.number >= 36); break;
                     default:       return null;
                 }
-                
                 if (!pool || pool.length === 0) return null;
                 const ayahIndex = getDailyIndex(appState.user.date, pool.length, difficulty);
                 return pool[ayahIndex];
@@ -523,8 +581,6 @@
 
             /**
              * Sets up the daily challenge by providing ONE Ayah.
-             * It creates the appropriate filtered pool, selects a deterministic Ayah, and populates the UI.
-             * For hard mode, it excludes ayahs from the same juz or surah as Easy and Medium modes.
              */
             function setupDailyAyah() {
                 const { currentDifficulty } = appState.ui;
@@ -532,44 +588,12 @@
                 let pool;
                 
                 if (currentDifficulty === 'Hard') {
-                    // For hard mode, exclude ayahs from the same juz or surah as Easy and Medium
                     const easyAyah = getDailyAyahForDifficulty('Easy');
                     const mediumAyah = getDailyAyahForDifficulty('Medium');
-                    
-                    // Start with the full Qur'an pool (Surahs 1-114)
                     pool = appState.quran.arabic;
-                    
-                    // Filter out the exact same ayah as Easy mode
-                    if (easyAyah) {
-                        pool = pool.filter(a => a.number !== easyAyah.number);
-                    }
-                    
-                    // Filter out the exact same ayah as Medium mode
-                    if (mediumAyah) {
-                        pool = pool.filter(a => a.number !== mediumAyah.number);
-                    }
-                    
-                    // Filter out ayahs from the same surah as Easy mode
-                    if (easyAyah) {
-                        pool = pool.filter(a => a.surah.number !== easyAyah.surah.number);
-                    }
-                    
-                    // Filter out ayahs from the same surah as Medium mode
-                    if (mediumAyah) {
-                        pool = pool.filter(a => a.surah.number !== mediumAyah.surah.number);
-                    }
-                    
-                    // Filter out ayahs from the same juz as Easy mode
-                    if (easyAyah) {
-                        pool = pool.filter(a => a.juz !== easyAyah.juz);
-                    }
-                    
-                    // Filter out ayahs from the same juz as Medium mode
-                    if (mediumAyah) {
-                        pool = pool.filter(a => a.juz !== mediumAyah.juz);
-                    }
+                    if (easyAyah) pool = pool.filter(a => a.number !== easyAyah.number && a.surah.number !== easyAyah.surah.number && a.juz !== easyAyah.juz);
+                    if (mediumAyah) pool = pool.filter(a => a.number !== mediumAyah.number && a.surah.number !== mediumAyah.surah.number && a.juz !== mediumAyah.juz);
                 } else {
-                    // Standard pool selection for Easy and Medium
                     switch(difficultySettings.scope) {
                         case 'easy':   pool = appState.quran.arabic.filter(a => a.juz === 30); break;
                         case 'medium': pool = appState.quran.arabic.filter(a => a.surah.number >= 36); break;
@@ -588,13 +612,11 @@
                 const ayahIndex = getDailyIndex(appState.user.date, pool.length, currentDifficulty);
                 const currentAyah = pool[ayahIndex];
                 
-                // Determine how many ayahs should be visible (restoring hints if script was changed)
                 const progress = appState.user.progress[currentDifficulty];
                 let unlockedAyahs = 1;
                 if (progress && progress.unlockedAyahs && Number.isInteger(progress.unlockedAyahs) && progress.unlockedAyahs > 1) {
-                    unlockedAyahs = Math.min(progress.unlockedAyahs, MAX_HINTS + 1); // never more than allowed
+                    unlockedAyahs = Math.min(progress.unlockedAyahs, MAX_HINTS + 1);
                 }
-                // Build the list of ayahs to show
                 const allChallengeAyahs = [currentAyah];
                 let lastAyah = currentAyah;
                 for (let i = 1; i < unlockedAyahs; i++) {
@@ -606,7 +628,6 @@
                         break;
                     }
                 }
-                // Restore last viewed pane if available
                 let visiblePaneIndex = 0;
                 if (progress && Number.isInteger(progress.lastPaneIndex) && progress.lastPaneIndex < allChallengeAyahs.length) {
                     visiblePaneIndex = progress.lastPaneIndex;
@@ -617,7 +638,7 @@
                     createPane(dom.ayahSlider, ayah, true);
                     createPane(dom.translationSlider, ayah, false);
                 });
-                navigateSlider(visiblePaneIndex, false); // Restore slider position
+                navigateSlider(visiblePaneIndex, false);
             }
 
             function updateContextForVisibleAyah() { const ayah = appState.challenge.allChallengeAyahs[appState.challenge.visiblePaneIndex]; if (!ayah) return; dom.audioElement.pause(); dom.audioElement.currentTime = 0; if (appState.quran.audio.length > 0) { const audioAyah = appState.quran.audio.find(a => a.number === ayah.number); if (audioAyah) dom.audioElement.src = audioAyah.audio; } }
@@ -633,8 +654,9 @@
                     if (i < progress.attempts.length) { 
                         const attempt = progress.attempts[i]; 
                         setTimeout(() => { 
-                            circle.classList.add('filled', attempt.correct ? 'bg-green-500' : 'bg-red-500'); 
-                            circle.classList.remove('border-slate-300', 'dark:border-slate-600'); 
+                            circle.classList.add('filled');
+                            circle.style.backgroundColor = attempt.correct ? 'var(--correct-color)' : 'var(--incorrect-color)';
+                            circle.style.borderColor = attempt.correct ? 'var(--correct-color)' : 'var(--incorrect-color)';
                         }, i * 100); 
                     } 
                 } 
@@ -653,12 +675,12 @@
                 const { currentDifficulty, isReviewMode } = appState.ui; 
                 const progress = appState.user.progress[currentDifficulty]; 
                 
-                // Prevent guessing in review mode
                 if (isReviewMode || progress.completed) return; 
                 
                 const isCorrect = surahNumber === appState.challenge.currentAyah.surah.number; 
                 progress.attempts.push({ surahNumber, correct: isCorrect }); 
                 updateAttemptsUI(); 
+                renderSurahListPage(); // Re-render to show guess status
                 if (isCorrect) { 
                     progress.solved = true; 
                     endDailyGame(true); 
@@ -682,143 +704,77 @@
             
             /**
              * Fetches and displays the Tafsir for the given Surah and Ayah using the Quran API.
-             * This function fetches tafsir information for the specific ayah from the challenge.
              */
             async function fetchAndDisplayTafsir(surahNumber) {
                 const tafsirContainer = document.createElement('div');
-                tafsirContainer.className = "mt-2 p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg w-full max-w-xl text-left";
+                tafsirContainer.className = "mt-4 p-4 bg-slate-100 dark:bg-slate-800/60 rounded-lg w-full max-w-2xl text-left";
                 
-                // Get the ayah number from the current challenge
                 const currentAyah = appState.challenge.currentAyah;
                 const ayahNumber = currentAyah ? currentAyah.numberInSurah : 1;
                 
-                // Show loading state initially
-                tafsirContainer.innerHTML = `
-                    <h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">Surah Insight</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 italic">Loading tafsir information...</p>
-                `;
+                tafsirContainer.innerHTML = `<h4 class="font-bold text-base text-[var(--primary-hover)] dark:text-[var(--primary-color)] mb-2">Surah Insight</h4><p class="text-sm text-subtle-text-light dark:text-subtle-text-dark italic">Loading tafsir information...</p>`;
                 dom.feedbackMessage.appendChild(tafsirContainer);
                 
                 try {
-                    // Fetch tafsir from the Quran API with timeout
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
                     
-                    const response = await fetchJSON(`https://quranapi.pages.dev/api/tafsir/${surahNumber}_${ayahNumber}.json`, {
-                        signal: controller.signal
-                    });
-                    
+                    const response = await fetchJSON(`https://quranapi.pages.dev/api/tafsir/${surahNumber}_${ayahNumber}.json`, { signal: controller.signal });
                     clearTimeout(timeoutId);
                     
-                    if (!response) {
-                        throw new Error("Invalid response from tafsir API");
-                    }
+                    if (!response) throw new Error("Invalid response from tafsir API");
                     
                     let tafsirContent = '';
-                    
-                    // Get surah info from our existing data
                     const surahInfo = appState.quran.surahMeta.get(surahNumber);
                     const surahName = surahInfo ? surahInfo.englishName : `Surah ${surahNumber}`;
                     
-                    // Add surah name, number, and ayah number
-                    tafsirContent += `<h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">${surahName} (${surahNumber}:${ayahNumber}) - Tafsir</h4>`;
+                    tafsirContent += `<h4 class="font-bold text-base text-[var(--primary-hover)] dark:text-[var(--primary-color)] mb-2">${surahName} (${surahNumber}:${ayahNumber}) - Tafsir</h4>`;
                     
-                    // Add revelation type if available
-                    if (surahInfo && surahInfo.revelationType) {
-                        tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mb-2">${surahInfo.revelationType}</p>`;
-                    }
-                    
-                    // Add tafsir text - the API returns multiple tafsirs from different sources
                     if (response && response.tafsirs && response.tafsirs.length > 0) {
-                        // Get the first available tafsir (usually Ibn Kathir which is most comprehensive)
                         const firstTafsir = response.tafsirs[0];
-                        
                         if (firstTafsir && firstTafsir.content && firstTafsir.content.length > 0) {
-                            const maxLength = 800; // Limit to prevent overwhelming the UI
+                            const maxLength = 800;
                             let displayText = firstTafsir.content;
-                            
                             if (displayText.length > maxLength) {
                                 displayText = displayText.substring(0, maxLength) + '...';
                             }
-                            
-                            // Format the tafsir text with proper paragraph breaks and spacing
-                            const formattedText = displayText
-                                .replace(/\n\n/g, '</p><p class="text-sm text-slate-500 dark:text-slate-400 italic leading-relaxed mb-3">') // Double line breaks become new paragraphs
-                                .replace(/\n/g, '<br>') // Single line breaks become line breaks
-                                .replace(/## (.*?)(?=\n|$)/g, '<h5 class="font-bold text-slate-700 dark:text-slate-300 text-sm mb-2 mt-3">$1</h5>') // Markdown headers
-                                .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>') // Bold text
-                                .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>'); // Italic text
-                            
-                            tafsirContent += `<div class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed space-y-2">
-                                <p class="text-sm text-slate-500 dark:text-slate-400 italic leading-relaxed">${formattedText}</p>
-                            </div>`;
-                            tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mt-2">Source: ${firstTafsir.author}</p>`;
-                            
-                            // Add group verse info if available
-                            if (firstTafsir.groupVerse) {
-                                tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mt-1">${firstTafsir.groupVerse}</p>`;
-                            }
-                            
-                            // Add link to continue reading on Quran.com
+                            const formattedText = displayText.replace(/\n\n/g, '</p><p class="mb-2">').replace(/\n/g, '<br>');
+                            tafsirContent += `<div class="text-sm text-subtle-text-light dark:text-subtle-text-dark leading-relaxed space-y-2"><p>${formattedText}</p></div>`;
+                            tafsirContent += `<p class="text-xs text-slate-400 dark:text-slate-500 mt-3">Source: ${firstTafsir.author}</p>`;
                             const quranComUrl = `https://quran.com/${surahNumber}:${ayahNumber}/tafsirs/en-tafisr-ibn-kathir`;
-                            tafsirContent += `<div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-600">
-                                <a href="${quranComUrl}" target="_blank" rel="noopener noreferrer" 
-                                   class="inline-flex items-center text-xs text-[var(--primary-color)] hover:text-[var(--primary-hover)] transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                    Continue reading full tafsir on Quran.com
-                                </a>
-                            </div>`;
+                            tafsirContent += `<div class="mt-3 pt-3 border-t border-border-light dark:border-border-dark"><a href="${quranComUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs text-[var(--primary-hover)] dark:text-[var(--primary-color)] hover:underline transition-colors">Continue reading on Quran.com<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a></div>`;
                         } else {
-                            tafsirContent += `<p class="text-sm text-slate-500 dark:text-slate-400 italic">Tafsir information not available for this ayah.</p>`;
+                            tafsirContent += `<p class="text-sm text-subtle-text-light dark:text-subtle-text-dark italic">Tafsir information not available for this ayah.</p>`;
                         }
                     } else {
-                        tafsirContent += `<p class="text-sm text-slate-500 dark:text-slate-400 italic">Tafsir information not available for this ayah.</p>`;
+                        tafsirContent += `<p class="text-sm text-subtle-text-light dark:text-subtle-text-dark italic">Tafsir information not available for this ayah.</p>`;
                     }
-                    
                     tafsirContainer.innerHTML = tafsirContent;
-                    
                 } catch (error) {
                     console.error("Failed to fetch Tafsir:", error);
-                    
-                    let errorMessage = "Could not load tafsir information at this time. Please try again later.";
-                    
-                    if (error.name === 'AbortError') {
-                        errorMessage = "Tafsir request timed out. Please check your internet connection.";
-                    } else if (error.message.includes('404')) {
-                        errorMessage = "Tafsir not available for this surah.";
-                    } else if (error.message.includes('network')) {
-                        errorMessage = "Network error. Please check your internet connection.";
-                    }
-                    
-                    tafsirContainer.innerHTML = `
-                        <h4 class="font-bold text-sm text-[var(--primary-color)] mb-2">Surah Insight</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 italic">${errorMessage}</p>
-                    `;
+                    let errorMessage = "Could not load tafsir information at this time.";
+                    if (error.name === 'AbortError') errorMessage = "Tafsir request timed out.";
+                    tafsirContainer.innerHTML = `<h4 class="font-bold text-base text-[var(--primary-hover)] dark:text-[var(--primary-color)] mb-2">Surah Insight</h4><p class="text-sm text-subtle-text-light dark:text-subtle-text-dark italic">${errorMessage}</p>`;
                 }
             }
 
-            function endDailyGame(isWin, isGiveUp = false) { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; if (progress.completed) return; progress.completed = true; document.querySelectorAll('.surah-card, .juz-btn, #hint-button, #surah-search-input, #give-up-button').forEach(el => el.disabled = true); dom.hintButton.classList.add('hidden'); dom.giveUpButton.classList.add('hidden'); dom.prevAyahBtn.classList.add('hidden'); dom.nextAyahBtn.classList.add('hidden'); const message = isWin ? `<p class="text-green-400">MashAllah, correct!</p>` : (isGiveUp ? `<p class="text-slate-400">Challenge ended.</p>` : `<p class="text-red-500">Better luck next time!</p>`); const { surah } = appState.challenge.currentAyah; dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-slate-500 dark:text-slate-400">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`; fetchAndDisplayTafsir(surah.number); updateStats(isWin, progress.attempts.length); saveGameState(); showPostGameOptions(); }
+            function endDailyGame(isWin, isGiveUp = false) { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; if (progress.completed) return; progress.completed = true; document.querySelectorAll('.surah-card, .juz-btn, #hint-button, #surah-search-input, #give-up-button').forEach(el => el.disabled = true); dom.hintButton.classList.add('hidden'); dom.giveUpButton.classList.add('hidden'); dom.prevAyahBtn.classList.add('hidden'); dom.nextAyahBtn.classList.add('hidden'); const message = isWin ? `<p class="text-green-400">MashAllah, correct!</p>` : (isGiveUp ? `<p class="text-slate-400">Challenge ended.</p>` : `<p class="text-red-400">Better luck next time!</p>`); const { surah } = appState.challenge.currentAyah; dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-subtle-text-light dark:text-subtle-text-dark">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`; fetchAndDisplayTafsir(surah.number); updateStats(isWin, progress.attempts.length); saveGameState(); showPostGameOptions(); }
             function showPostGameOptions() { dom.shareButton.classList.remove('hidden'); dom.postGameOptions.classList.remove('hidden', 'fade-in'); void dom.postGameOptions.offsetWidth; dom.postGameOptions.classList.add('fade-in'); }
             
             /**
-             * FIX: Handles showing the next sequential Ayah as a hint.
-             * It finds the next Ayah in the full Quran data, dynamically creates its panes,
-             * adds them to the DOM, and then slides to the new Ayah.
+             * Handles showing the next sequential Ayah as a hint.
              */
             function showHint() {
                 const { allChallengeAyahs, currentAyah } = appState.challenge;
                 if (allChallengeAyahs.length > MAX_HINTS) { showNotification("No more hints available."); return; }
                 const nextAyah = appState.quran.arabic.find(a => a.number === currentAyah.number + allChallengeAyahs.length);
-                if (!nextAyah || nextAyah.surah.number !== currentAyah.surah.number) { showNotification("This is the last ayah of the Surah, no hint is available. Or is that a hint in itself?"); dom.hintButton.disabled = true; return; }
+                if (!nextAyah || nextAyah.surah.number !== currentAyah.surah.number) { showNotification("This is the last ayah of the Surah!"); dom.hintButton.disabled = true; return; }
                 allChallengeAyahs.push(nextAyah);
                 createPane(dom.ayahSlider, nextAyah, true);
                 createPane(dom.translationSlider, nextAyah, false);
                 navigateSlider(allChallengeAyahs.length - 1);
                 const { currentDifficulty } = appState.ui;
                 appState.user.progress[currentDifficulty].hintUsed = true;
-                // Store how many ayahs are unlocked for this challenge (for restoring after script change)
                 appState.user.progress[currentDifficulty].unlockedAyahs = allChallengeAyahs.length;
                 appState.user.progress[currentDifficulty].lastPaneIndex = allChallengeAyahs.length - 1;
                 dom.hintButton.classList.add('hidden');
@@ -827,12 +783,10 @@
 
             /**
              * The core of the hint scrolling mechanic.
-             * It uses CSS transforms to move between full-width panes and updates nav button visibility.
              */
             function navigateSlider(targetIndex, animate = true) {
                 if (targetIndex < 0 || targetIndex >= appState.challenge.allChallengeAyahs.length) return;
                 appState.challenge.visiblePaneIndex = targetIndex;
-                // Save last viewed pane index for restoring after script change
                 const { currentDifficulty } = appState.ui;
                 if (appState.user.progress[currentDifficulty]) {
                     appState.user.progress[currentDifficulty].lastPaneIndex = targetIndex;
@@ -848,12 +802,10 @@
                 dom.nextAyahBtn.classList.toggle('hidden', targetIndex === appState.challenge.allChallengeAyahs.length - 1);
             }
             function handleShareClick() { const { user, ui } = appState; const result = user.progress[ui.currentDifficulty]; const attemptsStr = result.attempts.map(a => a.correct ? '🟩' : '🟥').join(''); const attemptCount = result.solved ? result.attempts.length : 'X'; const text = `Tadabbur ${new Date().toLocaleDateString('en-GB')}\nDifficulty: ${ui.currentDifficulty}\n${attemptCount}/${DIFFICULTIES[ui.currentDifficulty].attempts} Guesses\n${attemptsStr}`; if(navigator.share) { navigator.share({ title: 'Tadabbur Results', text: text }); } else { navigator.clipboard.writeText(text).then(() => { showNotification('Results copied to clipboard!'); }, () => { showNotification('Failed to copy results.'); }); } }
-            function showNotification(message) { dom.notification.textContent = message; dom.notification.classList.remove('hidden'); dom.notification.style.opacity = '1'; setTimeout(() => { dom.notification.style.opacity = '0'; }, 2700); setTimeout(() => { dom.notification.classList.add('hidden'); }, 3000); }
+            function showNotification(message) { dom.notification.textContent = message; dom.notification.classList.remove('hidden'); setTimeout(() => { dom.notification.classList.remove('translate-y-10', 'opacity-0'); }, 10); setTimeout(() => { dom.notification.classList.add('translate-y-10', 'opacity-0'); }, 2700); setTimeout(() => { dom.notification.classList.add('hidden'); }, 3000); }
             
             /**
              * Starts a new challenge with the given difficulty.
-             * FIX: This function now explicitly resets all UI and state elements (like the give up button)
-             * to ensure complete isolation between difficulty modes and prevent state contamination.
              */
             function startNewChallenge(newDifficulty) {
                 hideModal(dom.difficultyModal);
@@ -868,11 +820,10 @@
                 dom.giveUpButton.classList.add('hidden');
                 dom.shareButton.classList.add('hidden');
                 dom.hintButton.disabled = false;
-                dom.giveUpButton.disabled = false; // Explicitly re-enable the give up button.
+                dom.giveUpButton.disabled = false;
                 dom.prevAyahBtn.classList.add('hidden'); 
                 dom.nextAyahBtn.classList.add('hidden');
                 
-                // Reset UI elements to normal mode
                 dom.surahSelectionTitle.textContent = 'Select a Surah';
                 dom.surahSearchInput.placeholder = 'Search Surah...';
                 dom.surahSearchInput.disabled = false;
@@ -880,7 +831,7 @@
                 
                 const difficultyScope = DIFFICULTIES[newDifficulty].scope;
                 dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => { btn.style.display = 'flex'; if (difficultyScope === 'easy' && btn.dataset.juz !== '30') { btn.style.display = 'none'; } });
-                setupDailyAyah(); // Re-initializes the game state and UI for the new difficulty.
+                setupDailyAyah();
                 updateAttemptsUI();
                 const initialJuz = difficultyScope === 'easy' ? 30 : 1;
                 handleJuzSelection(initialJuz);
@@ -891,7 +842,6 @@
 
             /**
              * Starts review mode for a completed challenge.
-             * Shows the ayah, tafsir, and user's guesses without allowing new guesses.
              */
             function startReviewMode(difficulty) {
                 hideModal(dom.difficultyModal);
@@ -900,7 +850,6 @@
                 appState.ui.currentDifficulty = difficulty;
                 appState.ui.isReviewMode = true;
                 
-                // Reset UI states for review mode
                 dom.feedbackMessage.innerHTML = '';
                 dom.postGameOptions.classList.add('hidden');
                 dom.hintButton.classList.add('hidden');
@@ -909,12 +858,10 @@
                 dom.prevAyahBtn.classList.add('hidden'); 
                 dom.nextAyahBtn.classList.add('hidden');
                 
-                // Update UI for review mode
                 dom.surahSelectionTitle.textContent = 'Your Previous Guesses';
                 dom.surahSearchInput.placeholder = 'Search disabled in review mode';
                 dom.surahSearchInput.disabled = true;
                 
-                // Disable all interactive elements in review mode
                 document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = true);
                 
                 const difficultyScope = DIFFICULTIES[difficulty].scope;
@@ -925,7 +872,7 @@
                     } 
                 });
                 
-                setupDailyAyah(); // Load the same ayah as the original challenge
+                setupDailyAyah();
                 updateAttemptsUI();
                 showReviewResults();
                 
@@ -944,49 +891,52 @@
                 const progress = appState.user.progress[currentDifficulty];
                 const { surah } = appState.challenge.currentAyah;
                 
-                // Show the correct answer
                 const message = progress.solved ? 
                     `<p class="text-green-400">Correct! You solved this challenge.</p>` : 
-                    `<p class="text-red-500">Challenge completed. Here's the correct answer:</p>`;
+                    `<p class="text-red-400">Challenge completed. Here's the correct answer:</p>`;
                 
-                dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-slate-500 dark:text-slate-400">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`;
+                dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-subtle-text-light dark:text-subtle-text-dark">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`;
                 
-                // Show tafsir
                 fetchAndDisplayTafsir(surah.number);
                 
-                // Show share button for completed challenges
                 dom.shareButton.classList.remove('hidden');
                 dom.postGameOptions.classList.remove('hidden', 'fade-in');
                 void dom.postGameOptions.offsetWidth;
                 dom.postGameOptions.classList.add('fade-in');
             }
 
+            /**
+             * Updates the difficulty selection screen based on the user's daily progress.
+             */
             function showDifficultySelection() { 
                 const { progress } = appState.user; 
-                let allDone = true; 
+                let allChallengesAreCompleted = true; 
+
                 dom.difficultyButtons.querySelectorAll('.difficulty-btn').forEach(btn => { 
-                    const difficulty = btn.dataset.difficulty; 
+                    const difficulty = btn.dataset.difficulty;
+                    const difficultyProgress = progress[difficulty];
                     const difficultyText = btn.querySelector('.difficulty-text');
                     const difficultySubtitle = btn.querySelector('.difficulty-subtitle');
-                    const reviewText = btn.querySelector('.review-text');
                     
-                    if(progress[difficulty] && progress[difficulty].completed) { 
-                        btn.disabled = false; // Keep enabled for review
+                    if (difficultyProgress && difficultyProgress.completed) {
+                        btn.disabled = false;
                         btn.classList.add('completed-challenge');
-                        difficultyText.textContent = difficulty;
-                        difficultySubtitle.classList.add('hidden');
-                        reviewText.classList.remove('hidden');
-                        allDone = false; // Not all done since we can review
-                    } else { 
+                        difficultyText.textContent = 'Review';
+                        difficultySubtitle.textContent = difficulty;
+                    } else {
+                        allChallengesAreCompleted = false; 
                         btn.disabled = false; 
                         btn.classList.remove('completed-challenge');
                         difficultyText.textContent = difficulty;
-                        difficultySubtitle.classList.remove('hidden');
-                        reviewText.classList.add('hidden');
-                        allDone = false; 
+                        // Reset subtitle text in case it was changed to 'Review'
+                        if (difficulty === 'Easy') difficultySubtitle.textContent = 'Juz Amma (30)';
+                        if (difficulty === 'Medium') difficultySubtitle.textContent = 'Surah 36-114';
+                        if (difficulty === 'Hard') difficultySubtitle.textContent = 'Full Qur\'an';
                     } 
-                }); 
-                dom.allChallengesDoneMessage.classList.toggle('hidden', !allDone); 
+                });
+
+                dom.allChallengesDoneMessage.classList.toggle('hidden', !allChallengesAreCompleted);
+
                 hideModal(dom.gameContainer); 
                 hideModal(dom.loadingOverlay); 
                 showModal(dom.difficultyModal); 
@@ -1025,10 +975,8 @@
                             const progress = appState.user.progress[difficulty];
                             
                             if (progress && progress.completed) {
-                                // Start review mode for completed challenges
                                 startReviewMode(difficulty);
                             } else {
-                                // Start new challenge for incomplete challenges
                                 startNewChallenge(difficulty);
                             }
                         } 
@@ -1039,19 +987,19 @@
                 '#close-modal-btn': { 'click': () => { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } }, 
                 '#help-btn': { 'click': () => showModal(dom.howToPlayModal) }, 
                 '#surah-search-input': { 'input': () => { 
-                    if (appState.ui.isReviewMode) return; // Disable search in review mode
+                    if (appState.ui.isReviewMode) return;
                     const query = dom.surahSearchInput.value.toLowerCase().trim(); 
                     const difficultyScope = DIFFICULTIES[appState.ui.currentDifficulty].scope; 
                     let searchPool = appState.quran.allSurahs; 
                     if(difficultyScope === 'easy') searchPool = appState.quran.juzData[30] || []; 
                     else if (difficultyScope === 'medium') searchPool = appState.quran.allSurahs.filter(s => s.number >= 36); 
                     if (!query) { handleJuzSelection(appState.ui.currentJuz); return; } 
-                    document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-slate-900')); 
+                    document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]')); 
                     const results = searchPool.filter(s => s.englishName.toLowerCase().includes(query) || s.name.includes(query) || String(s.number).includes(query)); 
                     setSurahList(results); 
                 } }, 
                 '#reciter-select': { 'change': async () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.add('hidden'); dom.audioLoadingSpinner.classList.remove('hidden'); try { appState.quran.audio = await fetchEdition(dom.reciterSelect.value); updateContextForVisibleAyah(); } catch (e) { console.error("Reciter change failed", e); } finally { dom.audioLoadingSpinner.classList.add('hidden'); dom.playButton.classList.remove('hidden');} } }, 
-                '#script-style-select': { 'change': async () => { showModal(dom.loadingOverlay); dom.loadingMessage.textContent = 'Changing script style...'; try { appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value); setupDailyAyah(); updateHintButtonUI(); } catch(e){ console.error("Script change failed", e); } finally { hideModal(dom.loadingOverlay); } } }, 
+                '#script-style-select': { 'change': async () => { showModal(dom.loadingOverlay); dom.loadingMessage.textContent = 'Changing script style...'; try { appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value); setupDailyAyah(); } catch(e){ console.error("Script change failed", e); } finally { hideModal(dom.loadingOverlay); } } }, 
                 '#hint-button': { 'click': showHint }, 
                 '#next-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex + 1) }, 
                 '#prev-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex - 1) }, 
@@ -1069,7 +1017,7 @@
                 '#give-up-button': { 'click': () => endDailyGame(false, true) }, 
                 '#share-button': { 'click': handleShareClick }, 
             };
-            function handleJuzSelection(juzNumber) { dom.surahSearchInput.value = ''; appState.ui.currentJuz = juzNumber; document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-slate-900')); const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`); if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-slate-900'); setSurahList(appState.quran.juzData[juzNumber] || []); }
+            function handleJuzSelection(juzNumber) { dom.surahSearchInput.value = ''; appState.ui.currentJuz = juzNumber; document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]')); const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`); if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]'); setSurahList(appState.quran.juzData[juzNumber] || []); }
             for (const selector in eventListeners) { const element = document.querySelector(selector); if (element) { for (const event in eventListeners[selector]) { element.addEventListener(event, eventListeners[selector][event]); } } }
             dom.audioElement.addEventListener('play', () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.remove('hidden'); });
             dom.audioElement.addEventListener('pause', () => { dom.pauseButton.classList.add('hidden'); dom.playButton.classList.remove('hidden'); });
@@ -1078,26 +1026,6 @@
             initializeApp();
         });
     })();
-
-    /**
-     * Updates the visibility and state of the hint button based on user progress and difficulty.
-     */
-    function updateHintButtonUI() {
-        const { currentDifficulty } = appState.ui;
-        const progress = appState.user.progress[currentDifficulty];
-        const isEasyOrMedium = DIFFICULTIES[currentDifficulty].hint;
-        if (
-            isEasyOrMedium &&
-            progress.attempts.length >= 1 &&
-            !progress.hintUsed &&
-            !progress.completed
-        ) {
-            dom.hintButton.classList.remove('hidden');
-            dom.hintButton.disabled = false;
-        } else {
-            dom.hintButton.classList.add('hidden');
-        }
-    }
     </script>
 </body>
 </html>
