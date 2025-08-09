@@ -82,6 +82,28 @@
         /* Styling for the statistics distribution bars. */
         .stat-bar { transition: width 0.5s ease-in-out; }
         .stat-bar.is-primary { background-color: var(--primary-color); }
+        
+        /* Styling for completed challenge buttons */
+        .difficulty-btn.completed-challenge {
+            background-color: #6b7280 !important; /* gray-500 */
+            opacity: 0.8;
+            position: relative;
+        }
+        
+        .difficulty-btn.completed-challenge:hover {
+            background-color: #4b5563 !important; /* gray-600 */
+            opacity: 1;
+        }
+        
+        .difficulty-btn.completed-challenge::after {
+            content: "✓";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-200 flex items-center justify-center min-h-screen p-4 md:p-8">
@@ -132,16 +154,19 @@
             <p class="text-slate-300 text-lg mb-8">Select a difficulty to begin today's challenge.</p>
             <div id="difficulty-buttons" class="flex flex-col sm:flex-row gap-4 justify-center">
                  <button data-difficulty="Easy" class="difficulty-btn btn px-8 py-4 text-lg bg-sky-600 text-white font-bold rounded-lg hover:bg-sky-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     Easy
-                     <span class="block text-sm font-normal text-sky-200">Juz Amma (30)</span>
+                     <span class="difficulty-text">Easy</span>
+                     <span class="difficulty-subtitle block text-sm font-normal text-sky-200">Juz Amma (30)</span>
+                     <span class="review-text hidden text-sm font-normal text-sky-200">Review your guesses</span>
                  </button>
                  <button data-difficulty="Medium" class="difficulty-btn btn px-8 py-4 text-lg bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     Medium
-                      <span class="block text-sm font-normal text-indigo-200">Surah 36-114</span>
+                     <span class="difficulty-text">Medium</span>
+                     <span class="difficulty-subtitle block text-sm font-normal text-indigo-200">Surah 36-114</span>
+                     <span class="review-text hidden text-sm font-normal text-indigo-200">Review your guesses</span>
                  </button>
                  <button data-difficulty="Hard" class="difficulty-btn btn px-8 py-4 text-lg bg-rose-600 text-white font-bold rounded-lg hover:bg-rose-700 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed">
-                     Hard
-                      <span class="block text-sm font-normal text-rose-200">Full Qur'an</span>
+                     <span class="difficulty-text">Hard</span>
+                     <span class="difficulty-subtitle block text-sm font-normal text-rose-200">Full Qur'an</span>
+                     <span class="review-text hidden text-sm font-normal text-rose-200">Review your guesses</span>
                  </button>
             </div>
              <p id="all-challenges-done-message" class="hidden text-xl text-green-400 mt-8">MashAllah! You have completed all challenges for today. Come back tomorrow for more!</p>
@@ -158,7 +183,13 @@
         
         <!-- Left Column: Ayah Display & Interaction -->
         <div class="lg:col-span-2 bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-6 md:p-10 text-center flex flex-col fade-in">
-            <header class="mb-6">
+            <header class="mb-6 relative">
+                <!-- Back Button -->
+                <button id="back-to-difficulty-btn" class="absolute top-0 left-0 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Back to difficulty selection">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
                 <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-hover)]">Tadabbur</h1>
                 <p id="attempts-subtitle" class="text-slate-500 dark:text-slate-400 mt-2">You have 5 attempts to guess the Surah.</p>
             </header>
@@ -215,7 +246,7 @@
 
         <!-- Right Column: Surah Selection -->
         <div class="bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-6 flex flex-col fade-in" style="animation-delay: 0.1s;">
-            <h2 class="text-2xl font-bold text-center mb-4" style="color: var(--primary-color)">Select a Surah</h2>
+            <h2 id="surah-selection-title" class="text-2xl font-bold text-center mb-4" style="color: var(--primary-color)">Select a Surah</h2>
             <div class="mb-4">
                  <input type="text" id="surah-search-input" placeholder="Search Surah..." class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white">
             </div>
@@ -263,8 +294,8 @@
     <div id="notification" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg z-[70] transition-opacity duration-300"></div>
 
     <!-- Feedback Link -->
-    <a href="https://forms.gle/yhENVfd9YbNWxgmP7" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--primary-color)] dark:hover:text-[var(--primary-color)] transition-colors z-10">
-        Provide Feedback
+    <a href="https://forms.gle/yhENVfd9YbNWxgmP7" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--primary-color)] dark:hover:text-[var(--primary-color)] transition-colors z-50">
+        Please Provide Feedback Here! :)
     </a>
 
     <script>
@@ -313,7 +344,8 @@
                 statsPlayed: document.getElementById('stats-played'), statsWinPct: document.getElementById('stats-win-pct'),
                 statsCurrentStreak: document.getElementById('stats-current-streak'), statsMaxStreak: document.getElementById('stats-max-streak'),
                 guessDistributionChart: document.getElementById('guess-distribution-chart'), giveUpButton: document.getElementById('give-up-button'), shareButton: document.getElementById('share-button'),
-                notification: document.getElementById('notification'),
+                notification: document.getElementById('notification'), backToDifficultyBtn: document.getElementById('back-to-difficulty-btn'),
+                surahSelectionTitle: document.getElementById('surah-selection-title'),
             };
 
             // --- CENTRALIZED APPLICATION STATE ---
@@ -324,7 +356,7 @@
                 challenge: { currentAyah: null, allChallengeAyahs: [], visiblePaneIndex: 0 },
                 user: {}, // Holds daily progress, loaded from localStorage.
                 stats: {}, // Holds long-term stats, loaded from localStorage.
-                ui: { isLoading: true, isAudioLoading: false, currentJuz: 1, currentDifficulty: 'Easy', currentSurahList: [], surahListPage: 0 },
+                ui: { isLoading: true, isAudioLoading: false, currentJuz: 1, currentDifficulty: 'Easy', currentSurahList: [], surahListPage: 0, isReviewMode: false },
             };
             
             // --- UTILITY & HELPER FUNCTIONS ---
@@ -426,7 +458,50 @@
 
             function populateJuzGrid() { dom.juzGridContainer.innerHTML = ''; for (let i = 1; i <= 30; i++) { const btn = document.createElement('button'); btn.textContent = i; btn.dataset.juz = i; btn.className = 'juz-btn p-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-yellow-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]'; btn.onclick = () => handleJuzSelection(i); dom.juzGridContainer.appendChild(btn); } }
             function setSurahList(surahArray) { appState.ui.currentSurahList = surahArray; appState.ui.surahListPage = 0; renderSurahListPage(); }
-            function renderSurahListPage() { const { currentSurahList, surahListPage } = appState.ui; const start = surahListPage * SURAHS_PER_PAGE; const end = start + SURAHS_PER_PAGE; const pageSurahs = currentSurahList.slice(start, end); dom.surahListContainer.innerHTML = ''; const progress = appState.user.progress[appState.ui.currentDifficulty]; const guessedSurahNumbers = new Set(progress.attempts.map(a => a.surahNumber)); pageSurahs.forEach(surah => { const btn = document.createElement('button'); btn.dataset.surahNumber = surah.number; btn.className = 'surah-card block w-full text-left p-3 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:bg-slate-100 dark:disabled:bg-slate-700/50'; btn.onclick = () => checkGuess(surah.number); btn.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center"><span class="mr-3 text-sm font-bold text-[var(--primary-color)]">${surah.number}.</span><div><p class="font-semibold text-slate-800 dark:text-slate-200">${surah.englishName}</p><p class="text-sm text-slate-500 dark:text-slate-400">${surah.name}</p></div></div><span class="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase">${surah.revelationType}</span></div>`; if (progress.completed || guessedSurahNumbers.has(surah.number)) { btn.disabled = true; } dom.surahListContainer.appendChild(btn); }); if (pageSurahs.length === 0 && currentSurahList.length === 0) { dom.surahListContainer.innerHTML = `<p class="text-center text-slate-500 dark:text-slate-400 p-4">${dom.surahSearchInput.value ? 'No Surahs found.' : 'Select a Juz'}</p>`; } const totalPages = Math.ceil(currentSurahList.length / SURAHS_PER_PAGE); dom.surahPageIndicator.textContent = `${surahListPage + 1} / ${totalPages || 1}`; dom.prevSurahPage.disabled = surahListPage === 0; dom.nextSurahPage.disabled = surahListPage >= totalPages - 1; }
+            function renderSurahListPage() { 
+                const { currentSurahList, surahListPage, isReviewMode } = appState.ui; 
+                const start = surahListPage * SURAHS_PER_PAGE; 
+                const end = start + SURAHS_PER_PAGE; 
+                const pageSurahs = currentSurahList.slice(start, end); 
+                dom.surahListContainer.innerHTML = ''; 
+                const progress = appState.user.progress[appState.ui.currentDifficulty]; 
+                const guessedSurahNumbers = new Set(progress.attempts.map(a => a.surahNumber)); 
+                
+                pageSurahs.forEach(surah => { 
+                    const btn = document.createElement('button'); 
+                    btn.dataset.surahNumber = surah.number; 
+                    btn.className = 'surah-card block w-full text-left p-3 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:bg-slate-100 dark:disabled:bg-slate-700/50'; 
+                    
+                    if (!isReviewMode) {
+                        btn.onclick = () => checkGuess(surah.number); 
+                    }
+                    
+                    let statusIndicator = '';
+                    if (guessedSurahNumbers.has(surah.number)) {
+                        const attempt = progress.attempts.find(a => a.surahNumber === surah.number);
+                        if (attempt && attempt.correct) {
+                            statusIndicator = '<span class="text-green-500 ml-2">✓</span>';
+                        } else {
+                            statusIndicator = '<span class="text-red-500 ml-2">✗</span>';
+                        }
+                    }
+                    
+                    btn.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center"><span class="mr-3 text-sm font-bold text-[var(--primary-color)]">${surah.number}.</span><div><p class="font-semibold text-slate-800 dark:text-slate-200">${surah.englishName}</p><p class="text-sm text-slate-500 dark:text-slate-400">${surah.name}</p></div></div><div class="flex items-center"><span class="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase">${surah.revelationType}</span>${statusIndicator}</div></div>`; 
+                    
+                    if (progress.completed || guessedSurahNumbers.has(surah.number) || isReviewMode) { 
+                        btn.disabled = true; 
+                    } 
+                    dom.surahListContainer.appendChild(btn); 
+                }); 
+                
+                if (pageSurahs.length === 0 && currentSurahList.length === 0) { 
+                    dom.surahListContainer.innerHTML = `<p class="text-center text-slate-500 dark:text-slate-400 p-4">${dom.surahSearchInput.value ? 'No Surahs found.' : 'Select a Juz'}</p>`; 
+                } 
+                const totalPages = Math.ceil(currentSurahList.length / SURAHS_PER_PAGE); 
+                dom.surahPageIndicator.textContent = `${surahListPage + 1} / ${totalPages || 1}`; 
+                dom.prevSurahPage.disabled = surahListPage === 0; 
+                dom.nextSurahPage.disabled = surahListPage >= totalPages - 1; 
+            }
             function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[50px] flex flex-wrap items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text'; basmalaP.textContent = BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-slate-500 dark:text-slate-400 italic text-center'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
             
             /**
@@ -546,8 +621,64 @@
             }
 
             function updateContextForVisibleAyah() { const ayah = appState.challenge.allChallengeAyahs[appState.challenge.visiblePaneIndex]; if (!ayah) return; dom.audioElement.pause(); dom.audioElement.currentTime = 0; if (appState.quran.audio.length > 0) { const audioAyah = appState.quran.audio.find(a => a.number === ayah.number); if (audioAyah) dom.audioElement.src = audioAyah.audio; } }
-            function updateAttemptsUI() { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; const maxAttempts = DIFFICULTIES[currentDifficulty].attempts; dom.attemptsDisplay.innerHTML = ''; for (let i = 0; i < maxAttempts; i++) { const circle = document.createElement('div'); circle.className = 'attempt-circle h-4 w-4 rounded-full border-2 border-slate-300 dark:border-slate-600'; dom.attemptsDisplay.appendChild(circle); if (i < progress.attempts.length) { const attempt = progress.attempts[i]; setTimeout(() => { circle.classList.add('filled', attempt.correct ? 'bg-green-500' : 'bg-red-500'); circle.classList.remove('border-slate-300', 'dark:border-slate-600'); }, i * 100); } } const attemptsLeft = maxAttempts - progress.attempts.length; dom.attemptsSubtitle.textContent = `(${currentDifficulty}) You have ${attemptsLeft} attempt${attemptsLeft !== 1 ? 's' : ''} remaining.`; if (progress.completed) { dom.attemptsSubtitle.textContent = `(${currentDifficulty}) Challenge complete!`; } }
-            function checkGuess(surahNumber) { const { currentDifficulty } = appState.ui; const progress = appState.user.progress[currentDifficulty]; if (progress.completed) return; const isCorrect = surahNumber === appState.challenge.currentAyah.surah.number; progress.attempts.push({ surahNumber, correct: isCorrect }); updateAttemptsUI(); if (isCorrect) { progress.solved = true; endDailyGame(true); } else { const guessedButton = document.querySelector(`.surah-card[data-surah-number='${surahNumber}']`); if(guessedButton) guessedButton.disabled = true; if (progress.attempts.length === 1 && !progress.completed && !progress.hintUsed) { if (DIFFICULTIES[currentDifficulty].hint) { dom.hintButton.classList.remove('hidden'); } } if (progress.attempts.length >= 1) { dom.giveUpButton.classList.remove('hidden'); } if (progress.attempts.length >= DIFFICULTIES[currentDifficulty].attempts) { endDailyGame(false); } } saveGameState(); }
+            function updateAttemptsUI() { 
+                const { currentDifficulty, isReviewMode } = appState.ui; 
+                const progress = appState.user.progress[currentDifficulty]; 
+                const maxAttempts = DIFFICULTIES[currentDifficulty].attempts; 
+                dom.attemptsDisplay.innerHTML = ''; 
+                for (let i = 0; i < maxAttempts; i++) { 
+                    const circle = document.createElement('div'); 
+                    circle.className = 'attempt-circle h-4 w-4 rounded-full border-2 border-slate-300 dark:border-slate-600'; 
+                    dom.attemptsDisplay.appendChild(circle); 
+                    if (i < progress.attempts.length) { 
+                        const attempt = progress.attempts[i]; 
+                        setTimeout(() => { 
+                            circle.classList.add('filled', attempt.correct ? 'bg-green-500' : 'bg-red-500'); 
+                            circle.classList.remove('border-slate-300', 'dark:border-slate-600'); 
+                        }, i * 100); 
+                    } 
+                } 
+                
+                if (isReviewMode) {
+                    dom.attemptsSubtitle.textContent = `(${currentDifficulty}) Review Mode - Your previous attempts`;
+                } else {
+                    const attemptsLeft = maxAttempts - progress.attempts.length; 
+                    dom.attemptsSubtitle.textContent = `(${currentDifficulty}) You have ${attemptsLeft} attempt${attemptsLeft !== 1 ? 's' : ''} remaining.`; 
+                    if (progress.completed) { 
+                        dom.attemptsSubtitle.textContent = `(${currentDifficulty}) Challenge complete!`; 
+                    } 
+                }
+            }
+            function checkGuess(surahNumber) { 
+                const { currentDifficulty, isReviewMode } = appState.ui; 
+                const progress = appState.user.progress[currentDifficulty]; 
+                
+                // Prevent guessing in review mode
+                if (isReviewMode || progress.completed) return; 
+                
+                const isCorrect = surahNumber === appState.challenge.currentAyah.surah.number; 
+                progress.attempts.push({ surahNumber, correct: isCorrect }); 
+                updateAttemptsUI(); 
+                if (isCorrect) { 
+                    progress.solved = true; 
+                    endDailyGame(true); 
+                } else { 
+                    const guessedButton = document.querySelector(`.surah-card[data-surah-number='${surahNumber}']`); 
+                    if(guessedButton) guessedButton.disabled = true; 
+                    if (progress.attempts.length === 1 && !progress.completed && !progress.hintUsed) { 
+                        if (DIFFICULTIES[currentDifficulty].hint) { 
+                            dom.hintButton.classList.remove('hidden'); 
+                        } 
+                    } 
+                    if (progress.attempts.length >= 1) { 
+                        dom.giveUpButton.classList.remove('hidden'); 
+                    } 
+                    if (progress.attempts.length >= DIFFICULTIES[currentDifficulty].attempts) { 
+                        endDailyGame(false); 
+                    } 
+                } 
+                saveGameState(); 
+            }
             
             /**
              * Fetches and displays the Tafsir for the given Surah and Ayah using the Quran API.
@@ -729,6 +860,7 @@
                 showModal(dom.loadingOverlay);
                 dom.loadingMessage.textContent = `Loading ${newDifficulty} challenge...`;
                 appState.ui.currentDifficulty = newDifficulty;
+                appState.ui.isReviewMode = false;
                 // Reset all relevant UI states to ensure a clean slate.
                 dom.feedbackMessage.innerHTML = '';
                 dom.postGameOptions.classList.add('hidden');
@@ -739,7 +871,13 @@
                 dom.giveUpButton.disabled = false; // Explicitly re-enable the give up button.
                 dom.prevAyahBtn.classList.add('hidden'); 
                 dom.nextAyahBtn.classList.add('hidden');
-                document.querySelectorAll('.surah-card, .juz-btn, #surah-search-input').forEach(el => el.disabled = false);
+                
+                // Reset UI elements to normal mode
+                dom.surahSelectionTitle.textContent = 'Select a Surah';
+                dom.surahSearchInput.placeholder = 'Search Surah...';
+                dom.surahSearchInput.disabled = false;
+                document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = false);
+                
                 const difficultyScope = DIFFICULTIES[newDifficulty].scope;
                 dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => { btn.style.display = 'flex'; if (difficultyScope === 'easy' && btn.dataset.juz !== '30') { btn.style.display = 'none'; } });
                 setupDailyAyah(); // Re-initializes the game state and UI for the new difficulty.
@@ -751,7 +889,108 @@
                 dom.gameContainer.classList.add('opacity-100');
             }
 
-            function showDifficultySelection() { const { progress } = appState.user; let allDone = true; dom.difficultyButtons.querySelectorAll('.difficulty-btn').forEach(btn => { const difficulty = btn.dataset.difficulty; if(progress[difficulty] && progress[difficulty].completed) { btn.disabled = true; } else { btn.disabled = false; allDone = false; } }); dom.allChallengesDoneMessage.classList.toggle('hidden', !allDone); hideModal(dom.gameContainer); hideModal(dom.loadingOverlay); showModal(dom.difficultyModal); }
+            /**
+             * Starts review mode for a completed challenge.
+             * Shows the ayah, tafsir, and user's guesses without allowing new guesses.
+             */
+            function startReviewMode(difficulty) {
+                hideModal(dom.difficultyModal);
+                showModal(dom.loadingOverlay);
+                dom.loadingMessage.textContent = `Loading ${difficulty} review...`;
+                appState.ui.currentDifficulty = difficulty;
+                appState.ui.isReviewMode = true;
+                
+                // Reset UI states for review mode
+                dom.feedbackMessage.innerHTML = '';
+                dom.postGameOptions.classList.add('hidden');
+                dom.hintButton.classList.add('hidden');
+                dom.giveUpButton.classList.add('hidden');
+                dom.shareButton.classList.add('hidden');
+                dom.prevAyahBtn.classList.add('hidden'); 
+                dom.nextAyahBtn.classList.add('hidden');
+                
+                // Update UI for review mode
+                dom.surahSelectionTitle.textContent = 'Your Previous Guesses';
+                dom.surahSearchInput.placeholder = 'Search disabled in review mode';
+                dom.surahSearchInput.disabled = true;
+                
+                // Disable all interactive elements in review mode
+                document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = true);
+                
+                const difficultyScope = DIFFICULTIES[difficulty].scope;
+                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => { 
+                    btn.style.display = 'flex'; 
+                    if (difficultyScope === 'easy' && btn.dataset.juz !== '30') { 
+                        btn.style.display = 'none'; 
+                    } 
+                });
+                
+                setupDailyAyah(); // Load the same ayah as the original challenge
+                updateAttemptsUI();
+                showReviewResults();
+                
+                const initialJuz = difficultyScope === 'easy' ? 30 : 1;
+                handleJuzSelection(initialJuz);
+                hideModal(dom.loadingOverlay);
+                showModal(dom.gameContainer);
+                dom.gameContainer.classList.add('opacity-100');
+            }
+
+            /**
+             * Shows the review results with the correct answer and tafsir.
+             */
+            function showReviewResults() {
+                const { currentDifficulty } = appState.ui;
+                const progress = appState.user.progress[currentDifficulty];
+                const { surah } = appState.challenge.currentAyah;
+                
+                // Show the correct answer
+                const message = progress.solved ? 
+                    `<p class="text-green-400">Correct! You solved this challenge.</p>` : 
+                    `<p class="text-red-500">Challenge completed. Here's the correct answer:</p>`;
+                
+                dom.feedbackMessage.innerHTML = `${message}<p class="text-base text-slate-500 dark:text-slate-400">The Ayah is from Surah ${surah.englishName} (${surah.name}).</p>`;
+                
+                // Show tafsir
+                fetchAndDisplayTafsir(surah.number);
+                
+                // Show share button for completed challenges
+                dom.shareButton.classList.remove('hidden');
+                dom.postGameOptions.classList.remove('hidden', 'fade-in');
+                void dom.postGameOptions.offsetWidth;
+                dom.postGameOptions.classList.add('fade-in');
+            }
+
+            function showDifficultySelection() { 
+                const { progress } = appState.user; 
+                let allDone = true; 
+                dom.difficultyButtons.querySelectorAll('.difficulty-btn').forEach(btn => { 
+                    const difficulty = btn.dataset.difficulty; 
+                    const difficultyText = btn.querySelector('.difficulty-text');
+                    const difficultySubtitle = btn.querySelector('.difficulty-subtitle');
+                    const reviewText = btn.querySelector('.review-text');
+                    
+                    if(progress[difficulty] && progress[difficulty].completed) { 
+                        btn.disabled = false; // Keep enabled for review
+                        btn.classList.add('completed-challenge');
+                        difficultyText.textContent = difficulty;
+                        difficultySubtitle.classList.add('hidden');
+                        reviewText.classList.remove('hidden');
+                        allDone = false; // Not all done since we can review
+                    } else { 
+                        btn.disabled = false; 
+                        btn.classList.remove('completed-challenge');
+                        difficultyText.textContent = difficulty;
+                        difficultySubtitle.classList.remove('hidden');
+                        reviewText.classList.add('hidden');
+                        allDone = false; 
+                    } 
+                }); 
+                dom.allChallengesDoneMessage.classList.toggle('hidden', !allDone); 
+                hideModal(dom.gameContainer); 
+                hideModal(dom.loadingOverlay); 
+                showModal(dom.difficultyModal); 
+            }
             
             /**
              * The main initialization function for the entire application.
@@ -777,7 +1016,59 @@
                     dom.loadingMessage.innerHTML = `<div class="text-center"><p class="text-red-500 font-bold text-lg">Oops! Something went wrong.</p><p class="text-sm mt-2 text-slate-400">Could not load the challenge. Please check your internet connection and refresh the page.</p></div>`;
                 }
             }
-            const eventListeners = { '#difficulty-buttons': { 'click': (e) => { if (e.target.closest('.difficulty-btn')) { startNewChallenge(e.target.closest('.difficulty-btn').dataset.difficulty); } } }, '#return-to-difficulty-btn': { 'click': showDifficultySelection }, '#close-modal-btn': { 'click': () => { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } }, '#help-btn': { 'click': () => showModal(dom.howToPlayModal) }, '#surah-search-input': { 'input': () => { const query = dom.surahSearchInput.value.toLowerCase().trim(); const difficultyScope = DIFFICULTIES[appState.ui.currentDifficulty].scope; let searchPool = appState.quran.allSurahs; if(difficultyScope === 'easy') searchPool = appState.quran.juzData[30] || []; else if (difficultyScope === 'medium') searchPool = appState.quran.allSurahs.filter(s => s.number >= 36); if (!query) { handleJuzSelection(appState.ui.currentJuz); return; } document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-slate-900')); const results = searchPool.filter(s => s.englishName.toLowerCase().includes(query) || s.name.includes(query) || String(s.number).includes(query)); setSurahList(results); } }, '#reciter-select': { 'change': async () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.add('hidden'); dom.audioLoadingSpinner.classList.remove('hidden'); try { appState.quran.audio = await fetchEdition(dom.reciterSelect.value); updateContextForVisibleAyah(); } catch (e) { console.error("Reciter change failed", e); } finally { dom.audioLoadingSpinner.classList.add('hidden'); dom.playButton.classList.remove('hidden');} } }, '#script-style-select': { 'change': async () => { showModal(dom.loadingOverlay); dom.loadingMessage.textContent = 'Changing script style...'; try { appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value); setupDailyAyah(); updateHintButtonUI(); } catch(e){ console.error("Script change failed", e); } finally { hideModal(dom.loadingOverlay); } } }, '#hint-button': { 'click': showHint }, '#next-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex + 1) }, '#prev-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex - 1) }, '#play-button': { 'click': () => dom.audioElement.play() }, '#pause-button': { 'click': () => dom.audioElement.pause() }, '#prev-surah-page': { 'click': () => { if (appState.ui.surahListPage > 0) { appState.ui.surahListPage--; renderSurahListPage(); } } }, '#next-surah-page': { 'click': () => { const totalPages = Math.ceil(appState.ui.currentSurahList.length / SURAHS_PER_PAGE); if (appState.ui.surahListPage < totalPages - 1) { appState.ui.surahListPage++; renderSurahListPage(); } } }, '#theme-btn': { 'click': () => showModal(dom.themeModal) }, '#close-theme-btn': { 'click': () => hideModal(dom.themeModal) }, '#theme-light-btn': {'click': () => applyColorScheme('light') }, '#theme-dark-btn': {'click': () => applyColorScheme('dark') }, '#theme-system-btn': {'click': () => applyColorScheme('system') }, '#stats-btn': { 'click': () => { renderStatsModal(); showModal(dom.statsModal); } }, '#close-stats-btn': { 'click': () => hideModal(dom.statsModal) }, '#give-up-button': { 'click': () => endDailyGame(false, true) }, '#share-button': { 'click': handleShareClick }, };
+            const eventListeners = { 
+                '#difficulty-buttons': { 
+                    'click': (e) => { 
+                        if (e.target.closest('.difficulty-btn')) { 
+                            const btn = e.target.closest('.difficulty-btn');
+                            const difficulty = btn.dataset.difficulty;
+                            const progress = appState.user.progress[difficulty];
+                            
+                            if (progress && progress.completed) {
+                                // Start review mode for completed challenges
+                                startReviewMode(difficulty);
+                            } else {
+                                // Start new challenge for incomplete challenges
+                                startNewChallenge(difficulty);
+                            }
+                        } 
+                    } 
+                }, 
+                '#return-to-difficulty-btn': { 'click': showDifficultySelection }, 
+                '#back-to-difficulty-btn': { 'click': showDifficultySelection },
+                '#close-modal-btn': { 'click': () => { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } }, 
+                '#help-btn': { 'click': () => showModal(dom.howToPlayModal) }, 
+                '#surah-search-input': { 'input': () => { 
+                    if (appState.ui.isReviewMode) return; // Disable search in review mode
+                    const query = dom.surahSearchInput.value.toLowerCase().trim(); 
+                    const difficultyScope = DIFFICULTIES[appState.ui.currentDifficulty].scope; 
+                    let searchPool = appState.quran.allSurahs; 
+                    if(difficultyScope === 'easy') searchPool = appState.quran.juzData[30] || []; 
+                    else if (difficultyScope === 'medium') searchPool = appState.quran.allSurahs.filter(s => s.number >= 36); 
+                    if (!query) { handleJuzSelection(appState.ui.currentJuz); return; } 
+                    document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-slate-900')); 
+                    const results = searchPool.filter(s => s.englishName.toLowerCase().includes(query) || s.name.includes(query) || String(s.number).includes(query)); 
+                    setSurahList(results); 
+                } }, 
+                '#reciter-select': { 'change': async () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.add('hidden'); dom.audioLoadingSpinner.classList.remove('hidden'); try { appState.quran.audio = await fetchEdition(dom.reciterSelect.value); updateContextForVisibleAyah(); } catch (e) { console.error("Reciter change failed", e); } finally { dom.audioLoadingSpinner.classList.add('hidden'); dom.playButton.classList.remove('hidden');} } }, 
+                '#script-style-select': { 'change': async () => { showModal(dom.loadingOverlay); dom.loadingMessage.textContent = 'Changing script style...'; try { appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value); setupDailyAyah(); updateHintButtonUI(); } catch(e){ console.error("Script change failed", e); } finally { hideModal(dom.loadingOverlay); } } }, 
+                '#hint-button': { 'click': showHint }, 
+                '#next-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex + 1) }, 
+                '#prev-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex - 1) }, 
+                '#play-button': { 'click': () => dom.audioElement.play() }, 
+                '#pause-button': { 'click': () => dom.audioElement.pause() }, 
+                '#prev-surah-page': { 'click': () => { if (appState.ui.surahListPage > 0) { appState.ui.surahListPage--; renderSurahListPage(); } } }, 
+                '#next-surah-page': { 'click': () => { const totalPages = Math.ceil(appState.ui.currentSurahList.length / SURAHS_PER_PAGE); if (appState.ui.surahListPage < totalPages - 1) { appState.ui.surahListPage++; renderSurahListPage(); } } }, 
+                '#theme-btn': { 'click': () => showModal(dom.themeModal) }, 
+                '#close-theme-btn': { 'click': () => hideModal(dom.themeModal) }, 
+                '#theme-light-btn': {'click': () => applyColorScheme('light') }, 
+                '#theme-dark-btn': {'click': () => applyColorScheme('dark') }, 
+                '#theme-system-btn': {'click': () => applyColorScheme('system') }, 
+                '#stats-btn': { 'click': () => { renderStatsModal(); showModal(dom.statsModal); } }, 
+                '#close-stats-btn': { 'click': () => hideModal(dom.statsModal) }, 
+                '#give-up-button': { 'click': () => endDailyGame(false, true) }, 
+                '#share-button': { 'click': handleShareClick }, 
+            };
             function handleJuzSelection(juzNumber) { dom.surahSearchInput.value = ''; appState.ui.currentJuz = juzNumber; document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-slate-900')); const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`); if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-slate-900'); setSurahList(appState.quran.juzData[juzNumber] || []); }
             for (const selector in eventListeners) { const element = document.querySelector(selector); if (element) { for (const event in eventListeners[selector]) { element.addEventListener(event, eventListeners[selector][event]); } } }
             dom.audioElement.addEventListener('play', () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.remove('hidden'); });
