@@ -9,16 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 
-          CORE STYLING SECTION
-          - This section defines the visual theme of the application using CSS custom properties (variables).
-          - It allows for easy theme changes (e.g., light/dark mode) by updating these variables.
-          - Contains all custom classes for animations, layout, and component styling.
+        /* CORE STYLING SECTION
+            - This section defines the visual theme of the application using CSS custom properties (variables).
+            - It allows for easy theme changes (e.g., light/dark mode) by updating these variables.
+            - Contains all custom classes for animations, layout, and component styling.
         */
 
         :root {
             /* Color variables for the "Midnight Blue & Gold" theme. */
-            --primary-color: #facc15;      /* yellow-400 (Gold) */
+            --primary-color: #facc15;     /* yellow-400 (Gold) */
             --primary-hover: #eab308;     /* yellow-500 (Darker Gold) */
             --background-light: #f1f5f9;  /* slate-100 */
             --background-dark: #0f172a;   /* slate-900 (Midnight Blue) */
@@ -87,10 +86,10 @@
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-200 flex items-center justify-center min-h-screen p-4 md:p-8">
 
-    <!-- 
-      UI CONTROLS (HEADER)
-      - Contains persistent icons for Help, Statistics, and Theme settings.
-      - These are positioned absolutely at the top-right of the screen.
+    <!--  
+        UI CONTROLS (HEADER)
+        - Contains persistent icons for Help, Statistics, and Theme settings.
+        - These are positioned absolutely at the top-right of the screen.
     -->
     <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
         <button id="help-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="How to play">
@@ -149,11 +148,11 @@
         </div>
     </div>
 
-    <!-- 
-      MAIN GAME CONTAINER
-      - This is the primary interface for the game, split into two main columns.
-      - Left column: Ayah display, audio, hints, guesses, feedback.
-      - Right column: Surah selection (search, Juz grid, Surah list).
+    <!--  
+        MAIN GAME CONTAINER
+        - This is the primary interface for the game, split into two main columns.
+        - Left column: Ayah display, audio, hints, guesses, feedback.
+        - Right column: Surah selection (search, Juz grid, Surah list).
     -->
     <div id="game-container" class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 opacity-0 transition-opacity duration-500">
         
@@ -263,6 +262,11 @@
     <!-- Notification Popup: Used for sharing results, etc. -->
     <div id="notification" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg z-[70] transition-opacity duration-300"></div>
 
+    <!-- Feedback Link -->
+    <a href="https://forms.gle/yhENVfd9YbNWxgmP7" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 left-1/2 -translate-x-1/2 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--primary-color)] dark:hover:text-[var(--primary-color)] transition-colors z-10">
+        Provide Feedback
+    </a>
+
     <script>
     // An IIFE (Immediately Invoked Function Expression) is used to encapsulate all game logic.
     // This prevents polluting the global namespace and avoids conflicts with other scripts.
@@ -284,7 +288,7 @@
                 Hard:   { attempts: 3, hint: false, scope: 'hard' }
             };
             const SURAHS_PER_PAGE = 6; // How many Surahs to show at once in the selection list.
-            const BASMALA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ "; // The Basmala text to detect and separate.
+            const BASMALA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ "; // The Basmala text to detect and separate.
             const MAX_HINTS = 2; // The maximum number of hints (additional ayahs) a user can get.
 
             // --- DOM ELEMENT CACHING ---
