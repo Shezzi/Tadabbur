@@ -47,7 +47,7 @@
             /* Border Colors */
             --border-light: #e2e8f0;       /* slate-200 */
             --border-dark: #334155;        /* slate-700 */
-            
+
             /* Feedback Colors */
             --correct-color: #4ade80;      /* green-400 */
             --incorrect-color: #f87171;    /* red-400 */
@@ -56,75 +56,75 @@
         /* ==========================================================================
            BASE STYLES
            ========================================================================== */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-light);
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--background-light); 
+            color: var(--text-light); 
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .dark body {
-            background-color: var(--background-dark);
-            color: var(--text-dark);
+        .dark body { 
+            background-color: var(--background-dark); 
+            color: var(--text-dark); 
         }
 
         /* ==========================================================================
            TYPOGRAPHY STYLES
            ========================================================================== */
-        .arabic-text {
-            font-family: 'Amiri Quran', serif;
-            direction: rtl;
-            line-height: 2;
-            word-spacing: 8px;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--text-light);
+        .arabic-text { 
+            font-family: 'Amiri Quran', serif; 
+            direction: rtl; 
+            line-height: 2; 
+            word-spacing: 8px; 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            color: var(--text-light); 
             text-shadow: none;
         }
 
         .dark .arabic-text {
-            color: var(--primary-color);
+            color: var(--primary-color); 
             text-shadow: 0 0 15px var(--primary-glow);
         }
-
-        .ayah-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+        
+        .ayah-number { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1rem; 
+            font-family: 'Inter', sans-serif; 
             color: var(--primary-text);
             background-color: var(--primary-color);
             border-radius: 50%;
-            width: 2.25rem;
-            height: 2.25rem;
+            width: 2.25rem; 
+            height: 2.25rem; 
             margin: 0 0.75rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease; 
         }
 
         .dark .ayah-number {
-            color: var(--primary-text);
+             color: var(--primary-text);
         }
 
         /* ==========================================================================
            FORM CONTROLS
            ========================================================================== */
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding-left: 1rem;
-            padding-right: 2.5rem;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.75rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
+        select { 
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            appearance: none; 
+            padding-left: 1rem; 
+            padding-right: 2.5rem; 
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); 
+            background-position: right 0.75rem center; 
+            background-repeat: no-repeat; 
+            background-size: 1.5em 1.5em; 
         }
 
-        .dark select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        .dark select { 
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); 
         }
-
+        
         /* ==========================================================================
            BUTTON STYLES
            ========================================================================== */
@@ -172,13 +172,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border-left-color: var(--primary-color);
-            animation: spin 1s ease-in-out infinite;
+        .spinner { 
+            border: 4px solid rgba(255, 255, 255, 0.2); 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            border-left-color: var(--primary-color); 
+            animation: spin 1s ease-in-out infinite; 
         }
 
         .fade-in {
@@ -197,18 +197,18 @@
         /* ==========================================================================
            MODAL STYLES
            ========================================================================== */
-        .glass-modal {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+        .glass-modal { 
+            background: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.7); 
         }
 
-        .dark .glass-modal {
+        .dark .glass-modal { 
             background: rgba(30, 41, 59, 0.5);
             border: 1px solid var(--border-dark);
         }
-
+        
         /* ==========================================================================
            CUSTOM SCROLLBARS
            ========================================================================== */
@@ -236,12 +236,12 @@
         /* ==========================================================================
            STATISTICS & GAME ELEMENTS
            ========================================================================== */
-        .stat-bar {
-            transition: width 0.5s ease-in-out;
+        .stat-bar { 
+            transition: width 0.5s ease-in-out; 
             background-color: var(--primary-color);
             box-shadow: 0 0 10px var(--primary-glow);
         }
-
+        
         /* ==========================================================================
            VISUAL FEEDBACK & ANIMATIONS
            ========================================================================== */
@@ -286,6 +286,48 @@
         .dark .surah-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
+
+        /* ==========================================================================
+           MOBILE OPTIMIZATIONS
+           ========================================================================== */
+        /* Ensure minimum touch target sizes for mobile */
+        @media (max-width: 768px) {
+            .btn, button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Improve modal positioning on mobile */
+            .glass-modal {
+                margin: 0.5rem;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+            
+            /* Better touch targets for small screens */
+            .surah-card {
+                padding: 1rem;
+                min-height: 60px;
+            }
+            
+            /* Improve text readability on small screens */
+            .arabic-text {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                line-height: 1.8;
+            }
+            
+            /* Better spacing for mobile */
+            header nav {
+                gap: 0.5rem;
+            }
+        }
+
+        /* Prevent zoom on input focus on iOS */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4">
@@ -293,22 +335,30 @@
     <!-- ==========================================================================
          HEADER NAVIGATION
          ========================================================================== -->
-    <header class="absolute top-4 right-4 z-20" role="banner">
+    <header class="absolute top-4 right-4 z-[100]" role="banner">
         <nav class="flex items-center gap-2 text-subtle-text-light dark:text-subtle-text-dark" role="navigation" aria-label="Main navigation">
             <button id="help-btn" 
-                    class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" 
+                    class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
                     aria-label="How to play"
                     title="How to play">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-            </button>
+        </button>
             <button id="stats-btn" 
-                    class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" 
+                    class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
                     aria-label="Open statistics"
                     title="View statistics">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+        </button>
+            <button id="install-header-btn" 
+                    class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
+                    aria-label="Install app"
+                    title="Install Tadabbur app">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
             </button>
         </nav>
@@ -356,6 +406,33 @@
                     <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Full Qur'an</span>
                 </button>
             </div>
+            
+            <!-- Bonus Section -->
+            <div id="bonus-section" class="hidden mt-12">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold text-yellow-400 mb-2">🎉 Bonus Modes Unlocked!</h2>
+                    <p class="text-slate-300 text-lg">You've completed all daily challenges! Try these special modes:</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    <button id="streak-mode-btn" class="bonus-btn btn p-6 text-lg bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:from-yellow-500 hover:to-orange-500 shadow-lg shadow-yellow-900/50 transition-all">
+                        <div class="flex items-center justify-center gap-3 mb-2">
+                            <span class="text-2xl">🔥</span>
+                            <span class="text-2xl">Streak Mode</span>
+                        </div>
+                        <p class="text-sm font-normal text-yellow-100">Unlimited attempts - build your streak!</p>
+                        <p class="text-xs font-normal text-yellow-200 mt-1">One wrong answer = game over</p>
+                    </button>
+                    <button class="bonus-btn btn p-6 text-lg bg-slate-600 text-slate-300 font-bold rounded-xl cursor-not-allowed opacity-60" disabled>
+                        <div class="flex items-center justify-center gap-3 mb-2">
+                            <span class="text-2xl">🚀</span>
+                            <span class="text-2xl">Other Modes</span>
+                        </div>
+                        <p class="text-sm font-normal text-slate-400">Coming Soon!</p>
+                        <p class="text-xs font-normal text-slate-400 mt-1">More exciting modes in development</p>
+                    </button>
+                </div>
+            </div>
+            
              <p id="all-challenges-done-message" class="hidden text-xl text-green-400 mt-10">MashAllah! You have completed all challenges for today. Come back tomorrow for more!</p>
         </div>
     </div>
@@ -364,14 +441,14 @@
          MAIN GAME CONTAINER
          ========================================================================== -->
     <main id="game-container" 
-          class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6 opacity-0 transition-opacity duration-500"
+          class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6 opacity-0 transition-opacity duration-500 px-2 md:px-0"
           role="main">
         
         <!-- Ayah Display & Interaction Section -->
-        <section class="lg:col-span-3 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-6 md:p-8 text-center flex flex-col fade-in border border-border-light dark:border-border-dark"
+        <section class="lg:col-span-3 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-4 md:p-6 lg:p-8 text-center flex flex-col fade-in border border-border-light dark:border-border-dark"
                  aria-label="Ayah display and game interaction">
             <header class="mb-6 relative">
-                <button id="back-to-difficulty-btn" class="absolute top-1/2 -translate-y-1/2 left-0 p-2 rounded-full text-subtle-text-light dark:text-subtle-text-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Back to difficulty selection">
+                <button id="back-to-difficulty-btn" class="absolute top-1/2 -translate-y-1/2 left-0 p-3 md:p-2 rounded-full text-subtle-text-light dark:text-subtle-text-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Back to difficulty selection">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 </button>
                 <h1 class="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-green-600 dark:from-emerald-300 dark:to-green-400">Tadabbur</h1>
@@ -389,18 +466,18 @@
             
             <!-- Ayah Display Area (Slider) -->
             <div class="flex items-center justify-center gap-2 my-4">
-                <button id="prev-ayah-btn" aria-label="Previous Ayah" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                <button id="prev-ayah-btn" aria-label="Previous Ayah" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-3 md:p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
                 <div id="ayah-display-container" class="flex-grow overflow-hidden">
                     <div id="ayah-slider" class="flex transition-transform duration-500 ease-in-out"></div>
                 </div>
-                <button id="next-ayah-btn" aria-label="Next Ayah (Hint)" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                <button id="next-ayah-btn" aria-label="Next Ayah (Hint)" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-3 md:p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
             </div>
 
             <!-- Audio Player Controls -->
             <div id="audio-player" class="mt-2 mb-4 flex justify-center items-center h-12">
                 <audio id="ayah-audio"></audio>
-                <button id="play-button" aria-label="Play Audio" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg></button>
-                <button id="pause-button" aria-label="Pause Audio" class="hidden p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" /></svg></button>
+                <button id="play-button" aria-label="Play Audio" class="p-3 md:p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg></button>
+                <button id="pause-button" aria-label="Pause Audio" class="hidden p-3 md:p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-hover)] transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" /></svg></button>
                 <div id="audio-loading-spinner" class="spinner hidden" style="width: 28px; height: 28px;"></div>
             </div>
             
@@ -413,9 +490,9 @@
             <div id="attempts-display" class="flex justify-center items-center gap-3 my-6"></div>
 
             <!-- Hint and Give Up Buttons -->
-            <div class="flex justify-center items-center gap-4 mb-6">
-                <button id="hint-button" class="hidden btn px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40">💡 Get a Hint</button>
-                <button id="give-up-button" class="hidden btn px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40">🤚 Give Up</button>
+            <div class="flex justify-center items-center gap-3 md:gap-4 mb-6">
+                <button id="hint-button" class="hidden btn px-4 md:px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40 min-h-[44px] text-sm md:text-base">💡 Get a Hint</button>
+                <button id="give-up-button" class="hidden btn px-4 md:px-6 py-3 bg-slate-500 text-white font-bold rounded-lg hover:bg-slate-600 shadow-md shadow-slate-900/40 min-h-[44px] text-sm md:text-base">🤚 Give Up</button>
             </div>
 
             <!-- Feedback Message Area (Correct/Incorrect, Tafsir) -->
@@ -429,7 +506,7 @@
         </section>
 
         <!-- Surah Selection Section -->
-        <aside class="lg:col-span-2 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-6 flex flex-col fade-in border border-border-light dark:border-border-dark" 
+        <aside class="lg:col-span-2 bg-card-light dark:bg-card-dark shadow-xl rounded-2xl p-4 md:p-6 flex flex-col fade-in border border-border-light dark:border-border-dark" 
                style="animation-delay: 0.1s;"
                aria-label="Surah selection panel">
             <h2 id="surah-selection-title" class="text-2xl font-bold text-center mb-4 text-emerald-600 dark:text-[var(--primary-color)]">Select a Surah</h2>
@@ -439,16 +516,16 @@
             <div id="juz-grid-container" class="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-4"></div>
             <div id="surah-list-container" class="flex-grow space-y-2 p-1 bg-slate-100 dark:bg-slate-900/50 rounded-lg h-72 custom-scrollbar overflow-y-auto"></div>
             <div id="surah-pagination-controls" class="flex justify-center items-center mt-4 gap-4">
-                <button id="prev-surah-page" aria-label="Previous page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
-                <span id="surah-page-indicator" class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark">1 / 1</span>
-                <button id="next-surah-page" aria-label="Next page of Surahs" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                <button id="prev-surah-page" aria-label="Previous page of Surahs" class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                <span id="surah-page-indicator" class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark px-2">1 / 1</span>
+                <button id="next-surah-page" aria-label="Next page of Surahs" class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
             </div>
         </aside>
     </main>
 
     <!-- How to Play Modal -->
-    <div id="how-to-play-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center relative text-text-dark">
+    <div id="how-to-play-modal" class="hidden fixed inset-0 bg-black/60 flex items-start md:items-center justify-center p-2 md:p-4 z-50 fade-in overflow-y-auto">
+        <div class="glass-modal rounded-2xl shadow-2xl p-4 md:p-8 max-w-sm md:max-w-lg w-full text-center relative text-text-dark mt-4 md:mt-0 max-h-[95vh] overflow-y-auto">
             <h2 class="text-3xl font-bold text-[var(--primary-color)] mb-6">How to Play</h2>
             <div class="text-left space-y-4 text-slate-200">
                 <p>1. Select a <strong class="text-emerald-300 font-semibold">Difficulty</strong> to start the challenge!.</p>
@@ -470,24 +547,30 @@
     </div>
 
     <!-- Statistics Modal -->
-    <div id="stats-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 fade-in">
-        <div class="glass-modal rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-text-dark">
-            <button id="close-stats-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" aria-label="Close statistics"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
-            <h2 class="text-3xl font-bold text-center text-[var(--primary-color)] mb-6">Statistics</h2>
-            <div id="stats-content" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-6">
-                <div><div id="stats-played" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Played</div></div>
-                <div><div id="stats-win-pct" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Win %</div></div>
-                <div><div id="stats-current-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Current Streak</div></div>
-                <div><div id="stats-max-streak" class="text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Max Streak</div></div>
+    <div id="stats-modal" class="hidden fixed inset-0 bg-black/60 flex items-start md:items-center justify-center p-2 md:p-4 z-50 fade-in overflow-y-auto">
+        <div class="glass-modal rounded-2xl shadow-2xl p-4 md:p-8 w-full max-w-sm md:max-w-md max-h-[95vh] md:max-h-[90vh] overflow-y-auto relative text-text-dark mt-4 md:mt-0">
+            <button id="close-stats-btn" 
+                    class="absolute top-3 right-3 md:top-4 md:right-4 text-slate-400 hover:text-white transition-colors p-2 rounded-full hover:bg-slate-600 min-h-[44px] min-w-[44px] flex items-center justify-center" 
+                    aria-label="Close statistics">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-[var(--primary-color)] mb-4 md:mb-6 pr-12">Statistics</h2>
+            <div id="stats-content" class="grid grid-cols-2 gap-3 md:gap-4 text-center mb-4 md:mb-6">
+                <div><div id="stats-played" class="text-2xl md:text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Played</div></div>
+                <div><div id="stats-win-pct" class="text-2xl md:text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Win %</div></div>
+                <div><div id="stats-current-streak" class="text-2xl md:text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Current Streak</div></div>
+                <div><div id="stats-max-streak" class="text-2xl md:text-3xl font-bold">0</div><div class="text-xs uppercase text-slate-400 tracking-wider">Max Streak</div></div>
             </div>
-            <h3 class="text-xl font-bold text-center text-[var(--primary-color)] mb-4">Guess Distribution</h3>
+            <h3 class="text-lg md:text-xl font-bold text-center text-[var(--primary-color)] mb-3 md:mb-4">Guess Distribution</h3>
             <div id="guess-distribution-chart" class="space-y-2"></div>
         </div>
     </div>
     
     <!-- Notification Popup -->
     <div id="notification" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-lg shadow-lg z-[70] transition-all duration-300 transform translate-y-10 opacity-0"></div>
-    
+
     <!-- Achievement Toast Notification -->
     <div id="achievement-toast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-4 rounded-lg shadow-2xl z-[80] transition-all duration-500 transform -translate-y-full opacity-0">
         <div class="flex items-center gap-3">
@@ -500,15 +583,15 @@
     </div>
 
     <!-- PWA Install Prompt -->
-    <div id="install-prompt" class="hidden fixed bottom-4 left-4 right-4 bg-gradient-to-r from-emerald-600 to-green-700 text-white p-4 rounded-lg shadow-xl z-[85] max-w-sm mx-auto">
+    <div id="install-prompt" class="hidden fixed bottom-4 left-4 right-4 bg-gradient-to-r from-emerald-600 to-green-700 text-white p-4 rounded-lg shadow-xl z-[85] max-w-md mx-auto">
         <div class="flex items-start gap-3">
             <div class="text-2xl">📱</div>
             <div class="flex-grow">
-                <div class="font-bold text-lg">Install Tadabbur</div>
-                <div class="text-sm opacity-90 mb-3">Get the full app experience with offline access and daily reminders!</div>
+                <div class="font-bold text-lg mb-2">Install Tadabbur</div>
+                <div class="text-sm opacity-90 mb-3 leading-relaxed"></div>
                 <div class="flex gap-2">
-                    <button id="install-app-btn" class="btn bg-white text-emerald-700 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-100">Install</button>
-                    <button id="dismiss-install-btn" class="btn bg-emerald-800 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-emerald-900">Later</button>
+                    <button id="install-app-btn" class="btn bg-white text-emerald-700 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-100 min-h-[40px]">Install</button>
+                    <button id="dismiss-install-btn" class="btn bg-emerald-800 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-emerald-900 min-h-[40px]">Later</button>
                 </div>
             </div>
             <button id="close-install-btn" class="text-white hover:text-gray-200 p-1">✕</button>
@@ -573,9 +656,9 @@
                 BASMALA: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ",
                 MAX_HINTS: 2,
                 DIFFICULTIES: { 
-                    Easy:   { attempts: 5, hint: true, scope: 'easy' }, 
-                    Medium: { attempts: 5, hint: true, scope: 'medium' },
-                    Hard:   { attempts: 3, hint: false, scope: 'hard' }
+                Easy:   { attempts: 5, hint: true, scope: 'easy' }, 
+                Medium: { attempts: 5, hint: true, scope: 'medium' },
+                Hard:   { attempts: 3, hint: false, scope: 'hard' }
                 },
                 ACHIEVEMENTS: {
                     firstWin: {
@@ -662,7 +745,10 @@
                 installAppBtn: document.getElementById('install-app-btn'),
                 dismissInstallBtn: document.getElementById('dismiss-install-btn'),
                 closeInstallBtn: document.getElementById('close-install-btn'),
+                installHeaderBtn: document.getElementById('install-header-btn'),
                 offlineIndicator: document.getElementById('offline-indicator'),
+                bonusSection: document.getElementById('bonus-section'),
+                streakModeBtn: document.getElementById('streak-mode-btn'),
             };
 
             // ==========================================================================
@@ -675,7 +761,14 @@
                 user: {}, // Holds daily progress, loaded from localStorage.
                 stats: {}, // Holds long-term stats, loaded from localStorage.
                 achievements: {}, // Holds achievement progress, loaded from localStorage.
-                ui: { isLoading: true, isAudioLoading: false, currentJuz: 1, currentDifficulty: 'Easy', currentSurahList: [], surahListPage: 0, isReviewMode: false },
+                streakMode: { 
+                    isActive: false, 
+                    currentStreak: 0, 
+                    bestStreak: 0, 
+                    currentAyah: null,
+                    streakHistory: [] // Track streak scores for sharing
+                },
+                ui: { isLoading: true, isAudioLoading: false, currentJuz: 1, currentDifficulty: 'Easy', currentSurahList: [], surahListPage: 0, isReviewMode: false, isStreakMode: false },
             };
             
             // ==========================================================================
@@ -867,36 +960,110 @@
                     return;
                 }
 
-                // Listen for beforeinstallprompt event
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    deferredPrompt = e;
-                    showInstallPrompt();
-                });
-
-                // Check if user dismissed install prompt recently
-                const lastDismissed = localStorage.getItem('install_prompt_dismissed');
-                const now = Date.now();
-                const oneDayMs = 24 * 60 * 60 * 1000;
-                
-                if (!lastDismissed || (now - parseInt(lastDismissed)) > oneDayMs) {
-                    // Show install prompt after user has played a few games
-                    const stats = appState.stats;
-                    if (stats.gamesPlayed >= 2 && !localStorage.getItem('install_prompt_shown')) {
-                        setTimeout(() => {
-                            if (deferredPrompt) showInstallPrompt();
-                        }, 5000); // Show after 5 seconds
-                    }
-                }
-
-                // Register service worker
+                // Register service worker first
                 registerServiceWorker();
                 
                 // Setup offline detection
                 setupOfflineDetection();
                 
+                // Store deferred prompt globally
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    appState.pwa.deferredPrompt = deferredPrompt;
+                    console.log('PWA install prompt available');
+                    
+                    // Show prompt immediately for Android/Chrome
+                    if (isAndroid() || isChrome()) {
+                        setTimeout(() => showInstallPrompt(), 2000);
+                    }
+                });
+
+                // Check if app was installed
+                window.addEventListener('appinstalled', () => {
+                    console.log('PWA was installed');
+                    hideInstallPrompt();
+                    localStorage.setItem('pwa_installed', 'true');
+                });
+
+                // Show install prompt based on platform and engagement
+                setTimeout(() => {
+                    checkAndShowInstallPrompt();
+                }, 2000);
+                
+                // Also try to show after user interaction
+                document.addEventListener('click', () => {
+                    setTimeout(() => {
+                        checkAndShowInstallPrompt();
+                    }, 1000);
+                }, { once: true });
+                
                 // Request notification permission
                 requestNotificationPermission();
+            }
+
+            // Platform detection functions
+            function isIOS() {
+                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            }
+
+            function isAndroid() {
+                return /Android/.test(navigator.userAgent);
+            }
+
+            function isChrome() {
+                return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            }
+
+            function isSafari() {
+                return /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+            }
+
+            // Enhanced install prompt checking
+            function checkAndShowInstallPrompt() {
+                // Don't show if already installed
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    return;
+                }
+
+                // Don't show if user dismissed recently (shorter cooldown for mobile)
+                const lastDismissed = localStorage.getItem('install_prompt_dismissed');
+                const now = Date.now();
+                const cooldownMs = (isIOS() || isAndroid()) ? 2 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 2 hours for mobile, 24 hours for desktop
+                
+                if (lastDismissed && (now - parseInt(lastDismissed)) < cooldownMs) {
+                    return;
+                }
+
+                // Check user engagement (more lenient)
+                const stats = appState.stats;
+                const hasEngagement = stats.gamesPlayed >= 0 || 
+                                    localStorage.getItem('quranle_help_seen') === 'true' ||
+                                    localStorage.getItem('theme_setting') !== null ||
+                                    document.visibilityState === 'visible';
+
+                // Always show for iOS/Android after a short delay
+                if (isIOS() || isAndroid()) {
+                    // Show immediately for mobile devices
+                } else if (!hasEngagement) {
+                    return;
+                }
+
+                // Show appropriate prompt based on platform
+                if (appState.pwa.deferredPrompt) {
+                    // Android/Chrome - use native prompt
+                    showInstallPrompt();
+                } else if (isIOS()) {
+                    // iOS - show custom instructions
+                    showIOSInstallInstructions();
+                } else if (isSafari()) {
+                    // Safari - show custom instructions
+                    showSafariInstallInstructions();
+                } else {
+                    // Other browsers - show generic instructions
+                    showGenericInstallInstructions();
+                }
             }
 
             /**
@@ -988,6 +1155,84 @@
                 if (localStorage.getItem('install_permanently_dismissed')) return;
                 
                 dom.installPrompt.classList.remove('hidden');
+                localStorage.setItem('install_prompt_shown', 'true');
+            }
+
+            // iOS-specific install instructions
+            function showIOSInstallInstructions() {
+                const prompt = dom.installPrompt;
+                const title = prompt.querySelector('h3');
+                const description = prompt.querySelector('p');
+                const installBtn = dom.installAppBtn;
+                
+                title.textContent = 'Install Tadabbur';
+                description.innerHTML = `
+                    <strong>To install this app on your iPhone/iPad:</strong><br><br>
+                    1. Tap the <strong>Share</strong> button <span style="font-size: 1.2em;">📤</span> at the bottom of your screen<br>
+                    2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>
+                    3. Tap <strong>"Add"</strong> to confirm<br><br>
+                    <em>The app will appear on your home screen like a native app!</em>
+                `;
+                installBtn.textContent = 'Got it!';
+                installBtn.onclick = () => {
+                    hideInstallPrompt();
+                    localStorage.setItem('install_prompt_dismissed', Date.now().toString());
+                };
+                
+                prompt.classList.remove('hidden');
+                prompt.classList.add('fade-in');
+                localStorage.setItem('install_prompt_shown', 'true');
+            }
+
+            // Safari-specific install instructions
+            function showSafariInstallInstructions() {
+                const prompt = dom.installPrompt;
+                const title = prompt.querySelector('h3');
+                const description = prompt.querySelector('p');
+                const installBtn = dom.installAppBtn;
+                
+                title.textContent = 'Install Tadabbur';
+                description.innerHTML = `
+                    <strong>To install this app on Safari:</strong><br><br>
+                    1. Click the <strong>Share</strong> button <span style="font-size: 1.2em;">📤</span> in the toolbar<br>
+                    2. Select <strong>"Add to Home Screen"</strong><br>
+                    3. Click <strong>"Add"</strong> to confirm<br><br>
+                    <em>You'll get a native app experience with push notifications!</em>
+                `;
+                installBtn.textContent = 'Got it!';
+                installBtn.onclick = () => {
+                    hideInstallPrompt();
+                    localStorage.setItem('install_prompt_dismissed', Date.now().toString());
+                };
+                
+                prompt.classList.remove('hidden');
+                prompt.classList.add('fade-in');
+                localStorage.setItem('install_prompt_shown', 'true');
+            }
+
+            // Generic install instructions for other browsers
+            function showGenericInstallInstructions() {
+                const prompt = dom.installPrompt;
+                const title = prompt.querySelector('h3');
+                const description = prompt.querySelector('p');
+                const installBtn = dom.installAppBtn;
+                
+                title.textContent = 'Install Tadabbur';
+                description.innerHTML = `
+                    <strong>Install this app for a better experience:</strong><br><br>
+                    • Look for the <strong>install icon</strong> in your browser's address bar<br>
+                    • Or check your browser's <strong>menu</strong> for "Install App"<br>
+                    • You'll get push notifications and offline access!<br><br>
+                    <em>Installation varies by browser - look for install options in your browser's interface.</em>
+                `;
+                installBtn.textContent = 'Got it!';
+                installBtn.onclick = () => {
+                    hideInstallPrompt();
+                    localStorage.setItem('install_prompt_dismissed', Date.now().toString());
+                };
+                
+                prompt.classList.remove('hidden');
+                prompt.classList.add('fade-in');
                 localStorage.setItem('install_prompt_shown', 'true');
             }
 
@@ -1111,6 +1356,317 @@
                 // Note: We can't actually clear scheduled setTimeout notifications
                 // In a real PWA, you'd use Service Worker for background notifications
                 console.log('Clearing daily notifications (placeholder)');
+            }
+
+            // ==========================================================================
+            // STREAK MODE SYSTEM
+            // ==========================================================================
+            
+            /**
+             * Start streak mode with unlimited attempts
+             */
+            function startStreakMode() {
+                hideModal(dom.difficultyModal);
+                showModal(dom.loadingOverlay);
+                dom.loadingMessage.textContent = 'Loading Streak Mode...';
+                
+                // Initialize streak mode state
+                appState.streakMode.isActive = true;
+                appState.streakMode.currentStreak = 0;
+                appState.ui.isStreakMode = true;
+                appState.ui.isReviewMode = false;
+                
+                // Load best streak from localStorage
+                loadStreakStats();
+                
+                // Setup UI for streak mode
+                setupStreakModeUI();
+                
+                // Generate first random ayah
+                generateStreakAyah();
+                
+                hideModal(dom.loadingOverlay);
+                showModal(dom.gameContainer);
+                dom.gameContainer.classList.add('opacity-100');
+            }
+            
+            /**
+             * Setup UI specifically for streak mode
+             */
+            function setupStreakModeUI() {
+                // Reset UI elements
+                dom.feedbackMessage.innerHTML = '';
+                dom.postGameOptions.classList.add('hidden');
+                dom.hintButton.classList.remove('hidden'); // Show hint button in streak mode
+                dom.giveUpButton.classList.add('hidden');
+                dom.shareButton.classList.add('hidden');
+                dom.prevAyahBtn.classList.add('hidden');
+                dom.nextAyahBtn.classList.add('hidden');
+                
+                // Update titles and labels for streak mode
+                dom.surahSelectionTitle.textContent = 'Streak Mode - Select a Surah';
+                dom.surahSearchInput.placeholder = 'Search Surah...';
+                dom.surahSearchInput.disabled = false;
+                
+                // Enable all surah cards and juz buttons
+                document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = false);
+                
+                // Update attempts display for streak mode
+                updateStreakAttemptsUI();
+                
+                // Show all juzes for streak mode (full Quran)
+                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => {
+                    btn.style.display = 'flex';
+                });
+                
+                // Start with first juz
+                handleJuzSelection(1);
+            }
+            
+            /**
+             * Generate a random ayah for streak mode
+             */
+            function generateStreakAyah() {
+                // Use all available ayahs for maximum variety
+                const allAyahs = appState.quran.arabic;
+                if (!allAyahs || allAyahs.length === 0) return;
+                
+                // Generate random ayah
+                const randomIndex = Math.floor(Math.random() * allAyahs.length);
+                const randomAyah = allAyahs[randomIndex];
+                
+                // Set up the challenge
+                appState.challenge.currentAyah = randomAyah;
+                appState.challenge.allChallengeAyahs = [randomAyah];
+                appState.challenge.visiblePaneIndex = 0;
+                appState.streakMode.currentAyah = randomAyah;
+                
+                // Update UI
+                dom.ayahSlider.innerHTML = '';
+                dom.translationSlider.innerHTML = '';
+                createPane(dom.ayahSlider, randomAyah, true);
+                createPane(dom.translationSlider, randomAyah, false);
+                navigateSlider(0, false);
+                
+                // Reset hint button for new ayah
+                dom.hintButton.disabled = false;
+                dom.hintButton.textContent = '💡 Get a Hint';
+                dom.hintButton.classList.remove('hidden');
+                
+                // Hide navigation buttons initially
+                dom.prevAyahBtn.classList.add('hidden');
+                dom.nextAyahBtn.classList.add('hidden');
+            }
+            
+            /**
+             * Update attempts UI for streak mode
+             */
+            function updateStreakAttemptsUI() {
+                const { currentStreak, bestStreak } = appState.streakMode;
+                
+                // Clear attempts display and show streak info instead
+                dom.attemptsDisplay.innerHTML = '';
+                
+                // Create streak display
+                const streakDisplay = document.createElement('div');
+                streakDisplay.className = 'flex flex-col items-center gap-2';
+                streakDisplay.innerHTML = `
+                    <div class="flex items-center gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-yellow-400">${currentStreak}</div>
+                            <div class="text-xs uppercase text-slate-400 tracking-wider">Current Streak</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400">${bestStreak}</div>
+                            <div class="text-xs uppercase text-slate-400 tracking-wider">Best Streak</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-yellow-300 text-sm font-medium">🔥 Unlimited attempts - keep your streak alive!</div>
+                        <div class="text-slate-400 text-xs mt-1">One wrong answer ends your streak</div>
+                    </div>
+                `;
+                
+                dom.attemptsDisplay.appendChild(streakDisplay);
+                dom.attemptsSubtitle.textContent = 'Streak Mode - Build the longest streak possible!';
+            }
+            
+            /**
+             * Handle streak mode guess
+             */
+            function handleStreakGuess(surahNumber) {
+                if (!appState.streakMode.isActive) return;
+                
+                const isCorrect = surahNumber === appState.streakMode.currentAyah.surah.number;
+                
+                if (isCorrect) {
+                    // Correct guess - increment streak
+                    appState.streakMode.currentStreak++;
+                    
+                    // Update best streak if needed
+                    if (appState.streakMode.currentStreak > appState.streakMode.bestStreak) {
+                        appState.streakMode.bestStreak = appState.streakMode.currentStreak;
+                    }
+                    
+                    // Save streak stats
+                    saveStreakStats();
+                    
+                    // Visual feedback
+                    const correctButton = document.querySelector(`.surah-card[data-surah-number='${surahNumber}']`);
+                    if (correctButton) {
+                        correctButton.classList.add('guess-correct');
+                        setTimeout(() => correctButton.classList.remove('guess-correct'), 600);
+                    }
+                    
+                    // Show success message briefly, then continue
+                    dom.feedbackMessage.innerHTML = `<p class="text-green-400 text-lg font-bold">Correct! Streak: ${appState.streakMode.currentStreak} 🔥</p>`;
+                    
+                    // Generate next ayah after short delay
+                    setTimeout(() => {
+                        generateStreakAyah();
+                        updateStreakAttemptsUI();
+                        renderSurahListPage();
+                        dom.feedbackMessage.innerHTML = '';
+                        
+                        // Reset hint button for the new ayah
+                        dom.hintButton.disabled = false;
+                        dom.hintButton.textContent = '💡 Get a Hint';
+                        dom.hintButton.classList.remove('hidden');
+                    }, 1500);
+                    
+                } else {
+                    // Wrong guess - end streak
+                    const finalStreak = appState.streakMode.currentStreak;
+                    
+                    // Visual feedback
+                    const incorrectButton = document.querySelector(`.surah-card[data-surah-number='${surahNumber}']`);
+                    if (incorrectButton) {
+                        incorrectButton.classList.add('guess-incorrect');
+                        setTimeout(() => incorrectButton.classList.remove('guess-incorrect'), 600);
+                    }
+                    
+                    // Add to streak history for sharing
+                    appState.streakMode.streakHistory.push({
+                        streak: finalStreak,
+                        date: new Date().toISOString(),
+                        correctSurah: appState.streakMode.currentAyah.surah.englishName
+                    });
+                    
+                    // Reset current streak
+                    appState.streakMode.currentStreak = 0;
+                    
+                    // Save stats
+                    saveStreakStats();
+                    
+                    // End streak mode
+                    endStreakMode(finalStreak);
+                }
+            }
+            
+            /**
+             * End streak mode and show results
+             */
+            function endStreakMode(finalStreak) {
+                appState.streakMode.isActive = false;
+                
+                // Disable all interaction
+                document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = true);
+                
+                // Show results
+                const { surah } = appState.streakMode.currentAyah;
+                const message = finalStreak > 0 
+                    ? `<div class="text-center">
+                         <p class="text-red-400 text-xl font-bold mb-2">Streak Ended!</p>
+                         <p class="text-yellow-400 text-3xl font-bold mb-2">Final Score: ${finalStreak} 🔥</p>
+                         <p class="text-slate-300 text-lg mb-4">The correct answer was <strong>${surah.englishName}</strong></p>
+                       </div>`
+                    : `<div class="text-center">
+                         <p class="text-red-400 text-xl font-bold mb-2">Game Over!</p>
+                         <p class="text-slate-300 text-lg mb-4">The correct answer was <strong>${surah.englishName}</strong></p>
+                         <p class="text-slate-400 text-sm">Try again to build a streak!</p>
+                       </div>`;
+                
+                dom.feedbackMessage.innerHTML = message;
+                
+                // Show post-game options for streak mode
+                showStreakPostGameOptions(finalStreak);
+            }
+            
+            /**
+             * Show post-game options for streak mode
+             */
+            function showStreakPostGameOptions(finalStreak) {
+                dom.postGameOptions.innerHTML = `
+                    <div class="flex flex-col items-center gap-3">
+                        <button id="play-again-streak-btn" class="btn px-8 py-3 bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-lg hover:from-yellow-500 hover:to-orange-500 shadow-lg">
+                            🔥 Play Again
+                        </button>
+                        ${finalStreak > 0 ? `<button id="share-streak-btn" class="btn px-8 py-3 bg-slate-600 text-white font-bold rounded-lg hover:bg-slate-500 shadow-lg">Share Score</button>` : ''}
+                        <button id="back-to-menu-btn" class="btn px-6 py-2 bg-slate-700 text-slate-300 rounded-lg hover:bg-slate-600">Back to Menu</button>
+                    </div>
+                `;
+                
+                dom.postGameOptions.classList.remove('hidden');
+                
+                // Add event listeners
+                const playAgainBtn = document.getElementById('play-again-streak-btn');
+                const shareStreakBtn = document.getElementById('share-streak-btn');
+                const backToMenuBtn = document.getElementById('back-to-menu-btn');
+                
+                if (playAgainBtn) playAgainBtn.onclick = () => startStreakMode();
+                if (shareStreakBtn) shareStreakBtn.onclick = () => shareStreakScore(finalStreak);
+                if (backToMenuBtn) backToMenuBtn.onclick = () => showDifficultySelection();
+            }
+            
+            /**
+             * Share streak score
+             */
+            function shareStreakScore(streak) {
+                const text = `🔥 Tadabbur Streak Mode 🔥\n\nI just scored ${streak} consecutive correct answers!\n\nCan you beat my streak? Try Tadabbur today!\n\n#TadabburStreak #QuranChallenge`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Tadabbur Streak Score',
+                        text: text
+                    });
+                } else {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showNotification('Streak score copied to clipboard! 🔥');
+                    }, () => {
+                        showNotification('Failed to copy streak score.');
+                    });
+                }
+            }
+            
+            /**
+             * Load streak statistics from localStorage
+             */
+            function loadStreakStats() {
+                try {
+                    const stored = localStorage.getItem('tadabbur_streak_stats');
+                    if (stored) {
+                        const stats = JSON.parse(stored);
+                        appState.streakMode.bestStreak = stats.bestStreak || 0;
+                        appState.streakMode.streakHistory = stats.streakHistory || [];
+                    }
+                } catch (e) {
+                    console.error("Failed to load streak stats", e);
+                }
+            }
+            
+            /**
+             * Save streak statistics to localStorage
+             */
+            function saveStreakStats() {
+                try {
+                    const stats = {
+                        bestStreak: appState.streakMode.bestStreak,
+                        streakHistory: appState.streakMode.streakHistory.slice(-10) // Keep last 10 streaks
+                    };
+                    localStorage.setItem('tadabbur_streak_stats', JSON.stringify(stats));
+                } catch (e) {
+                    console.error("Failed to save streak stats", e);
+                }
             }
 
             // --- UI & GAMEPLAY FUNCTIONS ---
@@ -1277,7 +1833,7 @@
                 }
             }
 
-            function populateJuzGrid() { dom.juzGridContainer.innerHTML = ''; for (let i = 1; i <= 30; i++) { const btn = document.createElement('button'); btn.textContent = i; btn.dataset.juz = i; btn.className = 'juz-btn p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-emerald-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card-dark focus:ring-[var(--primary-hover)]'; btn.onclick = () => handleJuzSelection(i); dom.juzGridContainer.appendChild(btn); } }
+            function populateJuzGrid() { dom.juzGridContainer.innerHTML = ''; for (let i = 1; i <= 30; i++) { const btn = document.createElement('button'); btn.textContent = i; btn.dataset.juz = i; btn.className = 'juz-btn p-3 md:p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-emerald-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card-dark focus:ring-[var(--primary-hover)] min-h-[44px] min-w-[44px] flex items-center justify-center text-sm md:text-base font-medium'; btn.onclick = () => handleJuzSelection(i); dom.juzGridContainer.appendChild(btn); } }
             function setSurahList(surahArray) { appState.ui.currentSurahList = surahArray; appState.ui.surahListPage = 0; renderSurahListPage(); }
             /**
              * Renders the current page of surahs with optimized DOM operations
@@ -1291,7 +1847,7 @@
                 
                 // Use DocumentFragment for better performance
                 const fragment = document.createDocumentFragment();
-                const progress = appState.user.progress[appState.ui.currentDifficulty]; 
+                const progress = appState.ui.isStreakMode ? { attempts: [], completed: false } : appState.user.progress[appState.ui.currentDifficulty]; 
                 const guessedSurahNumbers = new Set(progress.attempts.map(a => a.surahNumber)); 
                 
                 pageSurahs.forEach(surah => { 
@@ -1304,7 +1860,9 @@
                     }
                     
                     let statusIndicator = '';
-                    if (guessedSurahNumbers.has(surah.number)) {
+                    
+                    // In streak mode, don't show status indicators from daily progress
+                    if (!appState.ui.isStreakMode && guessedSurahNumbers.has(surah.number)) {
                         const attempt = progress.attempts.find(a => a.surahNumber === surah.number);
                         if (attempt && attempt.correct) {
                             statusIndicator = `<span class="text-green-400 ml-2 font-bold">✓</span>`;
@@ -1315,11 +1873,14 @@
                     
                     btn.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center"><span class="mr-4 text-sm font-bold text-emerald-600 dark:text-[var(--primary-color)] w-6 text-center">${surah.number}.</span><div><p class="font-semibold text-text-light dark:text-text-dark">${surah.englishName}</p><p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">${surah.name}</p></div></div><div class="flex items-center"><span class="text-xs text-subtle-text-light dark:text-subtle-text-dark font-medium uppercase">${surah.revelationType}</span>${statusIndicator}</div></div>`; 
                     
-                    if (progress.completed || guessedSurahNumbers.has(surah.number) || isReviewMode) { 
+                    // In streak mode, don't disable buttons based on daily progress
+                    if (appState.ui.isStreakMode) {
+                        btn.disabled = false; // Always enabled in streak mode
+                    } else if (progress.completed || guessedSurahNumbers.has(surah.number) || isReviewMode) { 
                         btn.disabled = true; 
                     } 
                     fragment.appendChild(btn); 
-                });
+                }); 
                 
                 // Clear container and append fragment in one operation
                 dom.surahListContainer.innerHTML = '';
@@ -1444,6 +2005,12 @@
                 }
             }
             function checkGuess(surahNumber) { 
+                // Handle streak mode separately
+                if (appState.ui.isStreakMode && appState.streakMode.isActive) {
+                    handleStreakGuess(surahNumber);
+                    return;
+                }
+                
                 const { currentDifficulty, isReviewMode } = appState.ui; 
                 const progress = appState.user.progress[currentDifficulty]; 
                 
@@ -1546,6 +2113,13 @@
              * Handles showing the next sequential Ayah as a hint.
              */
             function showHint() {
+                // Handle streak mode hints
+                if (appState.ui.isStreakMode && appState.streakMode.isActive) {
+                    showStreakHint();
+                    return;
+                }
+                
+                // Regular daily mode hints
                 const { allChallengeAyahs, currentAyah } = appState.challenge;
                 if (allChallengeAyahs.length > CONFIG.MAX_HINTS) { showNotification("No more hints available."); return; }
                 const nextAyah = appState.quran.arabic.find(a => a.number === currentAyah.number + allChallengeAyahs.length);
@@ -1560,6 +2134,50 @@
                 appState.user.progress[currentDifficulty].lastPaneIndex = allChallengeAyahs.length - 1;
                 dom.hintButton.classList.add('hidden');
                 saveGameState();
+            }
+            
+            /**
+             * Show hint in streak mode by revealing the next ayah
+             */
+            function showStreakHint() {
+                const { allChallengeAyahs, currentAyah } = appState.challenge;
+                
+                // Check if we can add more ayahs from the same surah
+                if (allChallengeAyahs.length >= 3) { 
+                    showNotification("Maximum hints reached for this ayah!"); 
+                    return; 
+                }
+                
+                const nextAyah = appState.quran.arabic.find(a => a.number === currentAyah.number + allChallengeAyahs.length);
+                
+                if (!nextAyah || nextAyah.surah.number !== currentAyah.surah.number) { 
+                    showNotification("This is the last ayah of the Surah!"); 
+                    dom.hintButton.disabled = true; 
+                    return; 
+                }
+                
+                // Add the hint ayah
+                allChallengeAyahs.push(nextAyah);
+                createPane(dom.ayahSlider, nextAyah, true);
+                createPane(dom.translationSlider, nextAyah, false);
+                
+                // Navigate to show the new ayah
+                navigateSlider(allChallengeAyahs.length - 1);
+                
+                // Show navigation buttons since we now have multiple ayahs
+                if (allChallengeAyahs.length > 1) {
+                    dom.prevAyahBtn.classList.remove('hidden');
+                    dom.nextAyahBtn.classList.remove('hidden');
+                }
+                
+                // Show feedback about the hint
+                showNotification(`Hint added! 💡 Now showing ${allChallengeAyahs.length} ayah${allChallengeAyahs.length > 1 ? 's' : ''} from this Surah.`);
+                
+                // Disable hint button if we've reached the maximum
+                if (allChallengeAyahs.length >= 3) {
+                    dom.hintButton.disabled = true;
+                    dom.hintButton.textContent = '💡 Max Hints Used';
+                }
             }
 
             /**
@@ -1717,6 +2335,7 @@
                 });
 
                 dom.allChallengesDoneMessage.classList.toggle('hidden', !allChallengesAreCompleted);
+                dom.bonusSection.classList.toggle('hidden', !allChallengesAreCompleted);
 
                 hideModal(dom.gameContainer); 
                 hideModal(dom.loadingOverlay); 
@@ -1769,6 +2388,7 @@
                 '#back-to-difficulty-btn': { 'click': showDifficultySelection },
                 '#close-modal-btn': { 'click': () => { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } }, 
                 '#help-btn': { 'click': () => showModal(dom.howToPlayModal) }, 
+                '#how-to-play-modal': { 'click': (e) => { if (e.target === dom.howToPlayModal) { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } } }, 
                 '#surah-search-input': { 'input': () => { 
                     if (appState.ui.isReviewMode) return;
                     const query = dom.surahSearchInput.value.toLowerCase().trim(); 
@@ -1797,11 +2417,14 @@
                 '#theme-system-btn': {'click': () => applyColorScheme('system') }, 
                 '#stats-btn': { 'click': () => { renderStatsModal(); showModal(dom.statsModal); } }, 
                 '#close-stats-btn': { 'click': () => hideModal(dom.statsModal) }, 
+                '#stats-modal': { 'click': (e) => { if (e.target === dom.statsModal) hideModal(dom.statsModal); } }, 
                 '#give-up-button': { 'click': () => endDailyGame(false, true) }, 
-                '#share-button': { 'click': handleShareClick },
+                '#share-button': { 'click': handleShareClick }, 
                 '#install-app-btn': { 'click': installApp },
                 '#dismiss-install-btn': { 'click': dismissInstallPrompt },
                 '#close-install-btn': { 'click': closeInstallPrompt },
+                '#install-header-btn': { 'click': () => checkAndShowInstallPrompt() },
+                '#streak-mode-btn': { 'click': startStreakMode },
             };
             function handleJuzSelection(juzNumber) { dom.surahSearchInput.value = ''; appState.ui.currentJuz = juzNumber; document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]')); const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`); if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]'); setSurahList(appState.quran.juzData[juzNumber] || []); }
             for (const selector in eventListeners) { const element = document.querySelector(selector); if (element) { for (const event in eventListeners[selector]) { element.addEventListener(event, eventListeners[selector][event]); } } }
