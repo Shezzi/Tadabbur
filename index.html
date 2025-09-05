@@ -304,6 +304,7 @@
             .btn, button {
                 min-height: 44px;
                 min-width: 44px;
+                font-size: 16px;
             }
             
             /* Improve modal positioning on mobile */
@@ -329,6 +330,105 @@
             header nav {
                 gap: 0.5rem;
             }
+            
+            /* Mobile-specific layout improvements */
+            .mobile-container {
+                padding: 1rem;
+                margin: 0;
+            }
+            
+            /* Better mobile header */
+            .mobile-header {
+                padding: 1rem 0.5rem;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid var(--border-light);
+            }
+            
+            .dark .mobile-header {
+                background: rgba(15, 23, 42, 0.95);
+                border-bottom-color: var(--border-dark);
+            }
+            
+            /* Mobile game container */
+            .mobile-game-container {
+                padding: 1rem 0.5rem;
+                margin: 0;
+            }
+            
+            /* Mobile card improvements */
+            .mobile-card {
+                margin: 0.5rem 0;
+                border-radius: 1rem;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Mobile input improvements */
+            .mobile-input {
+                font-size: 16px;
+                padding: 0.75rem;
+                border-radius: 0.75rem;
+                border: 2px solid var(--border-light);
+                background: var(--card-light);
+                color: var(--text-light);
+                width: 100%;
+            }
+            
+            .dark .mobile-input {
+                border-color: var(--border-dark);
+                background: var(--card-dark);
+                color: var(--text-dark);
+            }
+            
+            /* Mobile button improvements */
+            .mobile-btn {
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                font-weight: 600;
+                font-size: 16px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            /* Mobile grid improvements */
+            .mobile-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0;
+            }
+            
+            /* Mobile text sizing */
+            .mobile-title {
+                font-size: 2rem;
+                font-weight: 700;
+                line-height: 1.2;
+            }
+            
+            .mobile-subtitle {
+                font-size: 1rem;
+                opacity: 0.8;
+                margin-top: 0.5rem;
+            }
+            
+            /* Mobile spacing */
+            .mobile-spacing {
+                margin: 1rem 0;
+            }
+            
+            /* Mobile safe area for notched devices */
+            .mobile-safe-area {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
         }
 
         /* Prevent zoom on input focus on iOS */
@@ -337,14 +437,31 @@
                 font-size: 16px;
             }
         }
+        
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .mobile-title {
+                font-size: 1.75rem;
+            }
+            
+            .mobile-btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 14px;
+            }
+            
+            .mobile-card {
+                margin: 0.25rem 0;
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4">
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4 mobile-safe-area">
 
     <!-- ==========================================================================
          HEADER NAVIGATION
          ========================================================================== -->
-    <header class="absolute top-4 right-4 z-[100]" role="banner">
+    <header class="absolute top-4 right-4 z-[100] mobile-header" role="banner">
         <nav class="flex items-center gap-2 text-subtle-text-light dark:text-subtle-text-dark" role="navigation" aria-label="Main navigation">
             <button id="help-btn" 
                     class="p-3 md:p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
@@ -399,20 +516,20 @@
     <!-- Difficulty Selection Modal -->
     <div id="difficulty-modal" class="hidden fixed inset-0 bg-background-dark/95 flex items-center justify-center p-4 z-50 fade-in">
         <div class="text-center max-w-2xl w-full">
-            <h1 class="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-green-400 mb-3">Tadabbur</h1>
-            <p class="text-slate-300 text-lg mb-10">Select a difficulty to begin today's challenge.</p>
-            <div id="difficulty-buttons" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <button data-difficulty="Easy" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
-                    <span class="difficulty-text block text-2xl">Easy</span>
-                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Juz Amma (30)</span>
+            <h1 class="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-green-400 mb-3 mobile-title">Tadabbur</h1>
+            <p class="text-slate-300 text-lg mb-10 mobile-subtitle">Select a difficulty to begin today's challenge.</p>
+            <div id="difficulty-buttons" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mobile-grid">
+                <button data-difficulty="Easy" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50 mobile-btn mobile-card">
+                    <span class="difficulty-text block text-2xl mobile-title">Easy</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200 mobile-subtitle">Juz Amma (30)</span>
                 </button>
-                <button data-difficulty="Medium" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
-                    <span class="difficulty-text block text-2xl">Medium</span>
-                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Surah 36-114</span>
+                <button data-difficulty="Medium" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50 mobile-btn mobile-card">
+                    <span class="difficulty-text block text-2xl mobile-title">Medium</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200 mobile-subtitle">Surah 36-114</span>
                 </button>
-                <button data-difficulty="Hard" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50">
-                    <span class="difficulty-text block text-2xl">Hard</span>
-                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200">Full Qur'an</span>
+                <button data-difficulty="Hard" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50 mobile-btn mobile-card">
+                    <span class="difficulty-text block text-2xl mobile-title">Hard</span>
+                    <span class="difficulty-subtitle block text-sm font-normal text-emerald-200 mobile-subtitle">Full Qur'an</span>
                 </button>
             </div>
             
@@ -450,7 +567,7 @@
          MAIN GAME CONTAINER
          ========================================================================== -->
     <main id="game-container" 
-          class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6 opacity-0 transition-opacity duration-500 px-2 md:px-0"
+          class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6 opacity-0 transition-opacity duration-500 px-2 md:px-0 mobile-game-container"
           role="main">
         
         <!-- Ayah Display & Interaction Section -->
@@ -976,11 +1093,9 @@
                 setupOfflineDetection();
                 
                 // Store deferred prompt globally
-                let deferredPrompt;
                 window.addEventListener('beforeinstallprompt', (e) => {
                     e.preventDefault();
-                    deferredPrompt = e;
-                    appState.pwa.deferredPrompt = deferredPrompt;
+                    appState.pwa.deferredPrompt = e;
                     console.log('PWA install prompt available');
                     
                     // Show prompt immediately for Android/Chrome
@@ -1031,8 +1146,14 @@
 
             // Enhanced install prompt checking
             function checkAndShowInstallPrompt() {
+                console.log('Checking install prompt...');
+                console.log('Platform:', { isIOS: isIOS(), isAndroid: isAndroid(), isChrome: isChrome(), isSafari: isSafari() });
+                console.log('Deferred prompt available:', !!appState.pwa.deferredPrompt);
+                console.log('Display mode:', window.matchMedia('(display-mode: standalone)').matches);
+                
                 // Don't show if already installed
                 if (window.matchMedia('(display-mode: standalone)').matches) {
+                    console.log('App already installed, skipping prompt');
                     return;
                 }
 
@@ -1042,6 +1163,7 @@
                 const cooldownMs = (isIOS() || isAndroid()) ? 2 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 2 hours for mobile, 24 hours for desktop
                 
                 if (lastDismissed && (now - parseInt(lastDismissed)) < cooldownMs) {
+                    console.log('Install prompt recently dismissed, skipping');
                     return;
                 }
 
@@ -1052,24 +1174,32 @@
                                     localStorage.getItem('theme_setting') !== null ||
                                     document.visibilityState === 'visible';
 
+                console.log('User engagement:', hasEngagement);
+
                 // Always show for iOS/Android after a short delay
                 if (isIOS() || isAndroid()) {
+                    console.log('Mobile device detected, showing prompt');
                     // Show immediately for mobile devices
                 } else if (!hasEngagement) {
+                    console.log('No user engagement, skipping prompt');
                     return;
                 }
 
                 // Show appropriate prompt based on platform
                 if (appState.pwa.deferredPrompt) {
+                    console.log('Showing native install prompt');
                     // Android/Chrome - use native prompt
                     showInstallPrompt();
                 } else if (isIOS()) {
+                    console.log('Showing iOS install instructions');
                     // iOS - show custom instructions
                     showIOSInstallInstructions();
                 } else if (isSafari()) {
+                    console.log('Showing Safari install instructions');
                     // Safari - show custom instructions
                     showSafariInstallInstructions();
                 } else {
+                    console.log('Showing generic install instructions');
                     // Other browsers - show generic instructions
                     showGenericInstallInstructions();
                 }
@@ -1163,6 +1293,18 @@
             function showInstallPrompt() {
                 if (localStorage.getItem('install_permanently_dismissed')) return;
                 
+                // Update the prompt content based on platform
+                const promptContent = dom.installPrompt.querySelector('.text-sm.opacity-90.mb-3.leading-relaxed');
+                if (promptContent) {
+                    if (isIOS()) {
+                        promptContent.innerHTML = '<strong>To install this app on your iPhone/iPad:</strong><br><br>1. Tap the <strong>Share</strong> button below<br>2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>3. Tap <strong>"Add"</strong> to install';
+                    } else if (isAndroid()) {
+                        promptContent.innerHTML = '<strong>Install this app for a better experience:</strong><br><br>• Get notifications and offline access<br>• Launch from your home screen<br>• Works like a native app';
+                    } else {
+                        promptContent.innerHTML = '<strong>Install this app for a better experience:</strong><br><br>• Look for the install icon in your browser<br>• Get offline access and notifications<br>• Launch from your home screen';
+                    }
+                }
+                
                 dom.installPrompt.classList.remove('hidden');
                 localStorage.setItem('install_prompt_shown', 'true');
             }
@@ -1250,19 +1392,30 @@
             }
 
             async function installApp() {
-                if (!deferredPrompt) return;
-
-                const result = await deferredPrompt.prompt();
-                console.log('Install prompt result:', result);
-
-                if (result.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                    showNotification('Installing Tadabbur... 📱');
-                } else {
-                    console.log('User dismissed the install prompt');
+                if (!appState.pwa.deferredPrompt) {
+                    console.log('No install prompt available');
+                    // Show instructions for manual installation
+                    checkAndShowInstallPrompt();
+                    return;
                 }
 
-                deferredPrompt = null;
+                try {
+                    const result = await appState.pwa.deferredPrompt.prompt();
+                    console.log('Install prompt result:', result);
+
+                    if (result.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        showNotification('Installing Tadabbur... 📱');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                } catch (error) {
+                    console.error('Error showing install prompt:', error);
+                    // Fallback to manual instructions
+                    checkAndShowInstallPrompt();
+                }
+
+                appState.pwa.deferredPrompt = null;
                 hideInstallPrompt();
             }
 
