@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="152" height="152" viewBox="0 0 152 152" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="152" fill="#0f172a"/>
+  <rect x="2" y="2" width="148" height="148" fill="none" stroke="#6ee7b7" stroke-width="6"/>
+  <circle cx="76" cy="76" r="53" fill="#6ee7b7"/>
+  <circle cx="76" cy="76" r="38" fill="#0f172a"/>
+  <text x="76" y="88" text-anchor="middle" fill="#6ee7b7" font-family="Arial, sans-serif" font-size="45" font-weight="bold">ق</text>
+</svg>
