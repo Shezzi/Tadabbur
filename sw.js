@@ -1,6 +1,6 @@
-const CACHE_NAME = 'tadabbur-v1.0.0';
-const STATIC_CACHE = 'tadabbur-static-v1.0.0';
-const DYNAMIC_CACHE = 'tadabbur-dynamic-v1.0.0';
+const CACHE_NAME = 'tadabbur-v2.0.0';
+const STATIC_CACHE = 'tadabbur-static-v2.0.0';
+const DYNAMIC_CACHE = 'tadabbur-dynamic-v2.0.0';
 
 // Files to cache for offline functionality
 const STATIC_FILES = [
@@ -62,30 +62,49 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event
+// - Navigations/HTML: network-first so deployed updates reach users immediately,
+//   falling back to the cached shell when offline.
+// - Everything else: cache-first with dynamic caching for speed.
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
   // Skip non-GET requests
   if (request.method !== 'GET') {
     return;
   }
-  
+
   // Skip chrome-extension and other non-http requests
   if (!url.protocol.startsWith('http')) {
     return;
   }
-  
+
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(STATIC_CACHE).then((cache) => {
+              cache.put(request, responseToCache);
+            });
+          }
+          return response;
+        })
+        .catch(() => caches.match(request).then((cached) => cached || caches.match('/index.html')))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(request)
       .then((cachedResponse) => {
         // Return cached version if available
         if (cachedResponse) {
-          console.log('Service Worker: Serving from cache:', request.url);
           return cachedResponse;
         }
-        
+
         // Otherwise, fetch from network
         return fetch(request)
           .then((response) => {
@@ -93,26 +112,21 @@ self.addEventListener('fetch', (event) => {
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-            
+
             // Clone the response for caching
             const responseToCache = response.clone();
-            
+
             // Cache dynamic content
             caches.open(DYNAMIC_CACHE)
               .then((cache) => {
                 cache.put(request, responseToCache);
               });
-            
+
             return response;
           })
           .catch((error) => {
             console.log('Service Worker: Network request failed:', error);
-            
-            // Return offline page for navigation requests
-            if (request.destination === 'document') {
-              return caches.match('/index.html');
-            }
-            
+
             // Return a generic offline response for other requests
             return new Response('Offline content not available', {
               status: 503,

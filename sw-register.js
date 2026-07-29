@@ -38,10 +38,13 @@
         });
       });
       
-      // Handle controller change (when new service worker takes control)
+      // Handle controller change (when new service worker takes control).
+      // The refreshing flag prevents an infinite reload loop.
+      let refreshing = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service Worker controller changed');
-        // Reload the page to get the new content
+        if (refreshing) return;
+        refreshing = true;
+        console.log('Service Worker controller changed, reloading for new content');
         window.location.reload();
       });
       
@@ -150,3 +153,5 @@
   };
   
 })();
+
+
