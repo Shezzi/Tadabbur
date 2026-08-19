@@ -1,7 +1,12 @@
 // Service Worker Registration Script
 (function() {
   'use strict';
-  
+
+  // Captured synchronously: document.currentScript is only readable while this
+  // script is executing, and the app must work both at a domain root and inside a
+  // GitHub Pages project subfolder (e.g. /Tadabbur/).
+  var BASE_URL = new URL('.', (document.currentScript && document.currentScript.src) || window.location.href);
+
   // Check if service workers are supported
   if (!('serviceWorker' in navigator)) {
     console.log('Service Workers not supported');
@@ -15,8 +20,8 @@
   
   async function registerServiceWorker() {
     try {
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/'
+      const registration = await navigator.serviceWorker.register(new URL('sw.js', BASE_URL).href, {
+        scope: BASE_URL.href
       });
       
       console.log('Service Worker registered successfully:', registration);
@@ -84,10 +89,15 @@
     
     // Add event listeners
     document.getElementById('update-btn').addEventListener('click', () => {
-      // Tell the service worker to skip waiting and activate
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-      }
+      // The SKIP_WAITING message must go to the *waiting* worker; the active
+      // controller is the old version and ignores it.
+      navigator.serviceWorker.getRegistration().then((registration) => {
+        if (registration && registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        } else {
+          window.location.reload();
+        }
+      });
       notification.remove();
     });
     
@@ -103,30 +113,22 @@
     }, 10000);
   }
   
-  // Check for updates periodically
-  setInterval(() => {
-    if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({ type: 'CHECK_UPDATE' });
-    }
-  }, 60000); // Check every minute
-  
-  // Handle online/offline status
-  function updateOnlineStatus() {
-    const isOnline = navigator.onLine;
-    
-    if (isOnline) {
-      // Trigger background sync when back online
-      if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
-        navigator.serviceWorker.ready.then(registration => {
-          registration.sync.register('background-sync');
-        });
-      }
-    }
+  // Ask the browser to re-check sw.js for a new deployment. registration.update() is
+  // what actually fetches it; the previous postMessage('CHECK_UPDATE') was a no-op
+  // because the service worker has no handler for that message.
+  function checkForUpdate() {
+    navigator.serviceWorker.getRegistration().then(function (registration) {
+      if (registration) registration.update();
+    }).catch(function () { /* offline: nothing to do */ });
   }
-  
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
-  
+
+  setInterval(checkForUpdate, 60 * 60 * 1000); // hourly
+
+  // Also check whenever the user returns to the tab.
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') checkForUpdate();
+  });
+
   // Expose service worker utilities globally
   window.swUtils = {
     getVersion: async () => {
@@ -146,9 +148,11 @@
     },
     
     skipWaiting: () => {
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-      }
+      navigator.serviceWorker.getRegistration().then((registration) => {
+        if (registration && registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      });
     }
   };
   

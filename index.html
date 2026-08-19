@@ -1,50 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="dark light">
+    <script>
+        // Runs before first paint so the saved theme is applied with no flash of the wrong colours.
+        (function () {
+            try {
+                var scheme = localStorage.getItem('quranle_color_scheme') || 'system';
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var useDark = scheme === 'dark' || (scheme === 'system' && prefersDark);
+                document.documentElement.classList.toggle('dark', useDark);
+            } catch (e) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
     <title>Tadabbur - Quran Guessing Game</title>
     <meta name="description" content="Tadabbur is a daily Quran guessing game. Read or listen to an ayah, then guess which Surah it belongs to across three difficulty levels.">
-    <link rel="canonical" href="https://sheheryaar.com/">
+    <link rel="canonical" href="https://shezzi.github.io/Tadabbur/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Tadabbur - Quran Guessing Game">
     <meta property="og:description" content="A daily Quranic verse guessing game. Listen, reflect, and guess the Surah across three difficulty levels.">
-    <meta property="og:url" content="https://sheheryaar.com/">
+    <meta property="og:url" content="https://shezzi.github.io/Tadabbur/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Tadabbur - Quran Guessing Game">
     <meta name="twitter:description" content="A daily Quranic verse guessing game. Listen, reflect, and guess the Surah.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'background-light': '#f4f6fb',
-                        'background-dark': '#0b1120',
-                        'card-light': '#ffffff',
-                        'card-dark': '#16213a',
-                        'text-light': '#0f172a',
-                        'text-dark': '#e2e8f0',
-                        'subtle-text-light': '#64748b',
-                        'subtle-text-dark': '#94a3b8',
-                        'border-light': '#e2e8f0',
-                        'border-dark': '#2a3752'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                        amiri: ['Amiri Quran', 'serif']
-                    }
-                }
-            }
-        };
-    </script>
+    <!-- Prebuilt Tailwind stylesheet (see tailwind.config.js). Replaces the CDN
+         script so styles are available on first paint with no runtime JIT step. -->
+    <link rel="stylesheet" href="tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran:wght@400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#6ee7b7">
@@ -54,16 +45,16 @@
     <meta name="apple-mobile-web-app-title" content="Tadabbur">
     <meta name="application-name" content="Tadabbur">
     <meta name="msapplication-TileColor" content="#0f172a">
-    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-config" content="browserconfig.xml">
     
     <!-- Apple Touch Icons -->
-    <link rel="apple-touch-icon" href="/icons/icon-152x152.svg">
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.svg">
+    <link rel="apple-touch-icon" href="icons/icon-152x152.svg">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192x192.svg">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/icons/icon-192x192.svg">
-    <link rel="shortcut icon" href="/icons/icon-192x192.svg">
+    <link rel="icon" type="image/svg+xml" href="icons/icon-192x192.svg">
+    <link rel="shortcut icon" href="icons/icon-192x192.svg">
     <style>
         /* ==========================================================================
            CSS CUSTOM PROPERTIES (VARIABLES)
@@ -141,21 +132,62 @@
         }
 
         /* ==========================================================================
+           SURFACES — soft, layered cards rather than flat boxes
+           ========================================================================== */
+        main > section, main > aside {
+            border-radius: 1.25rem;
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.04),
+                0 12px 32px -12px rgba(15, 23, 42, 0.14);
+            backdrop-filter: blur(6px);
+        }
+
+        .dark main > section, .dark main > aside {
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.3),
+                0 16px 40px -16px rgba(0, 0, 0, 0.6);
+        }
+
+        /* The wordmark: a single accent gradient used consistently */
+        .brand-title {
+            background-image: linear-gradient(135deg, #34d399 0%, #6ee7b7 50%, #5eead4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.03em;
+            font-weight: 800;
+        }
+
+        /* ==========================================================================
            TYPOGRAPHY STYLES
            ========================================================================== */
-        .arabic-text { 
-            font-family: 'Amiri Quran', serif; 
-            direction: rtl; 
-            line-height: 2; 
-            word-spacing: 8px; 
-            font-size: clamp(2rem, 5vw, 3rem); 
-            color: var(--text-light); 
+        .arabic-text {
+            font-family: 'Amiri Quran', serif;
+            direction: rtl;
+            line-height: 2.1;
+            word-spacing: 8px;
+            font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+            color: var(--text-light);
             text-shadow: none;
         }
 
+        /* Brighter than the accent mint so scripture stays comfortably readable on dark. */
         .dark .arabic-text {
-            color: var(--primary-color); 
-            text-shadow: 0 0 15px var(--primary-glow);
+            color: #a7f3d0;
+            text-shadow: 0 0 24px rgba(52, 211, 153, 0.18);
+        }
+
+        /* A quiet recessed panel so the ayah reads as the focal point of the card. */
+        .ayah-stage {
+            background: rgba(15, 23, 42, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
+            padding: 0.5rem 0.25rem;
+        }
+
+        .dark .ayah-stage {
+            background: rgba(2, 6, 23, 0.35);
+            border-color: rgba(42, 55, 82, 0.8);
         }
         
         .ayah-number { 
@@ -356,13 +388,32 @@
             animation: pulse 2s infinite;
         }
 
-        .surah-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .surah-card {
+            border-radius: 0.85rem;
         }
 
-        .dark .surah-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        .surah-card:not(:disabled):hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-hover);
+            box-shadow: 0 6px 16px -6px rgba(16, 185, 129, 0.4);
+        }
+
+        .dark .surah-card:not(:disabled):hover {
+            box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.6);
+        }
+
+        .juz-btn {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .juz-btn.active {
+            box-shadow: 0 4px 12px -4px var(--primary-glow);
+            font-weight: 700;
+        }
+
+        /* Attempt dots read as a progress track rather than loose circles */
+        .attempt-circle {
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.15);
         }
 
         /* ==========================================================================
@@ -615,10 +666,10 @@
     </div>
 
     <!-- Difficulty Selection Modal -->
-    <div id="difficulty-modal" class="hidden fixed inset-0 bg-background-dark/95 flex items-center justify-center p-4 z-50 fade-in">
+    <div id="difficulty-modal" class="hidden fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 flex items-center justify-center p-4 z-50 fade-in">
         <div class="text-center max-w-2xl w-full">
-            <h1 class="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-green-400 mb-3 mobile-title">Tadabbur</h1>
-            <p class="text-slate-300 text-lg mb-10 mobile-subtitle">Select a difficulty to begin today's challenge.</p>
+            <h1 class="brand-title text-6xl md:text-7xl mb-3 mobile-title">Tadabbur</h1>
+            <p class="text-subtle-text-light dark:text-slate-300 text-lg mb-10 mobile-subtitle">Select a difficulty to begin today's challenge.</p>
             <div id="difficulty-buttons" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mobile-grid">
                 <button data-difficulty="Easy" class="difficulty-btn btn p-6 text-lg bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/50 mobile-btn mobile-card">
                     <span class="difficulty-text block text-2xl mobile-title">Easy</span>
@@ -638,7 +689,7 @@
             <div id="bonus-section" class="hidden mt-12">
                 <div class="text-center mb-6">
                     <h2 class="text-3xl font-bold text-yellow-400 mb-2">🎉 Bonus Modes Unlocked!</h2>
-                    <p class="text-slate-300 text-lg">You've completed all daily challenges! Try these special modes:</p>
+                    <p class="text-subtle-text-light dark:text-slate-300 text-lg">You've completed all daily challenges! Try these special modes:</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                     <button id="streak-mode-btn" class="bonus-btn btn p-6 text-lg bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:from-yellow-500 hover:to-orange-500 shadow-lg shadow-yellow-900/50 transition-all">
@@ -678,7 +729,7 @@
                 <button id="back-to-difficulty-btn" class="absolute top-1/2 -translate-y-1/2 left-0 p-3 md:p-2 rounded-full text-subtle-text-light dark:text-subtle-text-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Back to difficulty selection">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 </button>
-                <h1 class="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-green-600 dark:from-emerald-300 dark:to-green-400">Tadabbur</h1>
+                <h1 class="brand-title text-5xl md:text-6xl">Tadabbur</h1>
                 <p id="attempts-subtitle" class="text-subtle-text-light dark:text-subtle-text-dark mt-2"></p>
             </header>
             
@@ -694,7 +745,7 @@
             <!-- Ayah Display Area (Slider) -->
             <div class="flex items-center justify-center gap-2 my-4">
                 <button id="prev-ayah-btn" aria-label="Previous Ayah" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-3 md:p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
-                <div id="ayah-display-container" class="flex-grow overflow-hidden">
+                <div id="ayah-display-container" class="ayah-stage flex-grow overflow-hidden">
                     <div id="ayah-slider" class="flex transition-transform duration-500 ease-in-out"></div>
                 </div>
                 <button id="next-ayah-btn" aria-label="Next Ayah (Hint)" class="hidden text-[var(--primary-hover)] hover:text-emerald-500 dark:text-[var(--primary-color)] dark:hover:text-[var(--primary-hover)] p-3 md:p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
@@ -889,8 +940,9 @@
 
             // --- CONFIGURATION & CONSTANTS ---
             // This section centralizes all static configuration values for easy management.
-            const CONFIG = { 
+            const CONFIG = {
                 API_BASE_URL: 'https://api.alquran.cloud/v1',
+                QURAN_CACHE: 'tadabbur-quran-data-v1',
                 SURAHS_PER_PAGE: 6,
                 BASMALA: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ",
                 MAX_HINTS: 2,
@@ -997,7 +1049,7 @@
             // ==========================================================================
             // Centralized state object for the entire application
             let appState = {
-                quran: { arabic: [], english: [], audio: [], surahMeta: new Map(), allSurahs: [], juzData: {}, reciters: [] },
+                quran: { arabic: [], surahMeta: new Map(), allSurahs: [], juzData: {}, reciters: [] },
                 challenge: { currentAyah: null, allChallengeAyahs: [], visiblePaneIndex: 0 },
                 user: {}, // Holds daily progress, loaded from localStorage.
                 stats: {}, // Holds long-term stats, loaded from localStorage.
@@ -1016,9 +1068,51 @@
             // ==========================================================================
             // UTILITY & HELPER FUNCTIONS
             // ==========================================================================
-            const showModal = (modalElement) => modalElement.classList.remove('hidden');
-            const hideModal = (modalElement) => modalElement.classList.add('hidden');
+            // Dialogs that should trap focus while open. The game container and loading
+            // overlay reuse showModal/hideModal but are not dialogs, so they are excluded.
+            const FOCUS_TRAPPED = new Set(['how-to-play-modal', 'stats-modal', 'theme-modal']);
+            const FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            let lastFocusedElement = null;
+
+            function handleModalFocusTrap(event) {
+                if (event.key !== 'Tab') return;
+                const modal = event.currentTarget;
+                const items = [...modal.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+                if (!items.length) return;
+                const first = items[0];
+                const last = items[items.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            }
+
+            const showModal = (modalElement) => {
+                modalElement.classList.remove('hidden');
+                if (!FOCUS_TRAPPED.has(modalElement.id)) return;
+                lastFocusedElement = document.activeElement;
+                modalElement.setAttribute('role', 'dialog');
+                modalElement.setAttribute('aria-modal', 'true');
+                modalElement.addEventListener('keydown', handleModalFocusTrap);
+                const target = modalElement.querySelector(FOCUSABLE);
+                if (target) setTimeout(() => target.focus(), 0);
+            };
+
+            const hideModal = (modalElement) => {
+                modalElement.classList.add('hidden');
+                if (!FOCUS_TRAPPED.has(modalElement.id)) return;
+                modalElement.removeEventListener('keydown', handleModalFocusTrap);
+                modalElement.removeAttribute('aria-modal');
+                if (lastFocusedElement && document.contains(lastFocusedElement)) {
+                    lastFocusedElement.focus();
+                    lastFocusedElement = null;
+                }
+            };
             const getTodayString = () => new Date().toISOString().split('T')[0];
+            const setLoadingMessage = (text) => { if (dom.loadingMessage) dom.loadingMessage.textContent = text; };
             function applyColorScheme(scheme) { localStorage.setItem('quranle_color_scheme', scheme); if (scheme === 'system') { const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; document.documentElement.classList.toggle('dark', systemPrefersDark); } else { document.documentElement.classList.toggle('dark', scheme === 'dark'); } updateActiveThemeButtons(); }
             function updateActiveThemeButtons() { const activeScheme = localStorage.getItem('quranle_color_scheme') || 'system'; document.querySelectorAll('.theme-mode-btn').forEach(btn => { btn.classList.toggle('bg-[var(--primary-color)]', btn.dataset.theme === activeScheme); btn.classList.toggle('text-[var(--primary-text)]', btn.dataset.theme === activeScheme); btn.classList.toggle('font-bold', btn.dataset.theme === activeScheme); }); }
             /**
@@ -1057,32 +1151,179 @@
             // ==========================================================================
 
             /**
-             * Fetches the core, non-changing Quran data (Surah list, translations, reciters) once per session.
+             * Fetches the core metadata: the Surah list and the list of available reciters.
+             * Both are small (tens of KB); the bulky Arabic edition is loaded separately
+             * and cached, and translations are fetched per-ayah on demand.
              */
             async function loadCoreData() {
-                dom.loadingMessage.textContent = 'Loading Quranic data...';
-                const [surahListJson, englishJson, reciterJson] = await Promise.all([
+                setLoadingMessage('Loading Quran metadata...');
+                const [surahListJson, reciterJson] = await Promise.all([
                     fetchJSON(`${CONFIG.API_BASE_URL}/surah`),
-                    fetchJSON(`${CONFIG.API_BASE_URL}/quran/en.sahih`),
                     fetchJSON(`${CONFIG.API_BASE_URL}/edition?format=audio&language=ar`)
                 ]);
                 appState.quran.allSurahs = surahListJson.data;
                 surahListJson.data.forEach(s => appState.quran.surahMeta.set(s.number, s));
-                appState.quran.english = englishJson.data.surahs.flatMap(s => s.ayahs);
-                appState.quran.reciters = reciterJson.data.sort((a, b) => a.englishName.localeCompare(b.englishName));
+
+                // The API lists several duplicate reciters (same name, different identifier).
+                // Keep the first of each name so the dropdown reads cleanly.
+                const seenNames = new Set();
+                appState.quran.reciters = reciterJson.data
+                    .sort((a, b) => a.englishName.localeCompare(b.englishName))
+                    .filter(r => {
+                        if (seenNames.has(r.englishName)) return false;
+                        seenNames.add(r.englishName);
+                        return true;
+                    });
             }
-            
+
             /**
-             * Fetches a specific edition of the Quran (e.g., Arabic script, audio).
+             * Fetches a full Quran edition, served from the Cache Storage API when available
+             * so that repeat visits (and offline use) are instant rather than re-downloading
+             * roughly 2 MB of JSON.
              * @param {string} edition - The identifier for the edition (e.g., 'quran-uthmani').
              * @returns {Promise<Array>} - An array of Ayah objects for the requested edition.
              */
             async function fetchEdition(edition) {
                 if (!edition) throw new Error("Fetch edition called with no identifier.");
-                const json = await fetchJSON(`${CONFIG.API_BASE_URL}/quran/${edition}`);
+                const url = `${CONFIG.API_BASE_URL}/quran/${edition}`;
+                let json = null;
+
+                if ('caches' in window) {
+                    try {
+                        const cache = await caches.open(CONFIG.QURAN_CACHE);
+                        const hit = await cache.match(url);
+                        if (hit) json = await hit.json();
+                    } catch (e) {
+                        console.warn('Quran cache read failed, falling back to network', e);
+                    }
+                }
+
+                if (!json) {
+                    const response = await fetchWithProgress(url, (pct) => {
+                        setLoadingMessage(pct !== null
+                            ? `Loading the Qur'an... ${pct}%`
+                            : "Loading the Qur'an...");
+                    });
+                    if ('caches' in window) {
+                        try {
+                            const cache = await caches.open(CONFIG.QURAN_CACHE);
+                            await cache.put(url, response.clone());
+                        } catch (e) {
+                            console.warn('Quran cache write failed (likely quota)', e);
+                        }
+                    }
+                    json = await response.json();
+                }
+
                 // Maps the fetched ayahs and injects the corresponding Surah metadata into each ayah object.
                 return json.data.surahs.flatMap(s => s.ayahs.map(a => ({ ...a, surah: appState.quran.surahMeta.get(s.number) })));
             }
+
+            /**
+             * Fetches a URL while reporting download progress, so the loading screen can show
+             * real percentages instead of a spinner that looks stalled on slow connections.
+             * Returns an unread Response so the caller can still clone/cache it.
+             */
+            async function fetchWithProgress(url, onProgress) {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status} for URL: ${url}`);
+
+                const total = Number(response.headers.get('content-length')) || 0;
+                if (!total || !response.body || typeof response.body.getReader !== 'function') {
+                    onProgress(null);
+                    return response;
+                }
+
+                const reader = response.body.getReader();
+                const chunks = [];
+                let received = 0;
+                let lastReported = -1;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    chunks.push(value);
+                    received += value.length;
+                    const pct = Math.min(99, Math.floor((received / total) * 100));
+                    if (pct !== lastReported) {
+                        lastReported = pct;
+                        onProgress(pct);
+                    }
+                }
+
+                return new Response(new Blob(chunks), {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                });
+            }
+
+            // --- TRANSLATIONS (fetched per ayah instead of downloading all 6,236) ---
+
+            const translationCache = new Map();
+
+            function loadTranslationCache() {
+                try {
+                    const stored = JSON.parse(localStorage.getItem('tadabbur_translations') || '{}');
+                    Object.entries(stored).forEach(([k, v]) => translationCache.set(Number(k), v));
+                } catch (e) {
+                    console.warn('Could not restore translation cache', e);
+                }
+            }
+
+            function persistTranslationCache() {
+                try {
+                    // Keep the cache bounded so localStorage never fills up.
+                    const entries = [...translationCache.entries()].slice(-300);
+                    localStorage.setItem('tadabbur_translations', JSON.stringify(Object.fromEntries(entries)));
+                } catch (e) {
+                    // Quota errors are non-fatal; translations simply refetch next time.
+                }
+            }
+
+            async function getTranslation(ayahNumber) {
+                if (translationCache.has(ayahNumber)) return translationCache.get(ayahNumber);
+                const json = await fetchJSON(`${CONFIG.API_BASE_URL}/ayah/${ayahNumber}/en.sahih`);
+                const text = (json && json.data && json.data.text) || '';
+                translationCache.set(ayahNumber, text);
+                persistTranslationCache();
+                return text;
+            }
+
+            // --- AUDIO (URLs are derived rather than downloading a 3 MB edition) ---
+
+            let reciterBitrates = {};
+
+            function loadReciterBitrates() {
+                try {
+                    reciterBitrates = JSON.parse(localStorage.getItem('tadabbur_reciter_bitrates') || '{}');
+                } catch (e) {
+                    reciterBitrates = {};
+                }
+            }
+
+            /**
+             * Reciters are hosted at differing bitrates (48/64/128/192 kbps). Resolving one
+             * ayah tells us which, and the answer is cached forever after.
+             */
+            async function resolveReciterBitrate(identifier) {
+                if (reciterBitrates[identifier]) return reciterBitrates[identifier];
+                try {
+                    const json = await fetchJSON(`${CONFIG.API_BASE_URL}/ayah/1/${identifier}`);
+                    const match = /\/audio\/(\d+)\//.exec((json && json.data && json.data.audio) || '');
+                    const bitrate = match ? match[1] : '128';
+                    reciterBitrates[identifier] = bitrate;
+                    try {
+                        localStorage.setItem('tadabbur_reciter_bitrates', JSON.stringify(reciterBitrates));
+                    } catch (e) { /* non-fatal */ }
+                    return bitrate;
+                } catch (e) {
+                    return '128';
+                }
+            }
+
+            const buildAudioUrl = (ayahNumber, identifier, bitrate) =>
+                `https://cdn.islamic.network/quran/audio/${bitrate}/${identifier}/${ayahNumber}.mp3`;
             
             // --- DAILY RANDOMIZATION ---
 
@@ -1187,13 +1428,11 @@
             }
 
             // ==========================================================================
-            // PWA & NOTIFICATION SYSTEM
+            // PWA INSTALL SUPPORT
             // ==========================================================================
-            let deferredPrompt = null;
-            let notificationPermission = 'default';
 
             /**
-             * Initialize PWA features including install prompt and notifications
+             * Initialize PWA features: offline detection and the install prompt.
              */
             function initializePWA() {
                 // Check if already installed
@@ -1245,16 +1484,6 @@
                         checkAndShowInstallPrompt();
                     }, 2000);
                 }, { once: true });
-                
-                // Additional trigger after more user engagement
-                document.addEventListener('click', () => {
-                    setTimeout(() => {
-                        checkAndShowInstallPrompt();
-                    }, 5000);
-                }, { once: true });
-                
-                // Request notification permission
-                requestNotificationPermission();
             }
 
             // Platform detection functions
@@ -1461,97 +1690,6 @@
                 localStorage.setItem('install_permanently_dismissed', 'true');
             }
 
-            /**
-             * Request notification permission and set up daily reminders
-             */
-            async function requestNotificationPermission() {
-                if (!('Notification' in window)) {
-                    console.log('This browser does not support notifications');
-                    return;
-                }
-
-                if (Notification.permission === 'granted') {
-                    notificationPermission = 'granted';
-                    setupDailyNotifications();
-                } else if (Notification.permission !== 'denied') {
-                    // Don't request permission immediately, wait for user engagement
-                    setTimeout(async () => {
-                        if (appState.stats.gamesPlayed >= 1) {
-                            const permission = await Notification.requestPermission();
-                            notificationPermission = permission;
-                            if (permission === 'granted') {
-                                setupDailyNotifications();
-                                showNotification('Daily reminders enabled! 🔔');
-                            }
-                        }
-                    }, 10000); // Wait 10 seconds after first game
-                }
-            }
-
-            function setupDailyNotifications() {
-                if (notificationPermission !== 'granted') return;
-
-                // Clear existing notifications
-                clearDailyNotifications();
-
-                // Schedule daily notifications for the next 7 days
-                const now = new Date();
-                for (let i = 1; i <= 7; i++) {
-                    const notificationTime = new Date(now);
-                    notificationTime.setDate(now.getDate() + i);
-                    notificationTime.setHours(9, 0, 0, 0); // 9 AM
-
-                    const timeUntilNotification = notificationTime.getTime() - now.getTime();
-                    
-                    if (timeUntilNotification > 0) {
-                        setTimeout(() => {
-                            showDailyNotification();
-                        }, timeUntilNotification);
-                    }
-                }
-            }
-
-            function showDailyNotification() {
-                if (notificationPermission !== 'granted') return;
-
-                const messages = [
-                    "🌅 Start your day with Tadabbur! New daily challenge awaits.",
-                    "📖 Your daily Quranic verse is ready. Come test your knowledge!",
-                    "🎯 Ready for today's challenge? Tadabbur is waiting for you!",
-                    "✨ A new day, a new verse. Let's continue your learning journey!",
-                    "🔥 Keep your streak alive! Today's Tadabbur challenge is here.",
-                    "📚 Expand your Quranic knowledge with today's verse challenge!",
-                    "🌟 Another opportunity to learn awaits in Tadabbur!"
-                ];
-
-                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-                const notification = new Notification("Tadabbur - Daily Challenge", {
-                    body: randomMessage,
-                    icon: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4Ij48cGF0aCBmaWxsPSIjNmVlN2I3IiBkPSJNNjQgQzY0IDI4Ljg0NiA2NCA2NFMyOS4xNTQgNjQgNjQgNjRzMjQuODQ2IDY0IDY0IDY0WiIvPjwvc3ZnPg==",
-                    badge: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiI+PHBhdGggZmlsbD0iIzZlZTdiNyIgZD0iTTQ4IDI0YzEzLjI1NSAwIDI0IDEwLjc0NSAyNCAyNHMtMTAuNzQ1IDI0LTI0IDI0LTI0LTEwLjc0NS0yNC0yNFMzNC43NDUgMjQgNDggMjR6Ii8+PC9zdmc+",
-                    tag: "daily-reminder",
-                    requireInteraction: false,
-                    silent: false
-                });
-
-                notification.onclick = () => {
-                    window.focus();
-                    notification.close();
-                };
-
-                // Auto-close after 10 seconds
-                setTimeout(() => {
-                    notification.close();
-                }, 10000);
-            }
-
-            function clearDailyNotifications() {
-                // Note: We can't actually clear scheduled setTimeout notifications
-                // In a real PWA, you'd use Service Worker for background notifications
-                console.log('Clearing daily notifications (placeholder)');
-            }
-
             // ==========================================================================
             // STREAK MODE SYSTEM
             // ==========================================================================
@@ -1608,13 +1746,8 @@
                 // Update attempts display for streak mode
                 updateStreakAttemptsUI();
                 
-                // Show all juzes for streak mode (full Quran)
-                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => {
-                    btn.style.display = 'flex';
-                });
-                
-                // Start with first juz
-                handleJuzSelection(1);
+                // Streak mode spans the full Quran, so every juz is available.
+                handleJuzSelection(applyJuzScope());
             }
             
             /**
@@ -2002,7 +2135,13 @@
                 distContainer.innerHTML += enhancedStatsHtml;
                 distContainer.innerHTML += `<div class="mt-6"><h4 class="text-lg font-bold text-center text-[var(--primary-color)] mb-4">Achievements</h4><div class="space-y-2">${achievementsHtml}</div></div>`;
             }
-            function populateReciterDropdown() { dom.reciterSelect.innerHTML = ''; appState.quran.reciters.forEach(reciter => { dom.reciterSelect.add(new Option(reciter.englishName, reciter.identifier)); }); const preferredReciter = 'ar.alafasy'; dom.reciterSelect.value = appState.quran.reciters.some(r => r.identifier === preferredReciter) ? preferredReciter : dom.reciterSelect.options[0].value; }
+            function populateReciterDropdown() {
+                dom.reciterSelect.innerHTML = '';
+                appState.quran.reciters.forEach(reciter => { dom.reciterSelect.add(new Option(reciter.englishName, reciter.identifier)); });
+                const saved = localStorage.getItem('tadabbur_reciter');
+                const preferred = [saved, 'ar.alafasy'].find(id => id && appState.quran.reciters.some(r => r.identifier === id));
+                dom.reciterSelect.value = preferred || dom.reciterSelect.options[0].value;
+            }
             
             /**
              * Groups Surahs into Juzes based on the API's data structure.
@@ -2088,7 +2227,41 @@
                 dom.prevSurahPage.disabled = surahListPage === 0; 
                 dom.nextSurahPage.disabled = surahListPage >= totalPages - 1; 
             }
-            function createPane(slider, ayah, isArabic) { const pane = document.createElement('div'); pane.className = 'w-full flex-shrink-0 min-h-[5rem] flex flex-col items-center justify-center px-4 md:px-6'; if (isArabic) { let ayahText = ayah.text; if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(CONFIG.BASMALA)) { const basmalaP = document.createElement('p'); basmalaP.className = 'basmala-text font-amiri text-center text-sm text-subtle-text-light dark:text-subtle-text-dark mb-2'; basmalaP.textContent = CONFIG.BASMALA.trim(); pane.appendChild(basmalaP); ayahText = ayahText.substring(CONFIG.BASMALA.length); } const p = document.createElement('p'); p.className = 'arabic-text'; p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`; pane.appendChild(p); } else { const englishAyah = appState.quran.english.find(a => a.number === ayah.number); const p = document.createElement('p'); p.className = 'text-subtle-text-light dark:text-subtle-text-dark italic text-center max-w-2xl'; p.textContent = englishAyah ? `"${englishAyah.text}"` : ""; pane.appendChild(p); } slider.appendChild(pane); }
+            function createPane(slider, ayah, isArabic) {
+                const pane = document.createElement('div');
+                pane.className = 'w-full flex-shrink-0 min-h-[5rem] flex flex-col items-center justify-center px-4 md:px-6';
+
+                if (isArabic) {
+                    let ayahText = ayah.text;
+                    if (ayah.numberInSurah === 1 && ayah.surah.number !== 1 && ayah.surah.number !== 9 && ayah.text.startsWith(CONFIG.BASMALA)) {
+                        const basmalaP = document.createElement('p');
+                        basmalaP.className = 'basmala-text font-amiri text-center text-sm text-subtle-text-light dark:text-subtle-text-dark mb-2';
+                        basmalaP.textContent = CONFIG.BASMALA.trim();
+                        pane.appendChild(basmalaP);
+                        ayahText = ayahText.substring(CONFIG.BASMALA.length);
+                    }
+                    const p = document.createElement('p');
+                    p.className = 'arabic-text';
+                    p.innerHTML = ayahText + `<span class="ayah-number">${ayah.numberInSurah}</span>`;
+                    pane.appendChild(p);
+                } else {
+                    const p = document.createElement('p');
+                    p.className = 'text-subtle-text-light dark:text-subtle-text-dark italic text-center max-w-2xl transition-opacity duration-300 opacity-0';
+                    p.textContent = '';
+                    pane.appendChild(p);
+                    // Translations load per ayah so the app never downloads all 6,236 up front.
+                    getTranslation(ayah.number).then(text => {
+                        p.textContent = text ? `"${text}"` : '';
+                        p.classList.remove('opacity-0');
+                    }).catch(() => {
+                        p.textContent = navigator.onLine
+                            ? 'Translation unavailable right now.'
+                            : 'Translation unavailable offline.';
+                        p.classList.remove('opacity-0');
+                    });
+                }
+                slider.appendChild(pane);
+            }
             
             /**
              * Gets the daily ayah for a specific difficulty without setting up the UI.
@@ -2168,7 +2341,53 @@
                 navigateSlider(visiblePaneIndex, false);
             }
 
-            function updateContextForVisibleAyah() { const ayah = appState.challenge.allChallengeAyahs[appState.challenge.visiblePaneIndex]; if (!ayah) return; dom.audioElement.pause(); dom.audioElement.currentTime = 0; if (appState.quran.audio.length > 0) { const audioAyah = appState.quran.audio.find(a => a.number === ayah.number); if (audioAyah) dom.audioElement.src = audioAyah.audio; } }
+            // Incremented on every ayah change so a slow bitrate lookup can't apply its
+            // result after the user has already moved to a different ayah.
+            let audioRequestToken = 0;
+
+            async function updateContextForVisibleAyah() {
+                const ayah = appState.challenge.allChallengeAyahs[appState.challenge.visiblePaneIndex];
+                if (!ayah) return;
+
+                dom.audioElement.pause();
+                dom.audioElement.currentTime = 0;
+
+                const reciter = dom.reciterSelect.value;
+                if (!reciter) return;
+
+                const token = ++audioRequestToken;
+                const bitrate = await resolveReciterBitrate(reciter);
+                if (token !== audioRequestToken) return;
+
+                dom.audioElement.src = buildAudioUrl(ayah.number, reciter, bitrate);
+            }
+
+            /**
+             * If a derived audio URL turns out to be wrong for an edition, ask the API for the
+             * canonical URL for this one ayah and retry with it.
+             */
+            async function recoverAudioSource() {
+                const ayah = appState.challenge.allChallengeAyahs[appState.challenge.visiblePaneIndex];
+                const reciter = dom.reciterSelect.value;
+                if (!ayah || !reciter || dom.audioElement.dataset.recovering === String(ayah.number)) return;
+                dom.audioElement.dataset.recovering = String(ayah.number);
+
+                try {
+                    const json = await fetchJSON(`${CONFIG.API_BASE_URL}/ayah/${ayah.number}/${reciter}`);
+                    const url = json && json.data && json.data.audio;
+                    if (!url) return;
+                    const match = /\/audio\/(\d+)\//.exec(url);
+                    if (match) {
+                        reciterBitrates[reciter] = match[1];
+                        try {
+                            localStorage.setItem('tadabbur_reciter_bitrates', JSON.stringify(reciterBitrates));
+                        } catch (e) { /* non-fatal */ }
+                    }
+                    dom.audioElement.src = url;
+                } catch (e) {
+                    console.warn('Could not recover audio source', e);
+                }
+            }
             function updateAttemptsUI() { 
                 const { currentDifficulty, isReviewMode } = appState.ui; 
                 const progress = appState.user.progress[currentDifficulty]; 
@@ -2422,11 +2641,9 @@
                 dom.surahSearchInput.disabled = false;
                 document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = false);
                 
-                const difficultyScope = CONFIG.DIFFICULTIES[newDifficulty].scope;
-                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => { btn.style.display = 'flex'; if (difficultyScope === 'easy' && btn.dataset.juz !== '30') { btn.style.display = 'none'; } });
+                const initialJuz = applyJuzScope();
                 setupDailyAyah();
                 updateAttemptsUI();
-                const initialJuz = difficultyScope === 'easy' ? 30 : 1;
                 handleJuzSelection(initialJuz);
                 hideModal(dom.loadingOverlay);
                 showModal(dom.gameContainer);
@@ -2457,19 +2674,12 @@
                 
                 document.querySelectorAll('.surah-card, .juz-btn').forEach(el => el.disabled = true);
                 
-                const difficultyScope = CONFIG.DIFFICULTIES[difficulty].scope;
-                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => { 
-                    btn.style.display = 'flex'; 
-                    if (difficultyScope === 'easy' && btn.dataset.juz !== '30') { 
-                        btn.style.display = 'none'; 
-                    } 
-                });
-                
+                const initialJuz = applyJuzScope();
+
                 setupDailyAyah();
                 updateAttemptsUI();
                 showReviewResults();
-                
-                const initialJuz = difficultyScope === 'easy' ? 30 : 1;
+
                 handleJuzSelection(initialJuz);
                 hideModal(dom.loadingOverlay);
                 showModal(dom.gameContainer);
@@ -2546,11 +2756,12 @@
                     loadStats();
                     loadAchievements();
                     loadGameState();
+                    loadTranslationCache();
+                    loadReciterBitrates();
                     await loadCoreData();
                     populateReciterDropdown();
-                    const [arabicData, audioData] = await Promise.all([ fetchEdition(dom.scriptStyleSelect.value), fetchEdition(dom.reciterSelect.value) ]);
-                    appState.quran.arabic = arabicData;
-                    appState.quran.audio = audioData;
+                    appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value);
+                    setLoadingMessage('Preparing your challenge...');
                     groupSurahsByJuz();
                     populateJuzGrid();
                     initializePWA(); // Initialize PWA features
@@ -2583,19 +2794,19 @@
                 '#close-modal-btn': { 'click': () => { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } }, 
                 '#help-btn': { 'click': () => showModal(dom.howToPlayModal) }, 
                 '#how-to-play-modal': { 'click': (e) => { if (e.target === dom.howToPlayModal) { hideModal(dom.howToPlayModal); localStorage.setItem('quranle_help_seen', 'true'); showDifficultySelection(); } } }, 
-                '#surah-search-input': { 'input': () => { 
+                '#surah-search-input': { 'input': () => {
                     if (appState.ui.isReviewMode) return;
-                    const query = dom.surahSearchInput.value.toLowerCase().trim(); 
-                    const difficultyScope = CONFIG.DIFFICULTIES[appState.ui.currentDifficulty].scope; 
-                    let searchPool = appState.quran.allSurahs; 
-                    if(difficultyScope === 'easy') searchPool = appState.quran.juzData[30] || []; 
-                    else if (difficultyScope === 'medium') searchPool = appState.quran.allSurahs.filter(s => s.number >= 36); 
-                    if (!query) { handleJuzSelection(appState.ui.currentJuz); return; } 
+                    const query = dom.surahSearchInput.value.toLowerCase().trim();
+                    const difficultyScope = appState.ui.isStreakMode ? null : CONFIG.DIFFICULTIES[appState.ui.currentDifficulty].scope;
+                    let searchPool = appState.quran.allSurahs;
+                    if (difficultyScope === 'easy') searchPool = appState.quran.juzData[30] || [];
+                    else searchPool = surahsInScope(searchPool);
+                    if (!query) { handleJuzSelection(appState.ui.currentJuz); return; }
                     document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]')); 
                     const results = searchPool.filter(s => s.englishName.toLowerCase().includes(query) || s.name.includes(query) || String(s.number).includes(query)); 
                     setSurahList(results); 
                 } }, 
-                '#reciter-select': { 'change': async () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.add('hidden'); dom.audioLoadingSpinner.classList.remove('hidden'); try { appState.quran.audio = await fetchEdition(dom.reciterSelect.value); updateContextForVisibleAyah(); } catch (e) { console.error("Reciter change failed", e); } finally { dom.audioLoadingSpinner.classList.add('hidden'); dom.playButton.classList.remove('hidden');} } }, 
+                '#reciter-select': { 'change': async () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.add('hidden'); dom.audioLoadingSpinner.classList.remove('hidden'); try { localStorage.setItem('tadabbur_reciter', dom.reciterSelect.value); await updateContextForVisibleAyah(); } catch (e) { console.error("Reciter change failed", e); } finally { dom.audioLoadingSpinner.classList.add('hidden'); dom.playButton.classList.remove('hidden');} } },
                 '#script-style-select': { 'change': async () => { showModal(dom.loadingOverlay); dom.loadingMessage.textContent = 'Changing script style...'; try { appState.quran.arabic = await fetchEdition(dom.scriptStyleSelect.value); setupDailyAyah(); } catch(e){ console.error("Script change failed", e); } finally { hideModal(dom.loadingOverlay); } } }, 
                 '#hint-button': { 'click': showHint }, 
                 '#next-ayah-btn': { 'click': () => navigateSlider(appState.challenge.visiblePaneIndex + 1) }, 
@@ -2622,11 +2833,53 @@
                 '#close-android-banner': { 'click': () => { dom.androidInstallBanner.classList.add('hidden'); localStorage.setItem('android_banner_dismissed', 'true'); } },
                 '#streak-mode-btn': { 'click': startStreakMode },
             };
-            function handleJuzSelection(juzNumber) { dom.surahSearchInput.value = ''; appState.ui.currentJuz = juzNumber; document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]')); const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`); if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]'); setSurahList(appState.quran.juzData[juzNumber] || []); }
+            /**
+             * Surahs that can actually be the answer for the current difficulty.
+             * Without this, Medium listed Surahs 1-35 as guessable even though its answer
+             * is always Surah 36 or later, letting players waste attempts on impossible options.
+             */
+            function surahsInScope(surahs) {
+                if (appState.ui.isStreakMode) return surahs;
+                const scope = (CONFIG.DIFFICULTIES[appState.ui.currentDifficulty] || {}).scope;
+                if (scope === 'medium') return surahs.filter(s => s.number >= 36);
+                return surahs;
+            }
+
+            function handleJuzSelection(juzNumber) {
+                dom.surahSearchInput.value = '';
+                appState.ui.currentJuz = juzNumber;
+                document.querySelectorAll('.juz-btn.active').forEach(btn => btn.classList.remove('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]'));
+                const activeJuzBtn = document.querySelector(`.juz-btn[data-juz='${juzNumber}']`);
+                if (activeJuzBtn) activeJuzBtn.classList.add('active', 'bg-[var(--primary-color)]', 'text-[var(--primary-text)]');
+                setSurahList(surahsInScope(appState.quran.juzData[juzNumber] || []));
+            }
+
+            /**
+             * Hides juz buttons that contain no in-scope Surahs and returns the first juz
+             * that does, so a difficulty never opens on an empty or unusable list.
+             */
+            function applyJuzScope() {
+                const scope = (CONFIG.DIFFICULTIES[appState.ui.currentDifficulty] || {}).scope;
+                let firstUsable = null;
+                dom.juzGridContainer.querySelectorAll('.juz-btn').forEach(btn => {
+                    const juz = Number(btn.dataset.juz);
+                    const inScope = appState.ui.isStreakMode
+                        ? (appState.quran.juzData[juz] || [])
+                        : surahsInScope(appState.quran.juzData[juz] || []);
+                    const usable = inScope.length > 0 && !(scope === 'easy' && juz !== 30);
+                    btn.style.display = usable ? 'flex' : 'none';
+                    if (usable && firstUsable === null) firstUsable = juz;
+                });
+                return firstUsable || 1;
+            }
             for (const selector in eventListeners) { const element = document.querySelector(selector); if (element) { for (const event in eventListeners[selector]) { element.addEventListener(event, eventListeners[selector][event]); } } }
             dom.audioElement.addEventListener('play', () => { dom.playButton.classList.add('hidden'); dom.pauseButton.classList.remove('hidden'); });
             dom.audioElement.addEventListener('pause', () => { dom.pauseButton.classList.add('hidden'); dom.playButton.classList.remove('hidden'); });
             dom.audioElement.addEventListener('ended', () => { dom.pauseButton.classList.add('hidden'); dom.playButton.classList.remove('hidden'); });
+            dom.audioElement.addEventListener('waiting', () => { dom.audioLoadingSpinner.classList.remove('hidden'); });
+            dom.audioElement.addEventListener('playing', () => { dom.audioLoadingSpinner.classList.add('hidden'); });
+            dom.audioElement.addEventListener('canplay', () => { dom.audioLoadingSpinner.classList.add('hidden'); });
+            dom.audioElement.addEventListener('error', () => { if (dom.audioElement.src) recoverAudioSource(); });
             
             // ==========================================================================
             // KEYBOARD SHORTCUTS
@@ -2691,6 +2944,6 @@
     </script>
     
     <!-- Service Worker Registration -->
-    <script src="/sw-register.js"></script>
+    <script src="sw-register.js"></script>
 </body>
 </html>

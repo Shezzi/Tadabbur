@@ -1,0 +1,13 @@
+{
+  "name": "tadabbur",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Tadabbur - a daily Quran guessing game (static site, no build step required to host)",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

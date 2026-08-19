@@ -2,22 +2,28 @@ const CACHE_NAME = 'tadabbur-v2.0.0';
 const STATIC_CACHE = 'tadabbur-static-v2.0.0';
 const DYNAMIC_CACHE = 'tadabbur-dynamic-v2.0.0';
 
+// Resolved against the service worker's own scope so the app works both at a domain
+// root and inside a GitHub Pages project subfolder (e.g. /Tadabbur/).
+const BASE = new URL('./', self.location.href);
+const scopedUrl = (path) => new URL(path, BASE).href;
+
 // Files to cache for offline functionality
 const STATIC_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/browserconfig.xml',
-  '/sw-register.js',
-  '/icons/icon-72x72.svg',
-  '/icons/icon-96x96.svg',
-  '/icons/icon-128x128.svg',
-  '/icons/icon-144x144.svg',
-  '/icons/icon-152x152.svg',
-  '/icons/icon-192x192.svg',
-  '/icons/icon-384x384.svg',
-  '/icons/icon-512x512.svg'
-];
+  './',
+  'index.html',
+  'tailwind.css',
+  'manifest.json',
+  'browserconfig.xml',
+  'sw-register.js',
+  'icons/icon-72x72.svg',
+  'icons/icon-96x96.svg',
+  'icons/icon-128x128.svg',
+  'icons/icon-144x144.svg',
+  'icons/icon-152x152.svg',
+  'icons/icon-192x192.svg',
+  'icons/icon-384x384.svg',
+  'icons/icon-512x512.svg'
+].map(scopedUrl);
 
 // Install event - cache static files
 self.addEventListener('install', (event) => {
@@ -80,6 +86,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Let the browser handle cross-origin traffic itself. Quran API responses are cached
+  // by the page via the Cache Storage API, and proxying media here would break the
+  // HTTP range requests that audio playback and seeking depend on.
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Range requests (audio seeking) must reach the network untouched.
+  if (request.headers.has('range')) {
+    return;
+  }
+
   if (request.mode === 'navigate' || request.destination === 'document') {
     event.respondWith(
       fetch(request)
@@ -92,7 +110,7 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(() => caches.match(request).then((cached) => cached || caches.match('/index.html')))
+        .catch(() => caches.match(request).then((cached) => cached || caches.match(scopedUrl('index.html'))))
     );
     return;
   }
@@ -159,8 +177,8 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: event.data ? event.data.text() : 'New content available!',
-    icon: '/icons/icon-192x192.svg',
-    badge: '/icons/icon-72x72.svg',
+    icon: scopedUrl('icons/icon-192x192.svg'),
+    badge: scopedUrl('icons/icon-72x72.svg'),
     vibrate: [200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
@@ -170,12 +188,12 @@ self.addEventListener('push', (event) => {
       {
         action: 'explore',
         title: 'Play Now',
-        icon: '/icons/icon-96x96.svg'
+        icon: scopedUrl('icons/icon-96x96.svg')
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/icons/icon-96x96.svg'
+        icon: scopedUrl('icons/icon-96x96.svg')
       }
     ]
   };
@@ -193,7 +211,7 @@ self.addEventListener('notificationclick', (event) => {
   
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow(BASE.href)
     );
   }
 });

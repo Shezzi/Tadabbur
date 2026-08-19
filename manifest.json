@@ -2,12 +2,12 @@
   "name": "Tadabbur - Quran Guessing Game",
   "short_name": "Tadabbur",
   "description": "A daily Quranic verse guessing game with multiple difficulty levels",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#0f172a",
+  "background_color": "#0b1120",
   "theme_color": "#6ee7b7",
-  "orientation": "portrait-primary",
-  "scope": "/",
+  "orientation": "any",
+  "scope": "./",
   "lang": "en",
   "categories": ["games", "education", "religion"],
   "icons": [
@@ -65,7 +65,7 @@
       "name": "Play Game",
       "short_name": "Play",
       "description": "Start a new game",
-      "url": "/?action=play",
+      "url": "./?action=play",
       "icons": [
         {
           "src": "icons/icon-96x96.svg",
