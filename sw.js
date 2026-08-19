@@ -99,8 +99,11 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (request.mode === 'navigate' || request.destination === 'document') {
+    // 'no-cache' forces revalidation with the origin rather than trusting the
+    // HTTP cache. GitHub Pages serves HTML with max-age=600, so without this a
+    // freshly deployed update could take up to ten minutes to reach a visitor.
     event.respondWith(
-      fetch(request)
+      fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' })
         .then((response) => {
           if (response && response.status === 200) {
             const responseToCache = response.clone();
